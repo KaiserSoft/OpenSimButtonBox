@@ -22,8 +22,8 @@ Specification
 
 Name Brands or Model Numbers
 ----------------------------
-Items marked with one (V) have been verified to work.    
-Items marked with two (S) have not been verified but should work based on specs!
+Items marked with (V) have been verified to work.    
+Items marked with (S) have not been verified but should work based on specs!
 	
 * Ignition Switch (16mm mounting hole)
 	* (V) Conrad.de - Vandalismusgeschützter Drucktaster 48 V/DC 2 A 1 x Aus/(Ein) GQ16F-10/J/N (Bestell-Nr:701802 - 62)    

@@ -21,8 +21,8 @@ Specification
 
 Name Brands or Model Numbers
 ----------------------------
-Items marked with one (V) have been verified to work.    
-Items marked with two (S) have not been verified but should work based on specs!
+Items marked with (V) have been verified to work.    
+Items marked with (S) have not been verified but should work based on specs!
 	
 
 * (V) Amazon.de - 10pcs 12mm Dreh Encoder Switch mit Schlüsselschalter (20 positions)    
