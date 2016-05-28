@@ -21,14 +21,14 @@ Specification
 
 Name Brands or Model Numbers
 ----------------------------
-Items marked with one + have been verified to work.
-Items marked with two ++ have not been verified but should work based on specs!
+Items marked with one (V) have been verified to work.
+Items marked with two (S) have not been verified but should work based on specs!
 	
 
-* + Amazon.de - 10pcs 12mm Dreh Encoder Switch mit Schlüsselschalter (20 positions)    
+* (V) Amazon.de - 10pcs 12mm Dreh Encoder Switch mit Schlüsselschalter (20 positions)    
   https://www.amazon.de/gp/product/B0085I4D5C/
     
-* + Amazon.de - SODIAL(R) 3 Stueck 6mm D-Shaft 18-Position 360°Drehgeber mit Druckknopf    
+* (V) Amazon.de - SODIAL(R) 3 Stueck 6mm D-Shaft 18-Position 360°Drehgeber mit Druckknopf    
   https://www.amazon.de/gp/product/B00U8MUSFW/    
   I prefer these over the 20 position ones because the SODIAl are a little bit harder to turn. This makes it easier to feel every click.
 
