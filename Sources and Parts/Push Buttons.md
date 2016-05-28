@@ -22,32 +22,32 @@ Specification
 
 Name Brands or Model Numbers
 ----------------------------
-Items marked with one * have been verified to work.
-Items marked with two ** have not been verified but should work based on specs!
+Items marked with one + have been verified to work.
+Items marked with two ++ have not been verified but should work based on specs!
 	
 * Ignition Switch (16mm mounting hole)
-	* Conrad.de - Vandalismusgeschützter Drucktaster 48 V/DC 2 A 1 x Aus/(Ein) GQ16F-10/J/N (Bestell-Nr:701802 - 62)    
+	* + Conrad.de - Vandalismusgeschützter Drucktaster 48 V/DC 2 A 1 x Aus/(Ein) GQ16F-10/J/N (Bestell-Nr:701802 - 62)    
 	https://www.conrad.de/de/vandalismusgeschuetzter-drucktaster-48-vdc-2-a-1-x-aus-ein-gq16f-10jn-ip65-tastend-1-st-701802.html?insertCode=62
 	    
-	** Amazon.de - HOTSYSTEM 16mm 12V Metall Reset Taster LED Beleuchtet Drucktaster (Reset System: drücken-einschalten, loslassen-ausschalten)    
+	* ++ Amazon.de - HOTSYSTEM 16mm 12V Metall Reset Taster LED Beleuchtet Drucktaster (Reset System: drücken-einschalten, loslassen-ausschalten)    
 	
-	** Pollin.de - Drucktaster PBS-28B, Schließer (Bestell-Nr:420566)    
+	* ++ Pollin.de - Drucktaster PBS-28B, Schließer (Bestell-Nr:420566)    
 	   http://www.pollin.de/shop/dt/MzM0OTc1OTk-/Bauelemente_Bauteile/Mechanische_Bauelemente/Schalter_Taster/Drucktaster_PBS_28B_Schliesser.html
     
 	   
 	   
 	   
 * Standard Switches	
-	* Conrad.de - Vandalismusgeschützter Drucktaster 48 V/DC 2 A 1 x Aus/(Ein) GQ12B-A    
+	* + Conrad.de - Vandalismusgeschützter Drucktaster 48 V/DC 2 A 1 x Aus/(Ein) GQ12B-A    
 	  https://www.conrad.de/de/vandalismusgeschuetzter-drucktaster-48-vdc-2-a-1-x-aus-ein-gq12b-a-rd-ip65-tastend-1-st-701258.html
 	    
-	* Amazon.de - Drucktastenschalter Wasserdicht Momentary (Nicht verriegelbare Impulsfunktion/Non-locking momentary action)    
+	* +  Amazon.de - Drucktastenschalter Wasserdicht Momentary (Nicht verriegelbare Impulsfunktion/Non-locking momentary action)    
 	  https://www.amazon.de/gp/product/B00J4BJ020/    
 	  https://www.amazon.de/gp/product/B00J4BIZ62/    
 	  https://www.amazon.de/gp/product/B00GTEQXYS/    
 	  https://www.amazon.de/gp/product/B00J4BIY9U/    
 	  
-	** Pollin.de - Drucktaster ITW SWITCHES 59-112, IP67 (Bestell-Nr:420828)    
+	* ++ Pollin.de - Drucktaster ITW SWITCHES 59-112, IP67 (Bestell-Nr:420828)    
 	   http://www.pollin.de/shop/dt/MTcxOTc1OTk-/Bauelemente_Bauteile/Mechanische_Bauelemente/Schalter_Taster/Drucktaster_ITW_SWITCHES_59_112_IP67_rot.html
 	    
 
