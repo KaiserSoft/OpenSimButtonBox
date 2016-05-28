@@ -21,7 +21,7 @@ Specification
 
 Name Brands or Model Numbers
 ----------------------------
-Items marked with one (V) have been verified to work.
+Items marked with one (V) have been verified to work.    
 Items marked with two (S) have not been verified but should work based on specs!
 	
 
