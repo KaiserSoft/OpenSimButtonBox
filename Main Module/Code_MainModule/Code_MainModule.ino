@@ -51,8 +51,6 @@ Bounce BPutton4 = Bounce(PButton4Pin, 10);
 
 
 void setup() {
-  delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
-  pinMode(ledPin, OUTPUT);
   
   /* top row push buttons */
   pinMode(PButton1Pin, INPUT_PULLUP);
@@ -77,6 +75,8 @@ void setup() {
   pinMode(TSwitch5PinA, INPUT_PULLUP);
   pinMode(TSwitch5PinB, INPUT_PULLUP);
 
+  delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
+  pinMode(ledPin, OUTPUT);
 
   // Anything with "Serial." is only used for development ATM
   #ifdef OutputSerial
@@ -124,11 +124,11 @@ void send_key( int key, int del, int mod=0, int btnhold=0 ){
     Keyboard.set_modifier(mod);
     Keyboard.set_key1(key);
     Keyboard.send_now();
-    delay(del);
   #endif
 
   #ifndef OutputSerial
   if( btnhold == 0 ){
+    delay(del); //iRacing will not detect the key without a delay
     release_key();
   }
   #endif

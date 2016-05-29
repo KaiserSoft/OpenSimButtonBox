@@ -2,8 +2,8 @@
 
 #define BootUpDelay 1000 //Delay between power on and "ready", set to 0 (zero) to disable
 
-#define delayEnc 25 //debounce for rotary encoders
-#define delayBtn 50 //debounce for push button switches
+#define delayEnc 75 //debounce for rotary encoders
+#define delayBtn 75 //debounce for push button switches
 #define ledPin 13 
 
 
