@@ -1,21 +1,12 @@
 Modular Open Sim Racing Button Box
 ===============================
 
-The Modular Open Sim Racing Button Box Project is an expandable button box designed for iRacing, build on a Teensy 3.2. The "main module" is designed to be very simple to build while still offering 15 buttons and 3 rotary encoders to navigate the iRacing Black Box screens. 
+The Modular Open Sim Racing Button Box Project is an expandable button box designed for iRacing, build on a Teensy 3.2. The "Main Module" is designed to be very simple to build while still offering 15 buttons and 3 rotary encoders to navigate the iRacing Black Box screens. 
 The design uses the internal resistors so wires connect directly from the switch to the Teensy board.
 
-
-The main module requires (see "Sources List" for details)
-* 3D printed case
-* 5 (ON)/OFF/(ON) Toggle Switches (12mm neck)
-* 3 Rotary Encoders with Push Button (6mm neck)
-* 4 Momentary Push Switches (12mm neck)
-* Arduino IDE (check Teensyduino Library for supported version)
-  https://www.arduino.cc/en/Main/Software
-* Teensyduino Library 
-  https://www.pjrc.com/teensy/td_download.html
-
-The Open Modular Button Box Project - Main Module is complete and is currently being tested.
+Main Module
+===========
+Prototype v2 demo video https://www.youtube.com/watch?v=qAUQymDLhig    
 
 
 
