@@ -9,52 +9,73 @@
     <hr>
     <div>
         <ol>
-            <li>
-                Begin by printing the main case found in "Main Module\Case\". I suggest you print the face plate first so you can start assembly while the rest is printed.<br>
-                Never print a "Face Plate v2" for a "Main Body v3". You only need one face plate.
+            <li style="margin-bottom: 3em;">
+                Begin by printing the main case and a face plate found in "Main Module\Case\140mm wide\STL\".<br>
+				Never mix two different versions of body and face plate. A version 3 body will most likely not work with a version 4 face plate!
                 <ul>
-                    <li>Face Plate Box MAIN BODY -v3.STL<br>
-                        This is the main body of the button box
+                    <li style="margin-bottom: 1em;">Main Module - Body - v4<br>
+                        This is the main body of the button box. The "STAND ALONE" version does not come with additional mounting holes for the side box.
                     </li>
-                    <li>Face Plate Box MAIN - v3 -  Top Row Ignition + 3 buttons<br>
-                        This face plates comes with one 16mm hole in the top left corner for an ignition switch
-                    </li>
-                    <li>Face Plate Box MAIN - v3 - Top Row 4 Buttons.STL<br>
-                        This face plates offers four identical mounting holes for the top row.
+                    <li style="margin-bottom: 1em;">Main Module - Face Plate - v4
+						<ul>
+						<li style="margin-bottom: 1em;">TOP ROW 1x16mm + 3x13mm<br>
+						This face plate has a hole for a 16mm switch in the top left corner.<br>
+                        <img src="Images/buttons_mounted-front-3-small.jpg" height="250"></li>
+						
+						<li style="margin-bottom: 1em;">TOP ROW 4x13mm<br>
+						This face plate uses the same buttons on the top row.<br>
+						<img src="Images/buttons_mounted-front-4-small.jpg" height="250"></li>
+						
+						<li style="margin-bottom: 1em;">NO HOLES<br>
+						<strong>WARNING</strong> You need to add holes to this face plate. Only use this if you 
+						don't have access to SolidWorks.</li>
+						</ul>
                     </li>
                 </ul>
             </li>
             
             
-            <li>
+            <li style="margin-bottom: 3em;">
                 The box can be mounted so the bottom sits flush on the table ("Flush Brackets") or the bottom of the box will sit below whatever it is mounted to ("Lowered Brackets").<br>
                 The filename also indicates the type of bracket. A "90 degree" bracket will make the box sit perpendicular to your desk while a "75 degree" bracket is tilted back by 25 degrees.<br>
                 <strong>Add Image of Proto 2 Mount here</strong>
                 
                 <ul>
-                    <li>Mount Bracket 90 degrees.STL<br>
+                    <li style="margin-bottom: 1em;">Mount Bracket 90 degrees<br>
                         The box stand vertical with this bracket.
                     </li>
-                    <li>Mount Bracket 75 degrees.STL<br>
+                    <li style="margin-bottom: 1em;">Mount Bracket 75 degrees<br>
                         The box will be tilted back by 25 degrees with this bracket.
                     </li>
                 </ul>
             </li>
             
             
-            <li>
-                Time to get dirty. Screw the switches onto the face plate. Some switches come with rubber gaskets to make them water resistant. I recommend that you don't use them since we don't intend to race in the rain
-                and the main housing isn't water resistant either ;)<br>
-                Make soldering easy by orienting all switches the same way, then connect all grounds together.<br>
-                Ignore the wires connected to the top and bottom terminals of the toggle switches. I already had them soldered for my prototype and did not feel ti disconnect the wires ... a better image will be uploaded "sooon"<br>
-                <img src="Images/ground_wire.jpg" height="600" width="500">
+            <li style="margin-bottom: 3em;">
+				Next, screw the switches onto the face plate and heat up your soldering iron.<br>
+                Make soldering easy by orienting all switches the same way.<br>
+                <img src="Images/buttons_mounted-back-small.jpg" height="250">
+            </li>
+            
+            
+            <li style="margin-bottom: 3em;">
+				Start with soldering all ground terminals together as seen in the image below. Be careful with the small plastic switches from China. I solder these at 300C for 2 seconds. Let the part cool down before you try again if you don't get the joint done quickly.<br>
+				
+				My FFB wheel generates a lot of vibration which will be transfered into the button box as well. So I stick the wire through the eye on every contact to make the joint stronger.<br>
+                <img src="Images/ground_wire-switches-small.jpg" height="250">
+				<img src="Images/ground_wire-soldered-small.jpg" height="250">
+            </li>
+			
+            <li style="margin-bottom: 3em;">
+				Next solder wires to the remaining terminals. These need one wire per terminal.<br>
+                <img src="Images/ground_wire-switches-small.jpg" height="250">
             </li>
             
             <li>
                 Now connect the other button terminals to the Teensy 3.2 board. Start with GND (Ground), then pins 1 to 12 and finally pins 14-23. <strong>DO NOT USE Pin 13</strong>, it is for the LED so connecting a switch may not work without removing the LED first.<br>
                 It should look similar to this when you are done. Make sure you place the Teensy behind the top row since those switches are the shortest and give the Teensy more room in the case.<br>
                 Make sure you write down the pin number for every buttong!
-                <img src="all_wired_up.jpg">
+                <img src="all_wired_up.jpg" height="250">
             </li>
             
             <li>
