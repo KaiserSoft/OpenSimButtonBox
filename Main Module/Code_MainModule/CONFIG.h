@@ -7,83 +7,161 @@
 #define ledPin 13 
 
 
-
-
-/* Top Row - Push Buttons */
-#define PButton1Pin 0
-#define PButton1Mod 0
-#define PButton1Hold 0 //1 == send key until released, 0 == release key right away
-#define PButton1Key KEY_I //ignition
-
-#define PButton2Pin 2
-#define PButton2Mod 0
-#define PButton2Hold 0 //1 == send key until released, 0 == release key right away
-#define PButton2Key KEY_5 //"sorry"
-
-#define PButton3Pin 1
-#define PButton3Mod 0
-#define PButton3Hold 0 //1 == send key until released, 0 == release key right away
-#define PButton3Key KEY_6 //"thanks"
-
-#define PButton4Pin 3
-#define PButton4Mod 0
-#define PButton4Hold 1 //1 == send key until released, 0 == release key right away
-#define PButton4Key KEY_ESC
-
-//#define PButton5Pin 10
-//#define PButton5Mod 0
-//#define PButton5Hold 0 //1 == send key until released, 0 == release key right away
-//#define PButton5Key KEY_SPACE
+/* multi plexer setup */
+#define UseMultiplexer 1 // 1 to use the multiplexer or 0 to use buttons without 
+#define Multiplexer1 A7 //analog pin to multiplexer
+#define Multiplexer2 A9 //analog pin to multiplexer
+#define Multiplexer3 A8 //analog pin to multiplexer
+#define Multiplexer4 A6 //analog pin to multiplexer
+#define MultiplexerP9 0 //4051 pin 9 connected to this Teensy pin (digital)
+#define MultiplexerP10 1 //4051 pin 10 connected to this Teensy pin (digital)
+#define MultiplexerP11 2 //4051 pin 11 connected to this Teensy pin (digital)
 
 
 
+/* Button Configuration - multiplexed and non-multiplexed */
+#define Button_1_Mod 0 //modifier key
+#define Button_1_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_1_Key KEY_A // Keyboad key
+#define Button_1_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_2_Mod 0 //modifier key
+#define Button_2_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_2_Key KEY_B // Keyboad key
+#define Button_2_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_3_Mod 0 //modifier key
+#define Button_3_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_3_Key KEY_C // Keyboad key
+#define Button_3_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_4_Mod 0 //modifier key
+#define Button_4_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_4_Key KEY_D // Keyboad key
+#define Button_4_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_5_Mod 0 //modifier key
+#define Button_5_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_5_Key KEY_E // Keyboad key
+#define Button_5_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_6_Mod 0 //modifier key
+#define Button_6_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_6_Key KEY_F // Keyboad key
+#define Button_6_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_7_Mod 0 //modifier key
+#define Button_7_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_7_Key KEY_G // Keyboad key
+#define Button_7_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_8_Mod 0 //modifier key
+#define Button_8_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_8_Key KEY_H // Keyboad key
+#define Button_8_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_9_Mod 0 //modifier key
+#define Button_9_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_9_Key KEY_I // Keyboad key
+#define Button_9_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_10_Mod 0 //modifier key
+#define Button_10_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_10_Key KEY_J // Keyboad key
+#define Button_10_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_11_Mod 0 //modifier key
+#define Button_11_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_11_Key KEY_K // Keyboad key
+#define Button_11_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_12_Mod 0 //modifier key
+#define Button_12_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_12_Key KEY_L // Keyboad key
+#define Button_12_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_13_Mod 0 //modifier key
+#define Button_13_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_13_Key KEY_M // Keyboad key
+#define Button_13_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_14_Mod 0 //modifier key
+#define Button_14_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_14_Key KEY_N // Keyboad key
+#define Button_14_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_15_Mod 0 //modifier key
+#define Button_15_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_15_Key KEY_O // Keyboad key
+#define Button_15_Pin 0//not used when UseMultiplexer is 1
+
+#define Button_16_Mod 0 //modifier key
+#define Button_16_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_16_Key KEY_P // Keyboad key
+#define Button_16_Pin 0//not used when UseMultiplexer is 1
 
 
-/* Second Row - Toggle Switches (ON)/OFF/(ON) */
-#define TSwitch1PinA      23
-#define TSwitch1HoldA     0
-#define TSwitch1ModA      MODIFIERKEY_SHIFT
-#define TSwitch1KeyA      KEY_0
-#define TSwitch1PinB      22
-#define TSwitch1HoldB     0
-#define TSwitch1ModB      MODIFIERKEY_SHIFT
-#define TSwitch1KeyB      KEY_9
+/* Button Configuration - multiplexed only */
+/* !!! moar buttons !!!! */
+#define Button_17_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_17_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_17_Key KEY_A // Keyboad key
 
-#define TSwitch2PinA      21
-#define TSwitch2HoldA     0
-#define TSwitch2ModA      MODIFIERKEY_SHIFT
-#define TSwitch2KeyA      KEY_8
-#define TSwitch2PinB      20
-#define TSwitch2HoldB     0
-#define TSwitch2ModB      MODIFIERKEY_SHIFT
-#define TSwitch2KeyB      KEY_7
+#define Button_18_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_18_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_18_Key KEY_B // Keyboad key
 
-#define TSwitch3PinA      19
-#define TSwitch3HoldA     0
-#define TSwitch3ModA      MODIFIERKEY_SHIFT
-#define TSwitch3KeyA      KEY_6
-#define TSwitch3PinB      18
-#define TSwitch3HoldB     0
-#define TSwitch3ModB      MODIFIERKEY_SHIFT
-#define TSwitch3KeyB      KEY_5
+#define Button_19_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_19_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_19_Key KEY_C // Keyboad key
 
-#define TSwitch4PinA      17
-#define TSwitch4HoldA     0
-#define TSwitch4ModA      MODIFIERKEY_SHIFT
-#define TSwitch4KeyA      KEY_4
-#define TSwitch4PinB      16
-#define TSwitch4HoldB     0
-#define TSwitch4ModB      MODIFIERKEY_SHIFT
-#define TSwitch4KeyB      KEY_5
+#define Button_20_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_20_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_20_Key KEY_D // Keyboad key
 
-#define TSwitch5PinA      15
-#define TSwitch5ModA      0
-#define TSwitch5HoldA     0
-#define TSwitch5KeyA      KEY_SPACE
-#define TSwitch5PinB      14
-#define TSwitch5HoldB     0
-#define TSwitch5ModB      MODIFIERKEY_SHIFT
-#define TSwitch5KeyB      KEY_A
+#define Button_21_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_21_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_21_Key KEY_E // Keyboad key
+
+#define Button_22_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_22_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_22_Key KEY_F // Keyboad key
+
+#define Button_23_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_23_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_23_Key KEY_G // Keyboad key
+
+#define Button_24_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_24_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_24_Key KEY_H // Keyboad key
+
+#define Button_25_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_25_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_25_Key KEY_I // Keyboad key
+
+#define Button_26_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_26_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_26_Key KEY_J // Keyboad key
+
+#define Button_27_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_27_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_27_Key KEY_K // Keyboad key
+
+#define Button_28_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_28_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_28_Key KEY_L // Keyboad key
+
+#define Button_29_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_29_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_29_Key KEY_M // Keyboad key
+
+#define Button_30_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_30_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_30_Key KEY_N // Keyboad key
+
+#define Button_31_Mod MODIFIERKEY_SHIFT //modifier key
+#define Button_31_Hold 0 // 1 == send key until released, 0 == release after delayBtn
+#define Button_31_Key KEY_O // Keyboad key
 
 
 
@@ -95,9 +173,9 @@
 #define Encoder1PinB      8          //turn
 #define Encoder1ModB      0          //turn
 #define Encoder1KeyB      KEY_P      //turn
-#define Encoder1PinC      5          //button push
-#define Encoder1ModC      0          //button push
-#define Encoder1KeyC      KEY_F3     //button push
+#define Encoder1PinC      5          //button push - not used when UseMultiplexer is 1
+#define Encoder1ModC      0          //button push - not used when UseMultiplexer is 1
+#define Encoder1KeyC      KEY_F3     //button push - not used when UseMultiplexer is 1
 
 #define Encoder2PinA      10            //turn
 #define Encoder2ModA      0            //turn
@@ -105,9 +183,9 @@
 #define Encoder2PinB      9            //turn
 #define Encoder2ModB      0            //turn
 #define Encoder2KeyB      KEY_DOWN      //turn
-#define Encoder2PinC      6            //button push
-#define Encoder2ModC      0            //button push
-#define Encoder2KeyC      KEY_SPACE       //button push
+#define Encoder2PinC      6            //button push - not used when UseMultiplexer is 1
+#define Encoder2ModC      0            //button push - not used when UseMultiplexer is 1
+#define Encoder2KeyC      KEY_SPACE       //button push - not used when UseMultiplexer is 1
 
 #define Encoder3PinA      12            //turn
 #define Encoder3ModA      0            //turn
@@ -115,9 +193,9 @@
 #define Encoder3PinB      11            //turn
 #define Encoder3ModB      0            //turn
 #define Encoder3KeyB      KEY_RIGHT      //turn
-#define Encoder3PinC      4            //button push
-#define Encoder3ModC      0            //button push
-#define Encoder3KeyC      KEY_SPACE       //button push
+#define Encoder3PinC      4            //button push - not used when UseMultiplexer is 1
+#define Encoder3ModC      0            //button push - not used when UseMultiplexer is 1
+#define Encoder3KeyC      KEY_SPACE       //button push - not used when UseMultiplexer is 1
 
 
 
@@ -128,5 +206,5 @@
  *    WARNING! Keys will most likely send their Integer value instead of the actual key!
 */
 //#define OutputSerial 1 //enable this to have values printed to serial port instead of keyboard inputs
-
+#define DebugOutput 0 //only works when OutputSerial is enabled as well
 /* CONFIG END */

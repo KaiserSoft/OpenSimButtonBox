@@ -1,26 +1,28 @@
 /* code for rotary encoders goes here */
+#if UseMultiplexer == 0
 
 /* check push buttons of encoders */
 void check_encoder_switches(){
-  if (BBToggle.update()) {
-    if (BBToggle.fallingEdge()) {
-      send_key(Encoder1KeyC, delayBtn, Encoder1ModC);
-    }
-  }
 
- if (BBSelect.update()) {
-    if (BBSelect.fallingEdge()) {
-      send_key(Encoder2KeyC, delayBtn, Encoder2ModC);
+    if (BBToggle.update()) {
+      if (BBToggle.fallingEdge()) {
+        send_key(Encoder1KeyC, delayBtn, Encoder1ModC);
+      }
     }
-  }
-
-  if (BBSelect2.update()) {
-    if (BBSelect2.fallingEdge()) {
-      send_key(Encoder3KeyC, delayBtn, Encoder3ModC);
+  
+   if (BBSelect.update()) {
+      if (BBSelect.fallingEdge()) {
+        send_key(Encoder2KeyC, delayBtn, Encoder2ModC);
+      }
     }
-  }
+  
+    if (BBSelect2.update()) {
+      if (BBSelect2.fallingEdge()) {
+        send_key(Encoder3KeyC, delayBtn, Encoder3ModC);
+      }
+    }
 }
-
+#endif
 
 
 /* check rotary encourders */
