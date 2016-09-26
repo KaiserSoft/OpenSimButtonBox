@@ -67,16 +67,20 @@
             </li>
 			
             <li style="margin-bottom: 3em;">
-				Next solder wires to the remaining terminals. These need one wire per terminal.<br>
+				Next solder wires to the remaining terminals. These need one wire per terminal and should be long enough to reach the main board once it is mounted in the case.<br>Notice how the wires are not the same length once they are bundeled up. Yes, I had to solder small extensions to all the short wires you see in the image - so much fun.<br>
                 <img src="Images/signal_wires-connected-small.jpg" height="250">
             </li>
 			
 			
 			<li>
 				At this point you need to decide if you want to build only the main box or if you want to connect the side box as well. This can 
-				be changed later on but you have to desolder a bunch of wires.<br>
+				be changed later but you have to desolder a bunch of wires.<br>
 				<ul>
 					<li>Stand alone<br>
+						Connect one wire to GND (ground) on the teensy
+					</li>
+
+					<li>Multi Plexed for upto 32 buttons and 3 rotary encoders<br>
 						Connect one wire to GND (ground) on the teensy
 					</li>
 				</ul>
@@ -84,7 +88,9 @@
 			</li>
 			
 			
-#######################            
+#######################   
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+         
             <li>
                 Now connect the other button terminals to the Teensy 3.2 board. Start with GND (Ground), then pins 1 to 12 and finally pins 14-23. <strong>DO NOT USE Pin 13</strong>, it is for the LED so connecting a switch may not work without removing the LED first.<br>
                 It should look similar to this when you are done. Make sure you place the Teensy behind the top row since those switches are the shortest and give the Teensy more room in the case.<br>
