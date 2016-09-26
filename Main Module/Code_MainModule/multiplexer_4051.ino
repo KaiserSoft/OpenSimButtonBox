@@ -1,36 +1,38 @@
 /* code checking multi plexed push buttons goes here */
 
+
+// array of analog pins used by the connected multi plexer
 byte Devices[4] = { Multiplexer1, Multiplexer2, Multiplexer3, Multiplexer4 };
 
+
 // action for every button
-int ButtonModifier[4][8] = { { Button_1_Mod, Button_2_Mod, Button_3_Mod, Button_4_Mod, Button_5_Mod, Button_6_Mod, Button_7_Mod, Button_8_Mod}
-                            , { Button_9_Mod, Button_10_Mod, Button_11_Mod, Button_12_Mod, Button_13_Mod, Button_14_Mod, Button_15_Mod, Button_16_Mod}
-                            , { Button_17_Mod, Button_18_Mod, Button_19_Mod, Button_20_Mod, Button_21_Mod, Button_22_Mod, Button_23_Mod, Button_24_Mod}
-                            , { Button_25_Mod, Button_26_Mod, Button_27_Mod, Button_28_Mod, Button_29_Mod, Button_30_Mod, Button_31_Mod, Button_31_Mod} };
+int ButtonKey[4][8] = { { Button_1_Key, Button_2_Key, Button_3_Key, Button_4_Key, Button_5_Key, Button_6_Key, Button_7_Key, Button_8_Key }
+                            , { Button_9_Key, Button_10_Key, Button_11_Key, Button_12_Key, Button_13_Key, Button_14_Key, Button_15_Key, Button_16_Key }
+                            , { Button_17_Key, Button_18_Key, Button_19_Key, Button_20_Key, Button_21_Key, Button_22_Key, Button_23_Key, Button_24_Key }
+                            , { Button_25_Key, Button_26_Key, Button_27_Key, Button_28_Key, Button_29_Key, Button_30_Key, Button_31_Key, Button_31_Key } };
 
-int ButtonKey[4][8] = { { Button_1_Key, Button_2_Key, Button_3_Key, Button_4_Key, Button_5_Key, Button_6_Key, Button_7_Key, Button_8_Key}
-                            , { Button_9_Key, Button_10_Key, Button_11_Key, Button_12_Key, Button_13_Key, Button_14_Key, Button_15_Key, Button_16_Key}
-                            , { Button_17_Key, Button_18_Key, Button_19_Key, Button_20_Key, Button_21_Key, Button_22_Key, Button_23_Key, Button_24_Key}
-                            , { Button_25_Key, Button_26_Key, Button_27_Key, Button_28_Key, Button_29_Key, Button_30_Key, Button_31_Key, Button_31_Key} };
+int ButtonModifier[4][8] = { { Button_1_Mod, Button_2_Mod, Button_3_Mod, Button_4_Mod, Button_5_Mod, Button_6_Mod, Button_7_Mod, Button_8_Mod }
+                            , { Button_9_Mod, Button_10_Mod, Button_11_Mod, Button_12_Mod, Button_13_Mod, Button_14_Mod, Button_15_Mod, Button_16_Mod }
+                            , { Button_17_Mod, Button_18_Mod, Button_19_Mod, Button_20_Mod, Button_21_Mod, Button_22_Mod, Button_23_Mod, Button_24_Mod }
+                            , { Button_25_Mod, Button_26_Mod, Button_27_Mod, Button_28_Mod, Button_29_Mod, Button_30_Mod, Button_31_Mod, Button_31_Mod } };
 
-int ButtonHold[4][8] = { { Button_1_Hold, Button_2_Hold, Button_3_Hold, Button_4_Hold, Button_5_Hold, Button_6_Hold, Button_7_Hold, Button_8_Hold}
-                            , { Button_9_Hold, Button_10_Hold, Button_11_Hold, Button_12_Hold, Button_13_Hold, Button_14_Hold, Button_15_Hold, Button_16_Hold}
-                            , { Button_17_Hold, Button_18_Hold, Button_19_Hold, Button_20_Hold, Button_21_Hold, Button_22_Hold, Button_23_Hold, Button_24_Hold}
-                            , { Button_25_Hold, Button_26_Hold, Button_27_Hold, Button_28_Hold, Button_29_Hold, Button_30_Hold, Button_31_Hold, Button_31_Hold} };
+int ButtonHold[4][8] = { { Button_1_Hold, Button_2_Hold, Button_3_Hold, Button_4_Hold, Button_5_Hold, Button_6_Hold, Button_7_Hold, Button_8_Hold }
+                            , { Button_9_Hold, Button_10_Hold, Button_11_Hold, Button_12_Hold, Button_13_Hold, Button_14_Hold, Button_15_Hold, Button_16_Hold }
+                            , { Button_17_Hold, Button_18_Hold, Button_19_Hold, Button_20_Hold, Button_21_Hold, Button_22_Hold, Button_23_Hold, Button_24_Hold }
+                            , { Button_25_Hold, Button_26_Hold, Button_27_Hold, Button_28_Hold, Button_29_Hold, Button_30_Hold, Button_31_Hold, Button_31_Hold } };
 
-
-// Multiplexer 4051  pin 9, 10 and 11 seletion matrix
-int ChannelActive[8][3] = { {0,0,0}, {1,0,0}, {1,1,0}, {1,0,1}, {1,1,1}, {0,1,0}, {0,1,1}, {0,0,1} };
-
+// Multiplexer 4051  pin 9, 10 and 11 channel selection
+int ChannelActive[8][3] = { {0,0,0}, {0,0,1}, {0,1,0}, {0,1,1}, {1,0,0}, {1,0,1}, {1,1,0}, {1,1,1} };
 
 //holds time stamp when button was pressed, 0 if not pressed
 unsigned int ButtonState[4][8] = { {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0} };
 // set to 1 once the assinged key has been executed, used to ensure one key press is only sent once
 unsigned int ButtonExecuted[4][8] = { {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0} };
 
-
 // holds return from analog read
-int AnalogValue = 0;
+unsigned int AnalogValue = 0;
+
+
 
 void check_multiplexed_buttons(){
   

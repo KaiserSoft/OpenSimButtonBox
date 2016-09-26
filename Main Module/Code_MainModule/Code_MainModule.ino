@@ -25,29 +25,29 @@ Encoder knobCenter(Encoder2PinA, Encoder2PinB);
 Encoder knobRight(Encoder3PinA, Encoder3PinB);  
 
 
-#if UseMultiplexer == 0
+#if EnableMultiplexer == 0
 /* setup debounced switch object for push buttons of rotary encoders */
-Bounce BBToggle = Bounce(Encoder1PinC, 10);
-Bounce BBSelect = Bounce(Encoder2PinC, 10);
-Bounce BBSelect2 = Bounce(Encoder3PinC, 10);
-
-/* setup debounced switch object for toggel switches */
-Bounce TSwitchOne_UP = Bounce(Button_7_Pin, 10);
-Bounce TSwitchOne_DOWN = Bounce(Button_8_Pin, 10);
-Bounce TSwitchTwo_UP = Bounce(Button_9_Pin, 10);
-Bounce TSwitchTwo_DOWN = Bounce(Button_10_Pin, 10);
-Bounce TSwitchThree_UP = Bounce(Button_11_Pin, 10);
-Bounce TSwitchThree_DOWN = Bounce(Button_12_Pin, 10);
-Bounce TSwitchFour_UP = Bounce(Button_13_Pin, 10);
-Bounce TSwitchFour_DOWN = Bounce(Button_14_Pin, 10);
-Bounce TSwitchFive_UP = Bounce(Button_15_Pin, 10);
-Bounce TSwitchFive_DOWN = Bounce(Button_16_Pin, 10);
+Bounce EncButton1 = Bounce(Encoder1PinC, 10);
+Bounce EncButton2 = Bounce(Encoder2PinC, 10);
+Bounce EncButton3 = Bounce(Encoder3PinC, 10);
 
 /* setup push buttons on top row */
-Bounce BPutton1 = Bounce(Button_1_Pin, 10);
-Bounce BPutton2 = Bounce(Button_2_Pin, 10);
-Bounce BPutton3 = Bounce(Button_3_Pin, 10);
-Bounce BPutton4 = Bounce(Button_4_Pin, 10);
+Bounce PushPutton1 = Bounce(Button_1_Pin, 10);
+Bounce PushPutton2 = Bounce(Button_2_Pin, 10);
+Bounce PushPutton3 = Bounce(Button_3_Pin, 10);
+Bounce PushPutton4 = Bounce(Button_4_Pin, 10);
+
+/* setup debounced switch object for toggel switches */
+Bounce PushPutton5 = Bounce(Button_5_Pin, 10);
+Bounce PushPutton6 = Bounce(Button_6_Pin, 10);
+Bounce PushPutton7 = Bounce(Button_7_Pin, 10);
+Bounce PushPutton8 = Bounce(Button_8_Pin, 10);
+Bounce PushPutton9 = Bounce(Button_9_Pin, 10);
+Bounce PushPutton10 = Bounce(Button_10_Pin, 10);
+Bounce PushPutton11 = Bounce(Button_11_Pin, 10);
+Bounce PushPutton12 = Bounce(Button_12_Pin, 10);
+Bounce PushPutton13 = Bounce(Button_13_Pin, 10);
+Bounce PushPutton14 = Bounce(Button_14_Pin, 10);
 #endif
 
 
@@ -59,15 +59,15 @@ Bounce BPutton4 = Bounce(Button_4_Pin, 10);
 void setup() {
 
   /* multi plexer setup */
-  #if UseMultiplexer == 1
+  #if EnableMultiplexer == 1
   pinMode(MultiplexerP9, OUTPUT);
   pinMode(MultiplexerP10, OUTPUT);
   pinMode(MultiplexerP11, OUTPUT);
-  analogReadResolution(12);
+  analogReadResolution(AnalogResolution);
   #endif
 
 
-  #if UseMultiplexer == 0
+  #if EnableMultiplexer == 0
   /* top row push buttons */
   pinMode(Button_1_Pin, INPUT_PULLUP);
   pinMode(Button_2_Pin, INPUT_PULLUP);
@@ -118,15 +118,17 @@ void loop() {
   }
 
 
-  #if UseMultiplexer == 1
+  /* button check start */
+  check_rotary_encoders();
+
+  #if EnableMultiplexer == 1
     check_multiplexed_buttons();
   #else
-    check_push_buttons();
-    check_toggle_switches();
+    check_buttons();
     check_encoder_switches();
   #endif
+  /* button check done */
 
-  check_rotary_encoders();
 
   #if OutputSerial == 1 && DebugOutput == 1
     DebugTimerStop = millis();
