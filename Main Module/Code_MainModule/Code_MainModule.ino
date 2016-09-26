@@ -73,6 +73,10 @@ void setup() {
   pinMode(Button_2_Pin, INPUT_PULLUP);
   pinMode(Button_3_Pin, INPUT_PULLUP);
   pinMode(Button_4_Pin, INPUT_PULLUP);
+
+  /* Aux 1 and 2 */
+  pinMode(Aux1, OUTPUT);
+  pinMode(Aux2, OUTPUT);  
   
   /* encoder push buttons */
   pinMode(Button_5_Pin, INPUT_PULLUP);
@@ -105,6 +109,9 @@ void setup() {
 
 
 void loop() {
+  
+  analogWrite(Aux1, 255);
+  analogWrite(Aux2, 255);
   #if OutputSerial == 1 && DebugOutput == 1
     DebugTimerStart = millis();
   #endif

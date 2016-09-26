@@ -10,7 +10,8 @@
 #define delayBtn 75       //debounce for push button switches
 #define ledPin 13 
 #define AnalogResolution 12 //used when reading multiplexed buttons
-
+#define Aux1 4 // 5Volt -  fan or UV LED pin
+#define Aux2 3 // 5Volt - fan or UV LED pin
 
 /* 
   #############################
@@ -32,10 +33,10 @@
   # Rotary Encoders #
   ###################
 */
-#define Encoder1PinA      7          // the pin the encoder is connected to
+#define Encoder1PinA      12         // the pin the encoder is connected to
 #define Encoder1ModA      0          // modifier key to send
 #define Encoder1KeyA      KEY_O      // key to send
-#define Encoder1PinB      8          // the pin the encoder is connected to
+#define Encoder1PinB      11         // the pin the encoder is connected to
 #define Encoder1ModB      0          // modifier key to send
 #define Encoder1KeyB      KEY_P      // key to send
 #define Encoder1PinC      0          // not used when EnableMultiplexer is 1
@@ -43,10 +44,10 @@
 #define Encoder1ModC      0          // not used when EnableMultiplexer is 1
 #define Encoder1HoldC     0          // not used when EnableMultiplexer is 1
 
-#define Encoder2PinA      10         // the pin the encoder is connected to
+#define Encoder2PinA      7          // the pin the encoder is connected to
 #define Encoder2ModA      0          // modifier key to send
 #define Encoder2KeyA      KEY_UP     // key to send
-#define Encoder2PinB      9          // the pin the encoder is connected to
+#define Encoder2PinB      8          // the pin the encoder is connected to
 #define Encoder2ModB      0          // modifier key to send
 #define Encoder2KeyB      KEY_DOWN   // key to send
 #define Encoder2PinC      0          // not used when EnableMultiplexer is 1
@@ -54,10 +55,10 @@
 #define Encoder2ModC      0          // not used when EnableMultiplexer is 1
 #define Encoder2HoldC     0          // not used when EnableMultiplexer is 1
 
-#define Encoder3PinA      12         // the pin the encoder is connected to
+#define Encoder3PinA      10          // the pin the encoder is connected to
 #define Encoder3ModA      0          // modifier key to send
 #define Encoder3KeyA      KEY_LEFT   // key to send
-#define Encoder3PinB      11         // the pin the encoder is connected to
+#define Encoder3PinB      9           // the pin the encoder is connected to
 #define Encoder3ModB      0          // modifier key to send
 #define Encoder3KeyB      KEY_RIGHT  // key to send
 #define Encoder3PinC      0          // not used when EnableMultiplexer is 1
