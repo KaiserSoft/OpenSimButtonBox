@@ -12,13 +12,44 @@
 #define AnalogResolution 12 //used when reading multiplexed buttons
 #define Aux1 4 // 5Volt -  fan or UV LED pin
 #define Aux2 3 // 5Volt - fan or UV LED pin
+#define Aux3 5 // 5Volt - fan or UV LED pin
+#define PitLimiterPin 7 // 5Volt - fan or UV LED pin
+#define PitLimiterKey KEY_O
+#define PitLimiterMod 0
+#define PitLimiterHold 0
+#define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
+
+
+#define EnableAux1 0 //use a button to conrtol PWM on AUX 1
+#define AUX1_Button KEY_M // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX1_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX1_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
+#define AUX1_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX1_EEPROM 0 // EEPROM address
+
+#define EnableAux2 0 //use a button to conrtol PWM on AUX 1
+#define AUX2_Button KEY_K // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX2_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX2_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
+#define AUX2_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX2_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX2_EEPROM 1 // EEPROM address
+
+#define EnableAux3 0 //use a button to conrtol PWM on AUX 1
+#define AUX3_Button KEY_O // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX3_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX3_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
+#define AUX3_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX3_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX3_EEPROM 2 // EEPROM address
 
 /* 
   #############################
   # Multiplexer Configuration #
   #############################
 */
-#define EnableMultiplexer 1 // 1 to use the multiplexer or 0 to use buttons without 
+#define EnableMultiplexer 1 // 1 to use the multiplexer or 0 to use buttons without
+#define AnalogLowerLimit 50 // a button is considered pressed when the analog reading drops below this value
 #define Multiplexer1 A7     //analog pin to multiplexer
 #define Multiplexer2 A9     //analog pin to multiplexer
 #define Multiplexer3 A8     //analog pin to multiplexer
@@ -44,10 +75,10 @@
 #define Encoder1ModC      0          // not used when EnableMultiplexer is 1
 #define Encoder1HoldC     0          // not used when EnableMultiplexer is 1
 
-#define Encoder2PinA      7          // the pin the encoder is connected to
+#define Encoder2PinA      9          // the pin the encoder is connected to
 #define Encoder2ModA      0          // modifier key to send
 #define Encoder2KeyA      KEY_UP     // key to send
-#define Encoder2PinB      8          // the pin the encoder is connected to
+#define Encoder2PinB      10         // the pin the encoder is connected to
 #define Encoder2ModB      0          // modifier key to send
 #define Encoder2KeyB      KEY_DOWN   // key to send
 #define Encoder2PinC      0          // not used when EnableMultiplexer is 1
@@ -55,12 +86,12 @@
 #define Encoder2ModC      0          // not used when EnableMultiplexer is 1
 #define Encoder2HoldC     0          // not used when EnableMultiplexer is 1
 
-#define Encoder3PinA      10          // the pin the encoder is connected to
+#define Encoder3PinA      7          // the pin the encoder is connected to
 #define Encoder3ModA      0          // modifier key to send
-#define Encoder3KeyA      KEY_LEFT   // key to send
-#define Encoder3PinB      9           // the pin the encoder is connected to
+#define Encoder3KeyA      KEY_RIGHT  // key to send
+#define Encoder3PinB      8          // the pin the encoder is connected to
 #define Encoder3ModB      0          // modifier key to send
-#define Encoder3KeyB      KEY_RIGHT  // key to send
+#define Encoder3KeyB      KEY_LEFT   // key to send
 #define Encoder3PinC      0          // not used when EnableMultiplexer is 1
 #define Encoder3KeyC      0          // not used when EnableMultiplexer is 1
 #define Encoder3ModC      0          // not used when EnableMultiplexer is 1

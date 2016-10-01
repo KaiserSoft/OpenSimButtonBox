@@ -33,7 +33,7 @@ void check_buttons(){
   check_button( PushPutton14, Button_14_Key, Button_14_Mod, Button_14_Hold );
 }
 
-
+#endif
 
 
 void check_button( Bounce &btn, int key, int mod, int btnhold ){
@@ -47,4 +47,4 @@ void check_button( Bounce &btn, int key, int mod, int btnhold ){
   }
 }
 
-#endif
+
