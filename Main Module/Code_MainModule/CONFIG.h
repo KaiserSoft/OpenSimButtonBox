@@ -29,8 +29,10 @@
 #define EnableAux1 1 //use a button to control PWM on AUX 1
 #define AUX1_Button KEY_M // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX1_PWM_CHANGE 10 //increase or decrease PWM by this much
-#define AUX1_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
+#define AUX1_PWM_MAX 255 //max valueo for pwm AoBLSOLUTE MAX 255 !!!!
 #define AUX1_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX1_ENABLE_FAN_START 1 //0 to disable or 1 to ramp up this port when turned on
+#define AUX1_FAN_START_RAMP 100 // PWM value used to get the fan spinning
 #define AUX1_EEPROM 0 // EEPROM address
 
 #define EnableAux2 1 //use a button to control PWM on AUX 2
@@ -38,15 +40,17 @@
 #define AUX2_PWM_CHANGE 10 //increase or decrease PWM by this much
 #define AUX2_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
 #define AUX2_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
-#define AUX2_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX2_ENABLE_FAN_START 0 //0 to disable or 1 to ramp up this port when turned on
+#define AUX2_FAN_START_RAMP 100 // PWM value used to get the fan spinning
 #define AUX2_EEPROM 1 // EEPROM address
 
 #define EnableAux3 0 //use a button to control PWM on AUX 3
 #define AUX3_Button KEY_O // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX3_PWM_CHANGE 10 //increase or decrease PWM by this much
 #define AUX3_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
-#define AUX3_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
-#define AUX3_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX3_PWM_MIN 10  //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX3_ENABLE_FAN_START 0 //0 to disable or 1 to ramp up this port when turned on
+#define AUX3_FAN_START_RAMP 100 // PWM value used to get the fan spinning
 #define AUX3_EEPROM 2 // EEPROM address
 
 

@@ -78,13 +78,13 @@ void check_rotary_encoders(){
           send_key(Encoder3KeyB, delayEnc, Encoder3ModB );
         }else if( AUX1Pressed == true ) {
           AUX1PWM_new = AUX1PWM - AUX1_PWM_CHANGE;
-          AUX1PWM = (AUX1PWM_new > AUX1_PWM_MIN ) ? AUX1PWM_new : AUX1_PWM_MIN;
+          AUX1PWM = (AUX1PWM_new > AUX1_PWM_MIN ) ? AUX1PWM_new : 0;
         }else if( AUX2Pressed == true ) {
           AUX2PWM_new = AUX2PWM - AUX2_PWM_CHANGE;
-          AUX2PWM = (AUX2PWM_new > 0 ) ? AUX2PWM_new : 0;
+          AUX2PWM = (AUX2PWM_new > AUX2_PWM_MIN ) ? AUX2PWM_new : 0;
         }else if( AUX3Pressed == true ) {
           AUX3PWM_new = AUX3PWM - AUX3_PWM_CHANGE;
-          AUX3PWM = (AUX3PWM_new > 0 ) ? AUX3PWM_new : 0;
+          AUX3PWM = (AUX3PWM_new > AUX3_PWM_MIN ) ? AUX3PWM_new : 0;
         }
       }
 
