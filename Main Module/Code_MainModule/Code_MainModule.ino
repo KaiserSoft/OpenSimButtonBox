@@ -86,10 +86,7 @@ void setup() {
   pinMode(Button_3_Pin, INPUT_PULLUP);
   pinMode(Button_4_Pin, INPUT_PULLUP);
 
-  /* Aux 1 and 2 */
-  pinMode(Aux1, OUTPUT);
-  pinMode(Aux2, OUTPUT);
-  pinMode(Aux3, OUTPUT);
+
   pinMode(PitLimiterPin, OUTPUT);
 
   /* encoder push buttons */
@@ -109,6 +106,14 @@ void setup() {
   pinMode(Button_15_Pin, INPUT_PULLUP);
   pinMode(Button_16_Pin, INPUT_PULLUP);
 #endif
+
+  /* Aux 1 and 2 */
+  pinMode(Aux1, OUTPUT);
+  analogWriteFrequency(Aux1, 100);
+  pinMode(Aux2, OUTPUT);
+  analogWriteFrequency(Aux2, 100);
+  //analogWriteFrequency(Aux2, 375000);
+  //pinMode(Aux3, OUTPUT);
 
   delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
   pinMode(ledPin, OUTPUT);
@@ -182,6 +187,8 @@ void loop() {
   if( EnableAux1 == 1 ) { analogWrite(Aux1, AUX1PWM);}
   if( EnableAux2 == 1 ) { analogWrite(Aux2, AUX2PWM);}
   if( EnableAux3 == 1 ) { analogWrite(Aux3, AUX3PWM);}
+//  analogWrite(Aux1, 255);
+//  analogWrite(Aux2, 255);
 
 
 #if OutputSerial == 1 && DebugOutput == 1
