@@ -13,7 +13,7 @@
 #define Aux1 4 // 5Volt -  fan or UV LED pin
 #define Aux2 3 // 5Volt - fan or UV LED pin
 #define Aux3 5 // 5Volt - fan or UV LED pin
-#define PitLimiterPin 7 // 5Volt - fan or UV LED pin
+#define PitLimiterPin 6 // pin for ON/OFF switch used as pit limiter
 #define PitLimiterKey KEY_O
 #define PitLimiterMod 0
 #define PitLimiterHold 0
@@ -27,7 +27,7 @@
  *  of each AUX port
  */
 #define EnableAux1 1 //use a button to control PWM on AUX 1
-#define AUX1_Button KEY_M // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX1_Button KEY_H // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX1_PWM_CHANGE 10 //increase or decrease PWM by this much
 #define AUX1_PWM_MAX 255 //max valueo for pwm AoBLSOLUTE MAX 255 !!!!
 #define AUX1_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
@@ -36,7 +36,7 @@
 #define AUX1_EEPROM 0 // EEPROM address
 
 #define EnableAux2 1 //use a button to control PWM on AUX 2
-#define AUX2_Button KEY_K // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX2_Button KEY_L // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX2_PWM_CHANGE 10 //increase or decrease PWM by this much
 #define AUX2_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
 #define AUX2_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
@@ -77,11 +77,11 @@
   ###################
 */
 #define Encoder1PinA      12         // the pin the encoder is connected to
-#define Encoder1ModA      0          // modifier key to send
-#define Encoder1KeyA      KEY_O      // key to send
+#define Encoder1ModA      MODIFIERKEY_SHIFT // modifier key to send
+#define Encoder1KeyA      KEY_X      // key to send
 #define Encoder1PinB      11         // the pin the encoder is connected to
-#define Encoder1ModB      0          // modifier key to send
-#define Encoder1KeyB      KEY_P      // key to send
+#define Encoder1ModB      MODIFIERKEY_SHIFT // modifier key to send
+#define Encoder1KeyB      KEY_Y      // key to send
 #define Encoder1PinC      0          // not used when EnableMultiplexer is 1
 #define Encoder1KeyC      0          // not used when EnableMultiplexer is 1
 #define Encoder1ModC      0          // not used when EnableMultiplexer is 1
