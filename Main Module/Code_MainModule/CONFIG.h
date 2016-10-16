@@ -30,6 +30,7 @@
  *  Holding that button down enables the use of the rotary encoder on the right to change the PWM value 
  *  of each AUX port
  */
+#define AUX_RAMP_TIME 3000 //ramp up timer for all AUX port on boot up
 #define EnableAux1 1 //use a button to control PWM on AUX 1
 #define AUX1_Pin 4 // 5Volt -  fan or UV LED pin
 #define AUX1_Button KEY_K // hold this button and use encoder left/right to adjust PWM output on port
@@ -111,10 +112,10 @@
 #define Encoder2ModC      0          // not used when EnableMultiplexer is 1
 #define Encoder2HoldC     0          // not used when EnableMultiplexer is 1
 
-#define Encoder3PinA      7          // the pin the encoder is connected to
+#define Encoder3PinA      8          // the pin the encoder is connected to
 #define Encoder3ModA      0          // modifier key to send
 #define Encoder3KeyA      KEY_RIGHT  // key to send
-#define Encoder3PinB      8          // the pin the encoder is connected to
+#define Encoder3PinB      7          // the pin the encoder is connected to
 #define Encoder3ModB      0          // modifier key to send
 #define Encoder3KeyB      KEY_LEFT   // key to send
 #define Encoder3PinC      0          // not used when EnableMultiplexer is 1

@@ -199,7 +199,7 @@ void loop() {
 
     if( fan_state_changed == true )
     {
-      delay(5000); //allow fans to spin up
+      delay(AUX_RAMP_TIME); //allow fans to spin up
       AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
       AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
       AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
