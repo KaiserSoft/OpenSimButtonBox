@@ -19,15 +19,22 @@ byte AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
 boolean AUX1_fan_started = false;
 boolean AUX2_fan_started = false;
 boolean AUX3_fan_started = false;
-long EEPROM_check_last = 0;
+boolean Pit_limiter_active = false;
+long EEPROM_check_last = 0; //last time EEPROM values where checked for change
+long EEPROM_val_change_last = 0; //last time any EEPROM stored value has changed
 
 /* turns LED off once one of the buttons has been used */
 boolean beenUsed = false;
 boolean LEDon = true;
 
+
+
+#if OutputSerial == 1
+  boolean OutEEPROMSkipSend = false;
+#endif
 #if OutputSerial == 1 && DebugOutput == 1
-int DebugTimerStart;
-int DebugTimerStop;
+  int DebugTimerStart;
+  int DebugTimerStop;
 #endif
 
 /* setup encoders */
@@ -37,28 +44,28 @@ Encoder knobRight(Encoder3PinA, Encoder3PinB);
 
 
 #if EnableMultiplexer == 0
-/* setup debounced switch object for push buttons of rotary encoders */
-Bounce EncButton1 = Bounce(Encoder1PinC, 10);
-Bounce EncButton2 = Bounce(Encoder2PinC, 10);
-Bounce EncButton3 = Bounce(Encoder3PinC, 10);
-
-/* setup push buttons on top row */
-Bounce PushPutton1 = Bounce(Button_1_Pin, 10);
-Bounce PushPutton2 = Bounce(Button_2_Pin, 10);
-Bounce PushPutton3 = Bounce(Button_3_Pin, 10);
-Bounce PushPutton4 = Bounce(Button_4_Pin, 10);
-
-/* setup debounced switch object for toggel switches */
-Bounce PushPutton5 = Bounce(Button_5_Pin, 10);
-Bounce PushPutton6 = Bounce(Button_6_Pin, 10);
-Bounce PushPutton7 = Bounce(Button_7_Pin, 10);
-Bounce PushPutton8 = Bounce(Button_8_Pin, 10);
-Bounce PushPutton9 = Bounce(Button_9_Pin, 10);
-Bounce PushPutton10 = Bounce(Button_10_Pin, 10);
-Bounce PushPutton11 = Bounce(Button_11_Pin, 10);
-Bounce PushPutton12 = Bounce(Button_12_Pin, 10);
-Bounce PushPutton13 = Bounce(Button_13_Pin, 10);
-Bounce PushPutton14 = Bounce(Button_14_Pin, 10);
+  /* setup debounced switch object for push buttons of rotary encoders */
+  Bounce EncButton1 = Bounce(Encoder1PinC, 10);
+  Bounce EncButton2 = Bounce(Encoder2PinC, 10);
+  Bounce EncButton3 = Bounce(Encoder3PinC, 10);
+  
+  /* setup push buttons on top row */
+  Bounce PushPutton1 = Bounce(Button_1_Pin, 10);
+  Bounce PushPutton2 = Bounce(Button_2_Pin, 10);
+  Bounce PushPutton3 = Bounce(Button_3_Pin, 10);
+  Bounce PushPutton4 = Bounce(Button_4_Pin, 10);
+  
+  /* setup debounced switch object for toggel switches */
+  Bounce PushPutton5 = Bounce(Button_5_Pin, 10);
+  Bounce PushPutton6 = Bounce(Button_6_Pin, 10);
+  Bounce PushPutton7 = Bounce(Button_7_Pin, 10);
+  Bounce PushPutton8 = Bounce(Button_8_Pin, 10);
+  Bounce PushPutton9 = Bounce(Button_9_Pin, 10);
+  Bounce PushPutton10 = Bounce(Button_10_Pin, 10);
+  Bounce PushPutton11 = Bounce(Button_11_Pin, 10);
+  Bounce PushPutton12 = Bounce(Button_12_Pin, 10);
+  Bounce PushPutton13 = Bounce(Button_13_Pin, 10);
+  Bounce PushPutton14 = Bounce(Button_14_Pin, 10);
 #endif
 
 
@@ -86,9 +93,6 @@ void setup() {
   pinMode(Button_3_Pin, INPUT_PULLUP);
   pinMode(Button_4_Pin, INPUT_PULLUP);
 
-
-  pinMode(PitLimiterPin, OUTPUT);
-
   /* encoder push buttons */
   pinMode(Button_5_Pin, INPUT_PULLUP);
   pinMode(Button_6_Pin, INPUT_PULLUP);
@@ -107,24 +111,52 @@ void setup() {
   pinMode(Button_16_Pin, INPUT_PULLUP);
 #endif
 
+#if EnablePitLimiterSwitch == 1
+  pinMode(PitLimiterPin, INPUT_PULLUP);
+#endif
+
   /* Aux 1 and 2 */
-  pinMode(Aux1, OUTPUT);
-  analogWriteFrequency(Aux1, 100);
-  pinMode(Aux2, OUTPUT);
-  analogWriteFrequency(Aux2, 100);
-  //analogWriteFrequency(Aux2, 375000);
-  //pinMode(Aux3, OUTPUT);
+  pinMode(AUX1_Pin, OUTPUT);
+  analogWriteFrequency(AUX1_Pin, AUX1_PWM_FREQ);
+  pinMode(AUX2_Pin, OUTPUT);
+  analogWriteFrequency(AUX2_Pin, AUX2_PWM_FREQ);
+  //pinMode(AUX3_Pin, OUTPUT);
+  //analogWriteFrequency(AUX3_Pin, AUX3_PWM_FREQ);
 
   delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
   pinMode(ledPin, OUTPUT);
 
   // Anything with "Serial." is only used for development ATM
-#ifdef OutputSerial
+#if OutputSerial == 1
   Serial.begin(115200);
   Serial.println("Modular Open Button Box (MOBB) ready...");
 #endif
 }
 
+
+void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
+#if OutputSerial == 1
+  Serial.print("send_key() / ");
+  Serial.print("Mod:");
+  Serial.print(mod);
+  Serial.print(" / key:");
+  Serial.print(key);
+  Serial.println();
+#else
+  Keyboard.set_modifier(mod);
+  Keyboard.set_key1(key);
+  Keyboard.send_now();
+#endif
+
+#if OutputSerial != 1
+  if ( btnhold == 0 ) {
+    delay(del); //iRacing will not detect the key without a delay
+    release_key();
+  }
+#endif
+
+  beenUsed = true;
+}
 
 
 void loop() {
@@ -136,30 +168,30 @@ void loop() {
     boolean fan_state_changed = false;
     
     if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 ){
-      analogWrite(Aux1, AUX1_FAN_START_RAMP );
+      analogWrite(AUX1_Pin, AUX1_FAN_START_RAMP );
       AUX1_fan_started = true;
       fan_state_changed = true;
-      #ifdef OutputSerial
+      #if OutputSerial == 1
         Serial.print("Fan ramp up AUX 1 PWM: ");
         Serial.println(AUX1_FAN_START_RAMP);
       #endif
     }
     
     if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 ){
-      analogWrite(Aux2, AUX2_FAN_START_RAMP );
+      analogWrite(AUX2_Pin, AUX2_FAN_START_RAMP );
       AUX2_fan_started = true;
       fan_state_changed = true;
-      #ifdef OutputSerial
+      #if OutputSerial == 1
         Serial.print("Fan ramp up AUX 2 PWM: ");
         Serial.println(AUX2_FAN_START_RAMP);
       #endif
     }
     
     if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 ){
-      analogWrite(Aux3, AUX3_FAN_START_RAMP );
+      analogWrite(AUX3_Pin, AUX3_FAN_START_RAMP );
       AUX3_fan_started = true;
       fan_state_changed = true;
-      #ifdef OutputSerial
+      #if OutputSerial == 1
         Serial.print("Fan ramp up AUX 3 PWM: ");
         Serial.println(AUX3_FAN_START_RAMP);
       #endif
@@ -171,7 +203,7 @@ void loop() {
       AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
       AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
       AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
-      #ifdef OutputSerial
+      #if OutputSerial == 1
         Serial.print("Fan ramp up done / ");
         Serial.print("AUX1:");
         Serial.print(AUX1PWM);
@@ -184,11 +216,11 @@ void loop() {
   }
 
   
-  if( EnableAux1 == 1 ) { analogWrite(Aux1, AUX1PWM);}
-  if( EnableAux2 == 1 ) { analogWrite(Aux2, AUX2PWM);}
-  if( EnableAux3 == 1 ) { analogWrite(Aux3, AUX3PWM);}
-//  analogWrite(Aux1, 255);
-//  analogWrite(Aux2, 255);
+  if( EnableAux1 == 1 ) { analogWrite(AUX1_Pin, AUX1PWM);}
+  if( EnableAux2 == 1 ) { analogWrite(AUX2_Pin, AUX2PWM);}
+  if( EnableAux3 == 1 ) { analogWrite(AUX3_Pin, AUX3PWM);}
+//  analogWrite(AUX1_Pin, 255);
+//  analogWrite(AUX2_Pin, 255);
 
 
 #if OutputSerial == 1 && DebugOutput == 1
@@ -203,9 +235,30 @@ void loop() {
     digitalWrite(ledPin, HIGH);
   }
 
-  //digitalWrite(PitLimiterPin, HIGH);
+#if EnablePitLimiterSwitch == 1
   //check_button( PitLimiterButton, PitLimiterKey, PitLimiterMod, PitLimiterHold );
+  if (PitLimiterButton.update()) {
 
+
+    if (PitLimiterButton.fallingEdge()) {
+      Pit_limiter_active = true;
+      #if OutputSerial == 1
+        Serial.println("Pit limiter ON");
+      #endif
+      send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
+
+      
+    }else{
+      if( Pit_limiter_active == true ){
+        Pit_limiter_active = false;
+        #if OutputSerial == 1
+          Serial.println("Pit limiter OFF");
+        #endif
+        send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
+      }
+    }
+  }
+#endif
 
   /* button check start */
   check_rotary_encoders();
@@ -248,10 +301,13 @@ void eeprom_update_pwm(){
   
 
   if( EEPROM_check_last == 0 ) {
-    EEPROM_check_last = millis(); //fresh start, wait a bit
+    //system just booted, wait at least for "EEPROM_storage_loop" delay
+    EEPROM_check_last = millis();
+    EEPROM_val_change_last = millis();
     
-  }else if( EEPROM_check_last < must_pass ){
+  }else if( EEPROM_check_last < must_pass && EEPROM_val_change_last < must_pass ){
     #if OutputSerial == 1
+      OutEEPROMSkipSend = false;
       Serial.println("comparing EEPROM values");
     #endif
 
@@ -287,6 +343,13 @@ void eeprom_update_pwm(){
 
     
     EEPROM_check_last = millis(); //update "last check counter"
+  }else{
+    #if OutputSerial == 1
+      if(  OutEEPROMSkipSend == false && EEPROM_check_last < must_pass && EEPROM_val_change_last > must_pass) {
+        OutEEPROMSkipSend = true;
+        Serial.println("skipping EEPROM checks - value recently changed");
+      }
+    #endif
   }
 
 
@@ -295,32 +358,10 @@ void eeprom_update_pwm(){
 }
 
 
-void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
-#ifdef OutputSerial
-  Serial.print("send_key() / ");
-  Serial.print("Mod:");
-  Serial.print(mod);
-  Serial.print(" / key:");
-  Serial.print(key);
-  Serial.println();
-#else
-  Keyboard.set_modifier(mod);
-  Keyboard.set_key1(key);
-  Keyboard.send_now();
-#endif
 
-#ifndef OutputSerial
-  if ( btnhold == 0 ) {
-    delay(del); //iRacing will not detect the key without a delay
-    release_key();
-  }
-#endif
-
-  beenUsed = true;
-}
 
 void release_key() {
-#ifdef OutputSerial
+#if OutputSerial == 1
   Serial.println("ran release_key()");
 #else
   Keyboard.set_modifier(0);

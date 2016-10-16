@@ -5,20 +5,24 @@
   # Misc Configuration #
   ######################
 */
-#define BootUpDelay 1000  //Delay between power on and "ready", set to 0 (zero) to disable
+#define BootUpDelay 2000  //Delay between power on and "ready", set to 0 (zero) to disable
 #define delayEnc 75       //debounce for rotary encoders
 #define delayBtn 75       //debounce for push button switches
 #define ledPin 13 
 #define AnalogResolution 12 //used when reading multiplexed buttons
-#define Aux1 4 // 5Volt -  fan or UV LED pin
-#define Aux2 3 // 5Volt - fan or UV LED pin
-#define Aux3 5 // 5Volt - fan or UV LED pin
+#define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
+
+
+/**
+ * Pit Limiter
+ * This is an ON/OFF switch to enable/disable the pit limiter
+ * NOT a momentary switch
+ */
+#define EnablePitLimiterSwitch 1
 #define PitLimiterPin 6 // pin for ON/OFF switch used as pit limiter
 #define PitLimiterKey KEY_O
 #define PitLimiterMod 0
 #define PitLimiterHold 0
-#define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
-
 
 /** 
  *  Auxillary Port Control
@@ -27,28 +31,37 @@
  *  of each AUX port
  */
 #define EnableAux1 1 //use a button to control PWM on AUX 1
-#define AUX1_Button KEY_H // hold this button and use encoder left/right to adjust PWM output on port
-#define AUX1_PWM_CHANGE 10 //increase or decrease PWM by this much
+#define AUX1_Pin 4 // 5Volt -  fan or UV LED pin
+#define AUX1_Button KEY_K // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX1_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
+#define AUX1_PWM_CHANGE 5 //increase or decrease PWM by this much
 #define AUX1_PWM_MAX 255 //max valueo for pwm AoBLSOLUTE MAX 255 !!!!
-#define AUX1_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX1_PWM_MIN 4 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX1_PWM_FREQ 100 //PWM frequency
 #define AUX1_ENABLE_FAN_START 1 //0 to disable or 1 to ramp up this port when turned on
 #define AUX1_FAN_START_RAMP 100 // PWM value used to get the fan spinning
 #define AUX1_EEPROM 0 // EEPROM address
 
 #define EnableAux2 1 //use a button to control PWM on AUX 2
-#define AUX2_Button KEY_L // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX2_Pin 3 // 5Volt - fan or UV LED pin
+#define AUX2_Button KEY_M // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX2_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
 #define AUX2_PWM_CHANGE 10 //increase or decrease PWM by this much
 #define AUX2_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
-#define AUX2_PWM_MIN 10 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX2_PWM_MIN 9 //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX2_PWM_FREQ 100 //PWM frequency
 #define AUX2_ENABLE_FAN_START 0 //0 to disable or 1 to ramp up this port when turned on
 #define AUX2_FAN_START_RAMP 100 // PWM value used to get the fan spinning
 #define AUX2_EEPROM 1 // EEPROM address
 
 #define EnableAux3 0 //use a button to control PWM on AUX 3
+#define AUX3_Pin 5 // 5Volt - fan or UV LED pin
 #define AUX3_Button KEY_O // hold this button and use encoder left/right to adjust PWM output on port
+#define AUX3_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
 #define AUX3_PWM_CHANGE 10 //increase or decrease PWM by this much
 #define AUX3_PWM_MAX 255 //max value for pwm ABLSOLUTE MAX 255 !!!!
-#define AUX3_PWM_MIN 10  //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX3_PWM_MIN 9  //min value for pwm ABSOLUTE MIN 0 !!!!
+#define AUX3_PWM_FREQ 100 //PWM frequency
 #define AUX3_ENABLE_FAN_START 0 //0 to disable or 1 to ramp up this port when turned on
 #define AUX3_FAN_START_RAMP 100 // PWM value used to get the fan spinning
 #define AUX3_EEPROM 2 // EEPROM address
@@ -269,6 +282,6 @@
  *    this will send commands to your serial port instead of typing the keys as a USB keyboard
  *    WARNING! Keys will most likely send their Integer value instead of the actual key!
 */
-//#define OutputSerial 1 //enable this to have values printed to serial port instead of keyboard inputs
+#define OutputSerial 0 //set to 1 to enable serial output - default: 0
 #define DebugOutput 0 //only works when OutputSerial is enabled as well
 /* CONFIG END */
