@@ -219,70 +219,71 @@ void loop() {
   if( EnableAux1 == 1 ) { analogWrite(AUX1_Pin, AUX1PWM);}
   if( EnableAux2 == 1 ) { analogWrite(AUX2_Pin, AUX2PWM);}
   if( EnableAux3 == 1 ) { analogWrite(AUX3_Pin, AUX3PWM);}
-//  analogWrite(AUX1_Pin, 255);
-//  analogWrite(AUX2_Pin, 255);
 
 
-#if OutputSerial == 1 && DebugOutput == 1
-  DebugTimerStart = millis();
-#endif
 
-  /* the LED is distracting when it's dark in the room. this turns it off after the first button use */
-  if ( beenUsed == true && LEDon == true ) {
-    digitalWrite(ledPin, LOW);
-    LEDon = false;
-  } else if ( beenUsed == false ) {
-    digitalWrite(ledPin, HIGH);
-  }
-
-#if EnablePitLimiterSwitch == 1
-  //check_button( PitLimiterButton, PitLimiterKey, PitLimiterMod, PitLimiterHold );
-  if (PitLimiterButton.update()) {
-
-
-    if (PitLimiterButton.fallingEdge()) {
-      Pit_limiter_active = true;
-      #if OutputSerial == 1
-        Serial.println("Pit limiter ON");
-      #endif
-      send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
-
-      
-    }else{
-      if( Pit_limiter_active == true ){
-        Pit_limiter_active = false;
+  #if OutputSerial == 1 && DebugOutput == 1
+    DebugTimerStart = millis();
+  #endif
+  
+    /* the LED is distracting when it's dark in the room. this turns it off after the first button use */
+    if ( beenUsed == true && LEDon == true ) {
+      digitalWrite(ledPin, LOW);
+      LEDon = false;
+    } else if ( beenUsed == false ) {
+      digitalWrite(ledPin, HIGH);
+    }
+  
+  
+  /**
+   * pit limiter is permanent ON/OFF switch so this is must be handeled seperately
+   */
+  #if EnablePitLimiterSwitch == 1
+    if (PitLimiterButton.update()) {
+  
+  
+      if (PitLimiterButton.fallingEdge()) {
+        Pit_limiter_active = true;
         #if OutputSerial == 1
-          Serial.println("Pit limiter OFF");
+          Serial.println("Pit limiter ON");
         #endif
         send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
+  
+        
+      }else{
+        if( Pit_limiter_active == true ){
+          Pit_limiter_active = false;
+          #if OutputSerial == 1
+            Serial.println("Pit limiter OFF");
+          #endif
+          send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
+        }
       }
     }
-  }
-#endif
+  #endif
 
   /* button check start */
   check_rotary_encoders();
 
-#if EnableMultiplexer == 1
-  check_multiplexed_buttons();
-#else
-  check_buttons();
-  check_encoder_switches();
-#endif
+  #if EnableMultiplexer == 1
+    check_multiplexed_buttons();
+  #else
+    check_buttons();
+    check_encoder_switches();
+  #endif
   /* button check done */
 
 
-#if OutputSerial == 1 && DebugOutput == 1
-  DebugTimerStop = millis();
-
-  Serial.print("Start: ");
-  Serial.print(DebugTimerStart);
-  Serial.print(" Stop: ");
-  Serial.println(DebugTimerStop);
-#endif
+  #if OutputSerial == 1 && DebugOutput == 1
+    DebugTimerStop = millis();
+  
+    Serial.print("Start: ");
+    Serial.print(DebugTimerStart);
+    Serial.print(" Stop: ");
+    Serial.println(DebugTimerStop);
+  #endif
 
   eeprom_update_pwm();
-  //delay(1000);
 }
 
 
@@ -296,7 +297,8 @@ void eeprom_update_pwm(){
     Serial.print("must_pass:  ");
     Serial.print(must_pass);
     Serial.print(" now:  ");
-    Serial.println(EEPROM_check_last);
+    Serial.print(EEPROM_check_last);
+    Serial.println(" / eeprom_update_pwm()");
   #endif
   
 
@@ -308,7 +310,7 @@ void eeprom_update_pwm(){
   }else if( EEPROM_check_last < must_pass && EEPROM_val_change_last < must_pass ){
     #if OutputSerial == 1
       OutEEPROMSkipSend = false;
-      Serial.println("comparing EEPROM values");
+      Serial.println("comparing EEPROM values / eeprom_update_pwm()");
     #endif
 
     if( EEPROM.read(AUX1_EEPROM) != AUX1PWM ){
@@ -316,7 +318,8 @@ void eeprom_update_pwm(){
         Serial.print("INFO: Update AUX1 EEPROM address ");
         Serial.print(AUX1_EEPROM);
         Serial.print(" with value ");
-        Serial.println(AUX1PWM);
+        Serial.print(AUX1PWM);
+        Serial.println(" / eeprom_update_pwm()");
       #endif
       EEPROM.write(AUX1_EEPROM, AUX1PWM);
     }
@@ -326,7 +329,8 @@ void eeprom_update_pwm(){
         Serial.print("INFO: Update AUX2 EEPROM address ");
         Serial.print(AUX2_EEPROM);
         Serial.print(" with value ");
-        Serial.println(AUX2PWM);
+        Serial.print(AUX2PWM);
+        Serial.println(" / eeprom_update_pwm()");
       #endif
       EEPROM.write(AUX2_EEPROM, AUX2PWM);
     }
@@ -336,7 +340,8 @@ void eeprom_update_pwm(){
         Serial.print("INFO: Update AUX3 EEPROM address ");
         Serial.print(AUX3_EEPROM);
         Serial.print(" with value ");
-        Serial.println(AUX3PWM);
+        Serial.print(AUX3PWM);
+        Serial.println(" / eeprom_update_pwm()");
       #endif
       EEPROM.write(AUX3_EEPROM, AUX3PWM);
     }
@@ -347,7 +352,7 @@ void eeprom_update_pwm(){
     #if OutputSerial == 1
       if(  OutEEPROMSkipSend == false && EEPROM_check_last < must_pass && EEPROM_val_change_last > must_pass) {
         OutEEPROMSkipSend = true;
-        Serial.println("skipping EEPROM checks - value recently changed");
+        Serial.println("skipping EEPROM checks - value recently changed / eeprom_update_pwm()");
       }
     #endif
   }

@@ -61,13 +61,18 @@ void check_multiplexed_buttons(){
           
           if( ButtonExecuted[d][i] == 0 ){
             #if OutputSerial == 1
+              Serial.println();
               Serial.print("Multiplexer: ");
               Serial.print(d);
-              Serial.print(" - Pin: ");
+              Serial.print(" / Pin ");
               Serial.print(i);
-              Serial.print(" - Value: ");
+              Serial.print(" / Value ");
               Serial.print(AnalogValue);
-              Serial.println("  send_key()");
+              Serial.print(" / ButtonMod ");
+              Serial.print(ButtonModifier[d][i]);
+              Serial.print(" / AuxMod ");
+              Serial.print(AUX1_Button_Mod);
+              Serial.println(" / check_multiplexed_buttons()");
             #endif
 
               
@@ -83,7 +88,8 @@ void check_multiplexed_buttons(){
                     Serial.print(" / ButtonMod ");
                     Serial.print(ButtonModifier[d][i]);
                     Serial.print(" / AuxMod ");
-                    Serial.println(AUX1_Button_Mod);
+                    Serial.print(AUX1_Button_Mod);
+                    Serial.println(" / check_multiplexed_buttons()");
                   #endif
                   
                 }
@@ -100,7 +106,8 @@ void check_multiplexed_buttons(){
                     Serial.print(" / ButtonMod ");
                     Serial.print(ButtonModifier[d][i]);
                     Serial.print(" / AuxMod ");
-                    Serial.println(AUX2_Button_Mod);
+                    Serial.print(AUX2_Button_Mod);
+                    Serial.println(" / check_multiplexed_buttons()");
                   #endif
   
                   
@@ -118,7 +125,8 @@ void check_multiplexed_buttons(){
                     Serial.print(" / ButtonMod ");
                     Serial.print(ButtonModifier[d][i]);
                     Serial.print(" / AuxMod ");
-                    Serial.println(AUX3_Button_Mod);
+                    Serial.print(AUX3_Button_Mod);
+                    Serial.println(" / check_multiplexed_buttons()");
                     #endif
                   }
                 #endif
@@ -153,7 +161,8 @@ void check_multiplexed_buttons(){
               Serial.print(" / ButtonMod ");
               Serial.print(ButtonModifier[d][i]);
               Serial.print(" / AuxMod ");
-              Serial.println(AUX1_Button_Mod);
+              Serial.print(AUX1_Button_Mod);
+              Serial.println(" / check_multiplexed_buttons()");
             #endif
           #endif
         }else if( ButtonExecuted[d][i] == 1 && AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
@@ -167,7 +176,8 @@ void check_multiplexed_buttons(){
               Serial.print(" / ButtonMod ");
               Serial.print(ButtonModifier[d][i]);
               Serial.print(" / AuxMod ");
-              Serial.println(AUX2_Button_Mod);
+              Serial.print(AUX2_Button_Mod);
+              Serial.println(" / check_multiplexed_buttons()");
             #endif
           #endif
         }else if( ButtonExecuted[d][i] == 1 && AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
@@ -181,7 +191,8 @@ void check_multiplexed_buttons(){
               Serial.print(" / ButtonMod ");
               Serial.print(ButtonModifier[d][i]);
               Serial.print(" / AuxMod ");
-              Serial.println(AUX3_Button_Mod);
+              Serial.print(AUX3_Button_Mod);
+              Serial.println(" / check_multiplexed_buttons()");
             #endif
            #endif
         }

@@ -28,26 +28,26 @@ void check_rotary_encoders(){
 
       if( newLeft > positionLeft ){
         #if OutputSerial == 1
-          Serial.println("EncLeft:left ");
+          Serial.println("EncLeft:left / check_rotary_encoders()");
         #endif
         send_key(Encoder1KeyA, delayEnc, Encoder1ModA );
         
       }else if( newLeft < positionLeft ){
         #if OutputSerial == 1
-          Serial.println("EncLeft:right ");
+          Serial.println("EncLeft:right / check_rotary_encoders()");
         #endif
         send_key(Encoder1KeyB, delayEnc, Encoder1ModB );
       }
 
       if( newCenter > positionCenter ){
         #if OutputSerial == 1
-          Serial.println("EncCenter:left ");
+          Serial.println("EncCenter:left / check_rotary_encoders()");
         #endif
         send_key(Encoder2KeyA, delayEnc, Encoder2ModA );
         
       }else if( newCenter < positionCenter ){
         #if OutputSerial == 1
-          Serial.println("EncCenter:right ");
+          Serial.println("EncCenter:right / check_rotary_encoders()");
         #endif
         send_key(Encoder2KeyB, delayEnc, Encoder2ModB );
       }
@@ -55,7 +55,7 @@ void check_rotary_encoders(){
 
       if( newRight > positionRight ){
         #if OutputSerial == 1
-          Serial.println("EncRight:left ");
+          Serial.println("EncRight:left / check_rotary_encoders()");
         #endif
         if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
           send_key(Encoder3KeyA, delayEnc, Encoder3ModA );
@@ -75,7 +75,7 @@ void check_rotary_encoders(){
         
       }else if( newRight < positionRight ){
         #if OutputSerial == 1
-          Serial.println("EncRight:right ");
+          Serial.println("EncRight:right / check_rotary_encoders()");
         #endif
         if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
           send_key(Encoder3KeyB, delayEnc, Encoder3ModB );
