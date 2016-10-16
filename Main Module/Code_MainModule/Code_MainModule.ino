@@ -116,12 +116,18 @@ void setup() {
 #endif
 
   /* Aux 1 and 2 */
-  pinMode(AUX1_Pin, OUTPUT);
-  analogWriteFrequency(AUX1_Pin, AUX1_PWM_FREQ);
-  pinMode(AUX2_Pin, OUTPUT);
-  analogWriteFrequency(AUX2_Pin, AUX2_PWM_FREQ);
-  //pinMode(AUX3_Pin, OUTPUT);
-  //analogWriteFrequency(AUX3_Pin, AUX3_PWM_FREQ);
+  #if EnableAux1 == 1
+    pinMode(AUX1_Pin, OUTPUT);
+    analogWriteFrequency(AUX1_Pin, AUX1_PWM_FREQ);
+  #endif
+  #if EnableAux2 == 1
+    pinMode(AUX2_Pin, OUTPUT);
+    analogWriteFrequency(AUX2_Pin, AUX2_PWM_FREQ);
+  #endif  
+  #if EnableAux3 == 1
+    pinMode(AUX3_Pin, OUTPUT);
+    analogWriteFrequency(AUX3_Pin, AUX3_PWM_FREQ);
+  #endif
 
   delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
   pinMode(ledPin, OUTPUT);
@@ -166,51 +172,72 @@ void loop() {
       ( AUX1_ENABLE_FAN_START == 1 || AUX2_ENABLE_FAN_START == 1 || AUX3_ENABLE_FAN_START == 1 ) )
   {
     boolean fan_state_changed = false;
-    
-    if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 ){
-      analogWrite(AUX1_Pin, AUX1_FAN_START_RAMP );
-      AUX1_fan_started = true;
-      fan_state_changed = true;
-      #if OutputSerial == 1
-        Serial.print("Fan ramp up AUX 1 PWM: ");
-        Serial.println(AUX1_FAN_START_RAMP);
-      #endif
-    }
-    
-    if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 ){
-      analogWrite(AUX2_Pin, AUX2_FAN_START_RAMP );
-      AUX2_fan_started = true;
-      fan_state_changed = true;
-      #if OutputSerial == 1
-        Serial.print("Fan ramp up AUX 2 PWM: ");
-        Serial.println(AUX2_FAN_START_RAMP);
-      #endif
-    }
-    
-    if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 ){
-      analogWrite(AUX3_Pin, AUX3_FAN_START_RAMP );
-      AUX3_fan_started = true;
-      fan_state_changed = true;
-      #if OutputSerial == 1
-        Serial.print("Fan ramp up AUX 3 PWM: ");
-        Serial.println(AUX3_FAN_START_RAMP);
-      #endif
-    }
+
+    #if EnableAux1 == 1
+      if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 ){
+        analogWrite(AUX1_Pin, AUX1_FAN_START_RAMP );
+        AUX1_fan_started = true;
+        fan_state_changed = true;
+        #if OutputSerial == 1
+          Serial.print("Fan ramp up AUX 1 PWM: ");
+          Serial.println(AUX1_FAN_START_RAMP);
+        #endif
+      }
+   #endif
+
+    #if EnableAux2 == 1
+      if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 ){
+        analogWrite(AUX2_Pin, AUX2_FAN_START_RAMP );
+        AUX2_fan_started = true;
+        fan_state_changed = true;
+        #if OutputSerial == 1
+          Serial.print("Fan ramp up AUX 2 PWM: ");
+          Serial.println(AUX2_FAN_START_RAMP);
+        #endif
+      }
+    #endif
+
+    #if EnableAux3 == 1
+      if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 ){
+        analogWrite(AUX3_Pin, AUX3_FAN_START_RAMP );
+        AUX3_fan_started = true;
+        fan_state_changed = true;
+        #if OutputSerial == 1
+          Serial.print("Fan ramp up AUX 3 PWM: ");
+          Serial.println(AUX3_FAN_START_RAMP);
+        #endif
+      }
+    #endif
 
     if( fan_state_changed == true )
     {
       delay(AUX_RAMP_TIME); //allow fans to spin up
-      AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
-      AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
-      AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
       #if OutputSerial == 1
-        Serial.print("Fan ramp up done / ");
-        Serial.print("AUX1:");
-        Serial.print(AUX1PWM);
-        Serial.print(" / AUX2: ");
-        Serial.print(AUX2PWM);
-        Serial.print(" / AUX3: ");
-        Serial.println(AUX3PWM);
+        Serial.print("Fan ramp up done");
+      #endif
+      
+      if( EnableAux1 == 1 ) { 
+        AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
+        #if OutputSerial == 1
+          Serial.print(" / AUX1 ");
+          Serial.print(AUX1PWM);
+        #endif
+      }
+      if( EnableAux2 == 1 ) { 
+        AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
+        #if OutputSerial == 1
+          Serial.print(" / AUX2 ");
+          Serial.print(AUX2PWM);
+        #endif
+      }
+      if( EnableAux3 == 1 ) { AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
+        #if OutputSerial == 1
+          Serial.print(" / AUX3 ");
+          Serial.print(AUX3PWM);
+        #endif
+      }
+      #if OutputSerial == 1
+        Serial.println();
       #endif
     }
   }

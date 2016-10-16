@@ -115,7 +115,7 @@ void check_multiplexed_buttons(){
               #endif
                 
                 #if EnableAux3 == 1
-                  if( AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){ ){
+                  if( AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
                     AUX3Pressed = true;
                     #if OutputSerial == 1
                     Serial.print("AUX3 pressed / PWM ");
