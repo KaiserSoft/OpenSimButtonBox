@@ -76,6 +76,13 @@ Bounce PitLimiterButton = Bounce(PitLimiterPin, 10);
 
 
 void setup() {
+  delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
+  pinMode(ledPin, OUTPUT);
+  
+  // Anything with "Serial." is only used for development ATM
+  #if OutputSerial == 1
+    Serial.begin(115200);
+  #endif
 
   /* multi plexer setup */
 #if EnableMultiplexer == 1
@@ -118,23 +125,39 @@ void setup() {
   /* Aux 1 and 2 */
   #if EnableAux1 == 1
     pinMode(AUX1_Pin, OUTPUT);
-    analogWriteFrequency(AUX1_Pin, AUX1_PWM_FREQ);
+    #ifdef AUX1_PWM_FREQ
+      analogWriteFrequency(AUX1_Pin, AUX1_PWM_FREQ);
+      #if OutputSerial == 1
+        Serial.print("AUX1 PWM frequency set to ");
+        Serial.println(AUX1_PWM_FREQ);
+      #endif
+    #endif
   #endif
+
   #if EnableAux2 == 1
     pinMode(AUX2_Pin, OUTPUT);
-    analogWriteFrequency(AUX2_Pin, AUX2_PWM_FREQ);
-  #endif  
-  #if EnableAux3 == 1
-    pinMode(AUX3_Pin, OUTPUT);
-    analogWriteFrequency(AUX3_Pin, AUX3_PWM_FREQ);
+    #ifdef AUX2_PWM_FREQ
+      analogWriteFrequency(AUX2_Pin, AUX2_PWM_FREQ);
+      #if OutputSerial == 1
+        Serial.print("AUX2 PWM frequency set to ");
+        Serial.println(AUX2_PWM_FREQ);
+      #endif
+    #endif
   #endif
 
-  delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
-  pinMode(ledPin, OUTPUT);
+  #if EnableAux3 == 1
+    pinMode(AUX3_Pin, OUTPUT);
+    #ifdef AUX3_PWM_FREQ
+      analogWriteFrequency(AUX3_Pin, AUX3_PWM_FREQ);
+      #if OutputSerial == 1
+        Serial.print("AUX3 PWM frequency set to ");
+        Serial.println(AUX3_PWM_FREQ);
+      #endif
+    #endif
+  #endif
 
-  // Anything with "Serial." is only used for development ATM
+
 #if OutputSerial == 1
-  Serial.begin(115200);
   Serial.println("Modular Open Button Box (MOBB) ready...");
 #endif
 }
