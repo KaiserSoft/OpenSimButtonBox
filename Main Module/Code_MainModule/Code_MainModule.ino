@@ -361,12 +361,12 @@ void eeprom_update_pwm(){
 
 
 void release_key() {
-#if OutputSerial == 1
-  Serial.println("ran release_key()");
-#else
-  Keyboard.set_modifier(0);
-  Keyboard.set_key1(0);
-  Keyboard.send_now();
-#endif
+  #if OutputSerial == 1
+    Serial.println("ran release_key()");
+  #else
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+  #endif
 }
 

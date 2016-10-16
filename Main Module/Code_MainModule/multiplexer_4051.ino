@@ -74,7 +74,7 @@ void check_multiplexed_buttons(){
               //check if AUX control
               #if EnableAux1 == 1
                 if( AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
-                  AUX1Pressed = true;
+                    AUX1Pressed = true;
                   #if OutputSerial == 1
                     Serial.print("AUX1 pressed / PWM ");
                     Serial.print(AUX1PWM);
@@ -91,7 +91,7 @@ void check_multiplexed_buttons(){
               
               #if EnableAux2 == 1
                 if( AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
-                  AUX2Pressed = true;
+                    AUX2Pressed = true;
                   #if OutputSerial == 1
                     Serial.print("AUX2 pressed / PWM ");
                     Serial.print(AUX2PWM);
@@ -109,7 +109,7 @@ void check_multiplexed_buttons(){
                 
                 #if EnableAux3 == 1
                   if( AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){ ){
-                  AUX3Pressed = true;
+                    AUX3Pressed = true;
                     #if OutputSerial == 1
                     Serial.print("AUX3 pressed / PWM ");
                     Serial.print(AUX3PWM);
@@ -123,14 +123,8 @@ void check_multiplexed_buttons(){
                   }
                 #endif
 
-              if(   ( EnableAux1 == 0 ||  EnableAux1 == 1 && AUX1_Button != ButtonKey[d][i] ) &&  
-                     ( EnableAux2 == 0 ||  EnableAux2 == 1 && AUX2_Button != ButtonKey[d][i] ) && 
-                     ( EnableAux3 == 0 ||  EnableAux3 == 1 && AUX3_Button != ButtonKey[d][i] ) 
-                    || 
-                     ( EnableAux1 == 1 && EnableAux2 != 1  && EnableAux3 != 1 ) )
-                  {
-                    send_key(ButtonKey[d][i], delayBtn, ButtonModifier[d][i], ButtonHold[d][i] );
-
+              if( AUX1Pressed == false && AUX2Pressed == false && AUX3Pressed == false   ){
+                send_key(ButtonKey[d][i], delayBtn, ButtonModifier[d][i], ButtonHold[d][i] );
               }
             
             
@@ -140,18 +134,13 @@ void check_multiplexed_buttons(){
 
 
       }else{
-        #if OutputSerial != 1
-          if(   ( EnableAux1 == 0 ||  EnableAux1 == 1 && AUX1_Button != ButtonKey[d][i] ) &&  
-                     ( EnableAux2 == 0 ||  EnableAux2 == 1 && AUX2_Button != ButtonKey[d][i] ) && 
-                     ( EnableAux3 == 0 ||  EnableAux3 == 1 && AUX3_Button != ButtonKey[d][i] ) 
-                    || 
-                     ( EnableAux1 == 1 && EnableAux2 != 1  && EnableAux3 != 1 ) )
-                  {
-                      if( ButtonExecuted[d][i] == 1 && ButtonHold[d][i] == 1 ){
-                        release_key();
-                      }
+       
+          if( AUX1Pressed == false && AUX2Pressed == false && AUX3Pressed == false   ){
+            if( ButtonExecuted[d][i] == 1 && ButtonHold[d][i] == 1 ){
+              release_key();
+            }
           }        
-        #endif
+
         
         if( ButtonExecuted[d][i] == 1 && AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
           #if EnableAux1 == 1
