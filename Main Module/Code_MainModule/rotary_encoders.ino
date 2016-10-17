@@ -60,26 +60,6 @@ void check_rotary_encoders(){
         if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
           send_key(Encoder3KeyA, BUTTON_HOLD, Encoder3ModA );
         }else if( AUX1Pressed == true ) {
-          AUX1PWM_new = AUX1PWM + AUX1_PWM_CHANGE;
-          AUX1PWM = (AUX1PWM_new < AUX1_PWM_MAX ) ? AUX1PWM_new : AUX1_PWM_MAX;
-          EEPROM_val_change_last = millis();
-        }else if( AUX2Pressed == true ) {
-          AUX2PWM_new = AUX2PWM + AUX2_PWM_CHANGE;
-          AUX2PWM = (AUX2PWM_new < 255 ) ? AUX2PWM_new : 255;
-          EEPROM_val_change_last = millis();
-        }else if( AUX3Pressed == true ) {
-          AUX3PWM_new = AUX3PWM + AUX3_PWM_CHANGE;
-          AUX3PWM = (AUX3PWM_new < 255 ) ? AUX3PWM_new : 255;
-          EEPROM_val_change_last = millis();
-        }
-        
-      }else if( newRight < positionRight ){
-        #if OutputSerial == 1
-          Serial.println("EncRight:right / check_rotary_encoders()");
-        #endif
-        if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
-          send_key(Encoder3KeyB, BUTTON_HOLD, Encoder3ModB );
-        }else if( AUX1Pressed == true ) {
           AUX1PWM_new = AUX1PWM - AUX1_PWM_CHANGE;
           AUX1PWM = (AUX1PWM_new > AUX1_PWM_MIN ) ? AUX1PWM_new : 0;
           EEPROM_val_change_last = millis();
@@ -90,6 +70,26 @@ void check_rotary_encoders(){
         }else if( AUX3Pressed == true ) {
           AUX3PWM_new = AUX3PWM - AUX3_PWM_CHANGE;
           AUX3PWM = (AUX3PWM_new > AUX3_PWM_MIN ) ? AUX3PWM_new : 0;
+          EEPROM_val_change_last = millis();
+        }
+        
+      }else if( newRight < positionRight ){
+        #if OutputSerial == 1
+          Serial.println("EncRight:right / check_rotary_encoders()");
+        #endif
+        if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
+          send_key(Encoder3KeyB, BUTTON_HOLD, Encoder3ModB );
+        }else if( AUX1Pressed == true ) {
+          AUX1PWM_new = AUX1PWM + AUX1_PWM_CHANGE;
+          AUX1PWM = (AUX1PWM_new < AUX1_PWM_MAX ) ? AUX1PWM_new : AUX1_PWM_MAX;
+          EEPROM_val_change_last = millis();
+        }else if( AUX2Pressed == true ) {
+          AUX2PWM_new = AUX2PWM + AUX2_PWM_CHANGE;
+          AUX2PWM = (AUX2PWM_new < 255 ) ? AUX2PWM_new : 255;
+          EEPROM_val_change_last = millis();
+        }else if( AUX3Pressed == true ) {
+          AUX3PWM_new = AUX3PWM + AUX3_PWM_CHANGE;
+          AUX3PWM = (AUX3PWM_new < 255 ) ? AUX3PWM_new : 255;
           EEPROM_val_change_last = millis();
         }
       }
