@@ -183,6 +183,110 @@ void setup() {
     Serial.println("Modular Open Button Box (MOBB) ready...");
   #endif
 
+  /* get any fans started */
+  if( ( AUX1_fan_started == false || AUX1_fan_started == false || AUX1_fan_started == false ) &&
+      ( AUX1_ENABLE_FAN_START == 1 || AUX2_ENABLE_FAN_START == 1 || AUX3_ENABLE_FAN_START == 1 ) )
+  {
+    boolean fan_state_changed = false;
+
+    #if EnableAux1 == 1
+      if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 && AUX1_FAN_START_RAMP > AUX1PWM ){
+        analogWrite(AUX1_Pin, AUX1_FAN_START_RAMP );
+        AUX1_fan_started = true;
+        fan_state_changed = true;
+        #if OutputSerial == 1
+          Serial.print("Fan ramp up AUX 1 PWM: ");
+          Serial.println(AUX1_FAN_START_RAMP);
+        #endif
+      }
+   #endif
+
+    #if EnableAux2 == 1
+      if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 && AUX2_FAN_START_RAMP > AUX2PWM ){
+        analogWrite(AUX2_Pin, AUX2_FAN_START_RAMP );
+        AUX2_fan_started = true;
+        fan_state_changed = true;
+        #if OutputSerial == 1
+          Serial.print("Fan ramp up AUX 2 PWM: ");
+          Serial.println(AUX2_FAN_START_RAMP);
+        #endif
+      }
+    #endif
+
+    #if EnableAux3 == 1
+      if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 && AUX3_FAN_START_RAMP > AUX3PWM ){
+        analogWrite(AUX3_Pin, AUX3_FAN_START_RAMP );
+        AUX3_fan_started = true;
+        fan_state_changed = true;
+        #if OutputSerial == 1
+          Serial.print("Fan ramp up AUX 3 PWM: ");
+          Serial.println(AUX3_FAN_START_RAMP);
+        #endif
+      }
+    #endif
+
+    if( fan_state_changed == true )
+    {
+      delay(AUX_RAMP_TIME); //allow fans to spin up
+      #if OutputSerial == 1
+        Serial.println("Fan ramp up done");
+      #endif
+      
+      if( EnableAux1_Button == 1 ) { 
+        AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
+      }else if ( EnableAux1 == 1 ){
+        AUX1PWM = AUX1_PWM_FIXED;       
+      }
+      
+      if( EnableAux2_Button == 1 ) { 
+        AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
+      }else if ( EnableAux2 == 1 ){
+        AUX2PWM = AUX2_PWM_FIXED;
+      }
+      
+      if( EnableAux3_Button == 1 ) {
+        AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
+      }else if ( EnableAux3 == 1 ){
+        AUX3PWM = AUX3_PWM_FIXED;
+      }
+    }
+  }
+
+  #if OutputSerial == 1
+    Serial.print("AUX ports ready ");
+    
+    if( EnableAux1 == 0 ){
+      Serial.print(" / AUX1 disabled");
+    }else if( EnableAux1 == 1 && EnableAux1_Button == 1 ){
+      Serial.print(" / AUX1 ");
+      Serial.print(AUX1PWM);
+    }else if( EnableAux1 == 1 && EnableAux1_Button == 0 ){
+      Serial.print(" / AUX1 FIX ");
+      Serial.print(AUX1PWM);
+    }
+    
+    if( EnableAux2 == 0 ){
+      Serial.print(" / AUX2 disabled");
+    }else if( EnableAux2 == 1 && EnableAux2_Button == 1 ){
+      Serial.print(" / AUX2 ");
+      Serial.print(AUX2PWM);
+    }else if( EnableAux2 == 1 && EnableAux2_Button == 0 ){
+      Serial.print(" / AUX2 FIX ");
+      Serial.print(AUX2PWM);
+    }
+
+    if( EnableAux3 == 0 ){
+      Serial.print(" / AUX3 disabled");
+    }else if( EnableAux3 == 1 && EnableAux3_Button == 1 ){
+      Serial.print(" / AUX3 ");
+      Serial.print(AUX3PWM);
+    }else if( EnableAux3 == 1 && EnableAux3_Button == 0 ){
+      Serial.print(" / AUX3 FIX ");
+      Serial.print(AUX3PWM);
+    }
+    Serial.println();
+  #endif  
+
 } //void setup()
 
 
@@ -213,97 +317,13 @@ void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
 
 
   beenUsed = true;
+
 } //void send_key()
 
 
 
 
 void loop() {
-
-  /* get any fans started */
-  if( ( AUX1_fan_started == false || AUX1_fan_started == false || AUX1_fan_started == false ) &&
-      ( AUX1_ENABLE_FAN_START == 1 || AUX2_ENABLE_FAN_START == 1 || AUX3_ENABLE_FAN_START == 1 ) )
-  {
-    boolean fan_state_changed = false;
-
-    #if EnableAux1 == 1
-      if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 ){
-        analogWrite(AUX1_Pin, AUX1_FAN_START_RAMP );
-        AUX1_fan_started = true;
-        fan_state_changed = true;
-        #if OutputSerial == 1
-          Serial.print("Fan ramp up AUX 1 PWM: ");
-          Serial.println(AUX1_FAN_START_RAMP);
-        #endif
-      }
-   #endif
-
-    #if EnableAux2 == 1
-      if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 ){
-        analogWrite(AUX2_Pin, AUX2_FAN_START_RAMP );
-        AUX2_fan_started = true;
-        fan_state_changed = true;
-        #if OutputSerial == 1
-          Serial.print("Fan ramp up AUX 2 PWM: ");
-          Serial.println(AUX2_FAN_START_RAMP);
-        #endif
-      }
-    #endif
-
-    #if EnableAux3 == 1
-      if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 ){
-        analogWrite(AUX3_Pin, AUX3_FAN_START_RAMP );
-        AUX3_fan_started = true;
-        fan_state_changed = true;
-        #if OutputSerial == 1
-          Serial.print("Fan ramp up AUX 3 PWM: ");
-          Serial.println(AUX3_FAN_START_RAMP);
-        #endif
-      }
-    #endif
-
-    if( fan_state_changed == true )
-    {
-      delay(AUX_RAMP_TIME); //allow fans to spin up
-      #if OutputSerial == 1
-        Serial.print("Fan ramp up done");
-      #endif
-      
-      if( EnableAux1_Button == 1 ) { 
-        AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
-        #if OutputSerial == 1
-          Serial.print(" / AUX1 ");
-          Serial.print(AUX1PWM);
-        #endif
-      }else if ( EnableAux1 == 1 ){
-        AUX1PWM = AUX1_PWM_FIXED;
-      }
-      
-      if( EnableAux2_Button == 1 ) { 
-        AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
-        #if OutputSerial == 1
-          Serial.print(" / AUX2 ");
-          Serial.print(AUX2PWM);
-        #endif
-      }else if ( EnableAux2 == 1 ){
-        AUX2PWM = AUX2_PWM_FIXED;
-      }
-      
-      if( EnableAux3_Button == 1 ) { 
-        AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
-        #if OutputSerial == 1
-          Serial.print(" / AUX3 ");
-          Serial.print(AUX3PWM);
-        #endif
-      }else if ( EnableAux3 == 1 ){
-        AUX3PWM = AUX3_PWM_FIXED;
-      }
-      #if OutputSerial == 1
-        Serial.println();
-      #endif
-    }
-  }
-
   
   if( EnableAux1 == 1 ) { analogWrite(AUX1_Pin, AUX1PWM);}
   if( EnableAux2 == 1 ) { analogWrite(AUX2_Pin, AUX2PWM);}
@@ -315,13 +335,13 @@ void loop() {
     DebugTimerStart = millis();
   #endif
   
-    /* the LED is distracting when it's dark in the room. this turns it off after the first button use */
-    if ( beenUsed == true && LEDon == true ) {
-      digitalWrite(ledPin, LOW);
-      LEDon = false;
-    } else if ( beenUsed == false ) {
-      digitalWrite(ledPin, HIGH);
-    }
+  /* the LED is distracting when it's dark in the room. this turns it off after the first button use */
+  if ( beenUsed == true && LEDon == true ) {
+    digitalWrite(ledPin, LOW);
+    LEDon = false;
+  } else if ( beenUsed == false ) {
+    digitalWrite(ledPin, HIGH);
+  }
   
   
   /**
@@ -402,7 +422,7 @@ void eeprom_update_pwm(){
       Serial.println("comparing EEPROM values / eeprom_update_pwm()");
     #endif
 
-    if( EEPROM.read(AUX1_EEPROM) != AUX1PWM ){
+    if( EnableAux1_Button == 1 && EEPROM.read(AUX1_EEPROM) != AUX1PWM ){
       #if OutputSerial == 1
         Serial.print("INFO: Update AUX1 EEPROM address ");
         Serial.print(AUX1_EEPROM);
@@ -413,7 +433,7 @@ void eeprom_update_pwm(){
       EEPROM.write(AUX1_EEPROM, AUX1PWM);
     }
 
-    if( EEPROM.read(AUX2_EEPROM) != AUX2PWM ){
+    if( EnableAux2_Button == 1 && EEPROM.read(AUX2_EEPROM) != AUX2PWM ){
       #if OutputSerial == 1
         Serial.print("INFO: Update AUX2 EEPROM address ");
         Serial.print(AUX2_EEPROM);
@@ -424,7 +444,7 @@ void eeprom_update_pwm(){
       EEPROM.write(AUX2_EEPROM, AUX2PWM);
     }
 
-    if( EEPROM.read(AUX3_EEPROM) != AUX3PWM ){
+    if( EnableAux3_Button == 1 && EEPROM.read(AUX3_EEPROM) != AUX3PWM ){
       #if OutputSerial == 1
         Serial.print("INFO: Update AUX3 EEPROM address ");
         Serial.print(AUX3_EEPROM);

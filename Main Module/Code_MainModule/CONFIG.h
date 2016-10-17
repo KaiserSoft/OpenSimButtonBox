@@ -35,7 +35,7 @@
 #define AUX_RAMP_TIME 3000 //ramp up timer for all AUX port on boot up
 
 #define EnableAux1 1 // Enable / Disable AUX port. Set this to 1 to use the feature
-#define EnableAux1_Button 1//hold down a button to control the PMW output
+#define EnableAux1_Button 1 //hold down a button to control the PMW output
 #define AUX1_Pin 4 // 5Volt -  fan or UV LED pin
 #define AUX1_Button KEY_D // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX1_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
@@ -53,7 +53,7 @@
 
 
 #define EnableAux2 1 // Enable / Disable AUX port. Set this to 1 to use the feature
-#define EnableAux2_Button 1//hold down a button to control the PMW output
+#define EnableAux2_Button 1 //hold down a button to control the PMW output
 #define AUX2_Pin 3 // 5Volt - fan or UV LED pin
 #define AUX2_Button KEY_H // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX2_Button_Mod MODIFIERKEY_SHIFT //set to 'MODIFIERKEY_SHIFT' to a capital letter
@@ -71,7 +71,7 @@
 
 
 #define EnableAux3 0 // Enable / Disable AUX port. Set this to 1 to use the feature
-#define EnableAux3_Button 0//hold down a button to control the PMW output
+#define EnableAux3_Button 0 //hold down a button to control the PMW output
 #define AUX3_Pin 5 // 5Volt - fan or UV LED pin
 #define AUX3_Button KEY_O // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX3_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
@@ -132,12 +132,12 @@
 #define Encoder2ModC      0          // encoder push button - not used when EnableMultiplexer is 1
 #define Encoder2HoldC     0          // encoder push button - not used when EnableMultiplexer is 1
 
-#define Encoder3PinA      8          // the pin the encoder is connected to
+#define Encoder3PinA      7          // the pin the encoder is connected to
 #define Encoder3ModA      0          // modifier key to send
-#define Encoder3KeyA      KEY_RIGHT  // key to send
-#define Encoder3PinB      7          // the pin the encoder is connected to
+#define Encoder3KeyA      KEY_LEFT  // key to send
+#define Encoder3PinB      8          // the pin the encoder is connected to
 #define Encoder3ModB      0          // modifier key to send
-#define Encoder3KeyB      KEY_LEFT   // key to send
+#define Encoder3KeyB      KEY_RIGHT   // key to send
 #define Encoder3PinC      0          // encoder push button - not used when EnableMultiplexer is 1
 #define Encoder3KeyC      0          // encoder push button - not used when EnableMultiplexer is 1
 #define Encoder3ModC      0          // encoder push button - not used when EnableMultiplexer is 1
