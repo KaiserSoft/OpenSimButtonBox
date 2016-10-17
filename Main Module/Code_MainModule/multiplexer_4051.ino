@@ -56,7 +56,7 @@ void check_multiplexed_buttons(){
           //press has been registed, store time
           ButtonState[d][i] = millis();
           
-        }else if( ButtonState[d][i] + delayBtn < ftime ){
+        }else if( ButtonState[d][i] + BUTTON_HOLD < ftime ){
           //button is still pressed
           
           if( ButtonExecuted[d][i] == 0 ){
@@ -76,64 +76,64 @@ void check_multiplexed_buttons(){
             #endif
 
               
-              //check if AUX control
-              #if EnableAux1 == 1
-                if( AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
-                    AUX1Pressed = true;
-                  #if OutputSerial == 1
-                    Serial.print("AUX1 pressed / PWM ");
-                    Serial.print(AUX1PWM);
-                    Serial.print(" / AnalogValue ");
-                    Serial.print(AnalogValue);
-                    Serial.print(" / ButtonMod ");
-                    Serial.print(ButtonModifier[d][i]);
-                    Serial.print(" / AuxMod ");
-                    Serial.print(AUX1_Button_Mod);
-                    Serial.println(" / check_multiplexed_buttons()");
-                  #endif
-                  
-                }
-              #endif
-              
-              #if EnableAux2 == 1
-                if( AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
-                    AUX2Pressed = true;
-                  #if OutputSerial == 1
-                    Serial.print("AUX2 pressed / PWM ");
-                    Serial.print(AUX2PWM);
-                    Serial.print(" / AnalogValue ");
-                    Serial.print(AnalogValue);
-                    Serial.print(" / ButtonMod ");
-                    Serial.print(ButtonModifier[d][i]);
-                    Serial.print(" / AuxMod ");
-                    Serial.print(AUX2_Button_Mod);
-                    Serial.println(" / check_multiplexed_buttons()");
-                  #endif
-  
-                  
-                }
-              #endif
+            //check if AUX control is enabled
+            #if EnableAux1 == 1 && EnableAux1_Button == 1
+              if( AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
+                  AUX1Pressed = true;
+                #if OutputSerial == 1
+                  Serial.print("AUX1 pressed / PWM ");
+                  Serial.print(AUX1PWM);
+                  Serial.print(" / AnalogValue ");
+                  Serial.print(AnalogValue);
+                  Serial.print(" / ButtonMod ");
+                  Serial.print(ButtonModifier[d][i]);
+                  Serial.print(" / AuxMod ");
+                  Serial.print(AUX1_Button_Mod);
+                  Serial.println(" / check_multiplexed_buttons()");
+                #endif
                 
-                #if EnableAux3 == 1
-                  if( AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
-                    AUX3Pressed = true;
-                    #if OutputSerial == 1
-                    Serial.print("AUX3 pressed / PWM ");
-                    Serial.print(AUX3PWM);
-                    Serial.print(" / AnalogValue ");
-                    Serial.print(AnalogValue);
-                    Serial.print(" / ButtonMod ");
-                    Serial.print(ButtonModifier[d][i]);
-                    Serial.print(" / AuxMod ");
-                    Serial.print(AUX3_Button_Mod);
-                    Serial.println(" / check_multiplexed_buttons()");
-                    #endif
-                  }
+              }
+            #endif
+            
+            #if EnableAux2 && EnableAux2_Button == 1
+              if( AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
+                  AUX2Pressed = true;
+                #if OutputSerial == 1
+                  Serial.print("AUX2 pressed / PWM ");
+                  Serial.print(AUX2PWM);
+                  Serial.print(" / AnalogValue ");
+                  Serial.print(AnalogValue);
+                  Serial.print(" / ButtonMod ");
+                  Serial.print(ButtonModifier[d][i]);
+                  Serial.print(" / AuxMod ");
+                  Serial.print(AUX2_Button_Mod);
+                  Serial.println(" / check_multiplexed_buttons()");
                 #endif
 
-              if( AUX1Pressed == false && AUX2Pressed == false && AUX3Pressed == false   ){
-                send_key(ButtonKey[d][i], delayBtn, ButtonModifier[d][i], ButtonHold[d][i] );
+                
               }
+            #endif
+              
+            #if EnableAux3 == 1 && EnableAux3_Button == 1
+              if( AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
+                AUX3Pressed = true;
+                #if OutputSerial == 1
+                Serial.print("AUX3 pressed / PWM ");
+                Serial.print(AUX3PWM);
+                Serial.print(" / AnalogValue ");
+                Serial.print(AnalogValue);
+                Serial.print(" / ButtonMod ");
+                Serial.print(ButtonModifier[d][i]);
+                Serial.print(" / AuxMod ");
+                Serial.print(AUX3_Button_Mod);
+                Serial.println(" / check_multiplexed_buttons()");
+                #endif
+              }
+            #endif
+
+            if( AUX1Pressed == false && AUX2Pressed == false && AUX3Pressed == false   ){
+              send_key(ButtonKey[d][i], BUTTON_HOLD, ButtonModifier[d][i], ButtonHold[d][i] );
+            }
             
             
             ButtonExecuted[d][i] = 1;
@@ -149,9 +149,9 @@ void check_multiplexed_buttons(){
             }
           }        
 
-        
-        if( ButtonExecuted[d][i] == 1 && AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
-          #if EnableAux1 == 1
+
+        #if EnableAux1 == 1 && EnableAux1_Button == 1
+          if( ButtonExecuted[d][i] == 1 && AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
             AUX1Pressed = false;
             #if OutputSerial == 1
               Serial.print("AUX1 released / PWM ");
@@ -164,9 +164,11 @@ void check_multiplexed_buttons(){
               Serial.print(AUX1_Button_Mod);
               Serial.println(" / check_multiplexed_buttons()");
             #endif
-          #endif
-        }else if( ButtonExecuted[d][i] == 1 && AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
-          #if EnableAux2 == 1
+          }
+        #endif
+
+        #if EnableAux2 == 1 && EnableAux2_Button == 1
+          if( ButtonExecuted[d][i] == 1 && AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
             AUX2Pressed = false;
             #if OutputSerial == 1
               Serial.print("AUX2 released / PWM ");
@@ -179,23 +181,26 @@ void check_multiplexed_buttons(){
               Serial.print(AUX2_Button_Mod);
               Serial.println(" / check_multiplexed_buttons()");
             #endif
-          #endif
-        }else if( ButtonExecuted[d][i] == 1 && AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
-          #if EnableAux3 == 1
-            AUX3Pressed = false;
-            #if OutputSerial == 1
-              Serial.print("AUX3 released / PWM ");
-              Serial.print(AUX3PWM);
-              Serial.print(" / AnalogValue ");
-              Serial.print(AnalogValue);
-              Serial.print(" / ButtonMod ");
-              Serial.print(ButtonModifier[d][i]);
-              Serial.print(" / AuxMod ");
-              Serial.print(AUX3_Button_Mod);
-              Serial.println(" / check_multiplexed_buttons()");
-            #endif
-           #endif
-        }
+          }
+        #endif
+
+        #if EnableAux3 == 1 && EnableAux3_Button == 1  
+          if( ButtonExecuted[d][i] == 1 && AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
+              AUX3Pressed = false;
+              #if OutputSerial == 1
+                Serial.print("AUX3 released / PWM ");
+                Serial.print(AUX3PWM);
+                Serial.print(" / AnalogValue ");
+                Serial.print(AnalogValue);
+                Serial.print(" / ButtonMod ");
+                Serial.print(ButtonModifier[d][i]);
+                Serial.print(" / AuxMod ");
+                Serial.print(AUX3_Button_Mod);
+                Serial.println(" / check_multiplexed_buttons()");
+              #endif
+          }
+        #endif
+
         ButtonState[d][i] = 0;
         ButtonExecuted[d][i] = 0;
       }

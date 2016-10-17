@@ -39,7 +39,7 @@ void check_buttons(){
 void check_button( Bounce &btn, int key, int mod, int btnhold ){
   if (btn.update()) {
     if (btn.fallingEdge()) {
-        send_key(key, delayBtn, mod, btnhold );
+        send_key(key, BUTTON_HOLD, mod, btnhold );
     }
     if (btnhold == 1 && btn.risingEdge()) {
         release_key();

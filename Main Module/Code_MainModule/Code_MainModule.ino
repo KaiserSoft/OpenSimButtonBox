@@ -13,9 +13,21 @@ long positionRight = 0;
 boolean AUX1Pressed = false;
 boolean AUX2Pressed = false;
 boolean AUX3Pressed = false;
-byte AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
-byte AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
-byte AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
+#if EnableAux1_Button == 1
+  byte AUX1PWM = EEPROM.read(AUX1_EEPROM); //read PWM value from EEPROM
+#else
+  byte AUX1PWM = AUX1_PWM_FIXED; //use fixed PWM value
+#endif
+#if EnableAux2_Button == 1
+  byte AUX2PWM = EEPROM.read(AUX2_EEPROM); //read PWM value from EEPROM
+#else
+  byte AUX2PWM = AUX2_PWM_FIXED; //use fixed PWM value
+#endif
+#if EnableAux3_Button == 1
+  byte AUX3PWM = EEPROM.read(AUX3_EEPROM); //read PWM value from EEPROM
+#else
+  byte AUX3PWM = AUX3_PWM_FIXED; //use fixed PWM value
+#endif
 boolean AUX1_fan_started = false;
 boolean AUX2_fan_started = false;
 boolean AUX3_fan_started = false;
@@ -85,47 +97,49 @@ void setup() {
   #endif
 
   /* multi plexer setup */
-#if EnableMultiplexer == 1
-  pinMode(MultiplexerP9, OUTPUT);
-  pinMode(MultiplexerP10, OUTPUT);
-  pinMode(MultiplexerP11, OUTPUT);
-  analogReadResolution(AnalogResolution);
-#endif
+  #if EnableMultiplexer == 1
+    pinMode(MultiplexerP9, OUTPUT);
+    pinMode(MultiplexerP10, OUTPUT);
+    pinMode(MultiplexerP11, OUTPUT);
+    analogReadResolution(AnalogResolution);
+  #endif
 
 
-#if EnableMultiplexer == 0
-  /* top row push buttons */
-  pinMode(Button_1_Pin, INPUT_PULLUP);
-  pinMode(Button_2_Pin, INPUT_PULLUP);
-  pinMode(Button_3_Pin, INPUT_PULLUP);
-  pinMode(Button_4_Pin, INPUT_PULLUP);
+  #if EnableMultiplexer == 0
+    /* top row push buttons */
+    pinMode(Button_1_Pin, INPUT_PULLUP);
+    pinMode(Button_2_Pin, INPUT_PULLUP);
+    pinMode(Button_3_Pin, INPUT_PULLUP);
+    pinMode(Button_4_Pin, INPUT_PULLUP);
+  
+    /* encoder push buttons */
+    pinMode(Button_5_Pin, INPUT_PULLUP);
+    pinMode(Button_6_Pin, INPUT_PULLUP);
+    pinMode(Button_7_Pin, INPUT_PULLUP);
+  
+    /* toggle switches */
+    pinMode(Button_7_Pin, INPUT_PULLUP);
+    pinMode(Button_8_Pin, INPUT_PULLUP);
+    pinMode(Button_9_Pin, INPUT_PULLUP);
+    pinMode(Button_10_Pin, INPUT_PULLUP);
+    pinMode(Button_11_Pin, INPUT_PULLUP);
+    pinMode(Button_12_Pin, INPUT_PULLUP);
+    pinMode(Button_13_Pin, INPUT_PULLUP);
+    pinMode(Button_14_Pin, INPUT_PULLUP);
+    pinMode(Button_15_Pin, INPUT_PULLUP);
+    pinMode(Button_16_Pin, INPUT_PULLUP);
+  #endif
+  
+  #if EnablePitLimiterSwitch == 1
+    pinMode(PitLimiterPin, INPUT_PULLUP);
+  #endif
 
-  /* encoder push buttons */
-  pinMode(Button_5_Pin, INPUT_PULLUP);
-  pinMode(Button_6_Pin, INPUT_PULLUP);
-  pinMode(Button_7_Pin, INPUT_PULLUP);
 
-  /* toggle switches */
-  pinMode(Button_7_Pin, INPUT_PULLUP);
-  pinMode(Button_8_Pin, INPUT_PULLUP);
-  pinMode(Button_9_Pin, INPUT_PULLUP);
-  pinMode(Button_10_Pin, INPUT_PULLUP);
-  pinMode(Button_11_Pin, INPUT_PULLUP);
-  pinMode(Button_12_Pin, INPUT_PULLUP);
-  pinMode(Button_13_Pin, INPUT_PULLUP);
-  pinMode(Button_14_Pin, INPUT_PULLUP);
-  pinMode(Button_15_Pin, INPUT_PULLUP);
-  pinMode(Button_16_Pin, INPUT_PULLUP);
-#endif
-
-#if EnablePitLimiterSwitch == 1
-  pinMode(PitLimiterPin, INPUT_PULLUP);
-#endif
-
-  /* Aux 1 and 2 */
+  /* Setup AUX ports */
+  pinMode(AUX1_Pin, OUTPUT);
+  analogWrite(AUX1_Pin, 0 ); //start board with power turned off
   #if EnableAux1 == 1
-    pinMode(AUX1_Pin, OUTPUT);
-    #ifdef AUX1_PWM_FREQ
+    #if AUX1_PWM_FREQ > 0
       analogWriteFrequency(AUX1_Pin, AUX1_PWM_FREQ);
       #if OutputSerial == 1
         Serial.print("AUX1 PWM frequency set to ");
@@ -134,9 +148,11 @@ void setup() {
     #endif
   #endif
 
+  
+  pinMode(AUX2_Pin, OUTPUT);
+  analogWrite(AUX2_Pin, 0 ); //start board with power turned off
   #if EnableAux2 == 1
-    pinMode(AUX2_Pin, OUTPUT);
-    #ifdef AUX2_PWM_FREQ
+    #if AUX2_PWM_FREQ > 0
       analogWriteFrequency(AUX2_Pin, AUX2_PWM_FREQ);
       #if OutputSerial == 1
         Serial.print("AUX2 PWM frequency set to ");
@@ -145,9 +161,11 @@ void setup() {
     #endif
   #endif
 
+  
+  pinMode(AUX3_Pin, OUTPUT);
+  analogWrite(AUX3_Pin, 0 ); //start board with power turned off
   #if EnableAux3 == 1
-    pinMode(AUX3_Pin, OUTPUT);
-    #ifdef AUX3_PWM_FREQ
+    #if AUX3_PWM_FREQ > 0
       analogWriteFrequency(AUX3_Pin, AUX3_PWM_FREQ);
       #if OutputSerial == 1
         Serial.print("AUX3 PWM frequency set to ");
@@ -155,37 +173,49 @@ void setup() {
       #endif
     #endif
   #endif
+  /* AUX ports done */
 
 
-#if OutputSerial == 1
-  Serial.println("Modular Open Button Box (MOBB) ready...");
-#endif
-}
+
+
+
+  #if OutputSerial == 1
+    Serial.println("Modular Open Button Box (MOBB) ready...");
+  #endif
+
+} //void setup()
+
+
+
+
+
+
 
 
 void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
-#if OutputSerial == 1
-  Serial.print("send_key() / ");
-  Serial.print("Mod:");
-  Serial.print(mod);
-  Serial.print(" / key:");
-  Serial.print(key);
-  Serial.println();
-#else
-  Keyboard.set_modifier(mod);
-  Keyboard.set_key1(key);
-  Keyboard.send_now();
-#endif
+  #if OutputSerial == 1
+    Serial.print("send_key() / ");
+    Serial.print("Mod:");
+    Serial.print(mod);
+    Serial.print(" / key:");
+    Serial.print(key);
+    Serial.println();
+  #else
+    Keyboard.set_modifier(mod);
+    Keyboard.set_key1(key);
+    Keyboard.send_now();
 
-#if OutputSerial != 1
-  if ( btnhold == 0 ) {
-    delay(del); //iRacing will not detect the key without a delay
-    release_key();
-  }
-#endif
+    if ( btnhold == 0 ) {
+      delay(del); //iRacing will not detect the key without a short delay
+      release_key();
+    }
+  #endif
+
 
   beenUsed = true;
-}
+} //void send_key()
+
+
 
 
 void loop() {
@@ -239,25 +269,34 @@ void loop() {
         Serial.print("Fan ramp up done");
       #endif
       
-      if( EnableAux1 == 1 ) { 
+      if( EnableAux1_Button == 1 ) { 
         AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
         #if OutputSerial == 1
           Serial.print(" / AUX1 ");
           Serial.print(AUX1PWM);
         #endif
+      }else if ( EnableAux1 == 1 ){
+        AUX1PWM = AUX1_PWM_FIXED;
       }
-      if( EnableAux2 == 1 ) { 
+      
+      if( EnableAux2_Button == 1 ) { 
         AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
         #if OutputSerial == 1
           Serial.print(" / AUX2 ");
           Serial.print(AUX2PWM);
         #endif
+      }else if ( EnableAux2 == 1 ){
+        AUX2PWM = AUX2_PWM_FIXED;
       }
-      if( EnableAux3 == 1 ) { AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
+      
+      if( EnableAux3_Button == 1 ) { 
+        AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
         #if OutputSerial == 1
           Serial.print(" / AUX3 ");
           Serial.print(AUX3PWM);
         #endif
+      }else if ( EnableAux3 == 1 ){
+        AUX3PWM = AUX3_PWM_FIXED;
       }
       #if OutputSerial == 1
         Serial.println();
@@ -297,7 +336,7 @@ void loop() {
         #if OutputSerial == 1
           Serial.println("Pit limiter ON");
         #endif
-        send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
+        send_key(PitLimiterKey, BUTTON_HOLD, PitLimiterMod, PitLimiterHold );
   
         
       }else{
@@ -306,7 +345,7 @@ void loop() {
           #if OutputSerial == 1
             Serial.println("Pit limiter OFF");
           #endif
-          send_key(PitLimiterKey, delayBtn, PitLimiterMod, PitLimiterHold );
+          send_key(PitLimiterKey, BUTTON_HOLD, PitLimiterMod, PitLimiterHold );
         }
       }
     }

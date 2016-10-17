@@ -30,26 +30,26 @@ void check_rotary_encoders(){
         #if OutputSerial == 1
           Serial.println("EncLeft:left / check_rotary_encoders()");
         #endif
-        send_key(Encoder1KeyA, delayEnc, Encoder1ModA );
+        send_key(Encoder1KeyA, BUTTON_HOLD, Encoder1ModA );
         
       }else if( newLeft < positionLeft ){
         #if OutputSerial == 1
           Serial.println("EncLeft:right / check_rotary_encoders()");
         #endif
-        send_key(Encoder1KeyB, delayEnc, Encoder1ModB );
+        send_key(Encoder1KeyB, BUTTON_HOLD, Encoder1ModB );
       }
 
       if( newCenter > positionCenter ){
         #if OutputSerial == 1
           Serial.println("EncCenter:left / check_rotary_encoders()");
         #endif
-        send_key(Encoder2KeyA, delayEnc, Encoder2ModA );
+        send_key(Encoder2KeyA, BUTTON_HOLD, Encoder2ModA );
         
       }else if( newCenter < positionCenter ){
         #if OutputSerial == 1
           Serial.println("EncCenter:right / check_rotary_encoders()");
         #endif
-        send_key(Encoder2KeyB, delayEnc, Encoder2ModB );
+        send_key(Encoder2KeyB, BUTTON_HOLD, Encoder2ModB );
       }
 
 
@@ -58,7 +58,7 @@ void check_rotary_encoders(){
           Serial.println("EncRight:left / check_rotary_encoders()");
         #endif
         if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
-          send_key(Encoder3KeyA, delayEnc, Encoder3ModA );
+          send_key(Encoder3KeyA, BUTTON_HOLD, Encoder3ModA );
         }else if( AUX1Pressed == true ) {
           AUX1PWM_new = AUX1PWM + AUX1_PWM_CHANGE;
           AUX1PWM = (AUX1PWM_new < AUX1_PWM_MAX ) ? AUX1PWM_new : AUX1_PWM_MAX;
@@ -78,7 +78,7 @@ void check_rotary_encoders(){
           Serial.println("EncRight:right / check_rotary_encoders()");
         #endif
         if( AUX1Pressed != true && AUX2Pressed != true  && AUX3Pressed != true ) {
-          send_key(Encoder3KeyB, delayEnc, Encoder3ModB );
+          send_key(Encoder3KeyB, BUTTON_HOLD, Encoder3ModB );
         }else if( AUX1Pressed == true ) {
           AUX1PWM_new = AUX1PWM - AUX1_PWM_CHANGE;
           AUX1PWM = (AUX1PWM_new > AUX1_PWM_MIN ) ? AUX1PWM_new : 0;
