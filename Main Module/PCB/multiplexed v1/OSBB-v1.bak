@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:OSBB-v1-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -965,17 +966,6 @@ Wire Wire Line
 	3200 5550 3300 5550
 Wire Wire Line
 	3300 5550 3300 5500
-$Comp
-L Teensy3.2 U5
-U 1 1 5810D118
-P 5250 5050
-F 0 "U5" H 4800 5800 60  0000 C CNN
-F 1 "Teensy3.2" H 4950 5900 60  0000 C CNN
-F 2 "Housings_DIP:DIP-28_W15.24mm_LongPads" H 5250 5650 60  0001 C CNN
-F 3 "" H 5250 5650 60  0001 C CNN
-	1    5250 5050
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4450 4450 4550 4450
 Wire Wire Line
@@ -1004,22 +994,21 @@ Wire Wire Line
 	5950 4650 7100 4650
 Connection ~ 6900 4650
 Connection ~ 7000 4650
-$Comp
-L +5V #PWR017
-U 1 1 581107FE
-P 5450 4000
-F 0 "#PWR017" H 5450 3850 50  0001 C CNN
-F 1 "+5V" H 5450 4140 50  0000 C CNN
-F 2 "" H 5450 4000 50  0000 C CNN
-F 3 "" H 5450 4000 50  0000 C CNN
-	1    5450 4000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5450 4050 5450 4000
 NoConn ~ 4950 6400
 NoConn ~ 5100 6400
 NoConn ~ 5250 6400
 NoConn ~ 5400 6400
 NoConn ~ 5550 6400
+$Comp
+L Teensy3.2-RESCUE-OSBB-v1 U5
+U 1 1 5810D118
+P 5250 5050
+F 0 "U5" H 4800 5800 60  0000 C CNN
+F 1 "Teensy3.2" H 4950 5900 60  0000 C CNN
+F 2 "Housings_DIP:DIP-28_W15.24mm_LongPads" H 5250 5650 60  0001 C CNN
+F 3 "" H 5250 5650 60  0001 C CNN
+	1    5250 5050
+	1    0    0    -1  
+$EndComp
+NoConn ~ 5450 4050
 $EndSCHEMATC
