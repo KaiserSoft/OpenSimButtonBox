@@ -1,3 +1,2 @@
 (fp_lib_table
-  (lib (name DIP-SIP)(type Github)(uri https://github.com/cpavlina/kicad-pcblib/tree/master/dip-sip.pretty)(options "")(descr ""))
 )

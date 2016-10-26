@@ -1,4 +1,4 @@
-update=25.10.2016 16:01:36
+update=26.10.2016 12:21:03
 version=1
 last_client=kicad
 [pcbnew]
@@ -22,6 +22,9 @@ BoardOutlineThickness=0.100000000000
 ModuleOutlineThickness=0.150000000000
 [general]
 version=1
+[cvpcb]
+version=1
+NetIExt=net
 [eeschema]
 version=1
 LibDir=
@@ -55,7 +58,5 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
-LibName30=C:/Users/tech/Documents/74hc4051
-[cvpcb]
-version=1
-NetIExt=net
+LibName30=Z:/_private/GitHub - OpenSimButtonBox/Main Module/PCB/KiCad-Library/74hc4051
+LibName31=Z:/_private/GitHub - OpenSimButtonBox/Main Module/PCB/KiCad-Library/Teensy3.2
