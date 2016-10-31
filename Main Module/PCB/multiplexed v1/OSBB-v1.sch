@@ -222,7 +222,7 @@ F 1 "EXTRA Pins" V 7000 5450 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Angled_1x05" H 6900 5450 50  0001 C CNN
 F 3 "" H 6900 5450 50  0000 C CNN
 	1    6900 5450
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L CONN_01X03 P4
@@ -894,33 +894,21 @@ Wire Wire Line
 Wire Wire Line
 	6700 2300 6700 1600
 Wire Wire Line
-	6700 1600 5250 1600
-Wire Wire Line
-	5250 1600 5250 1100
-Wire Wire Line
 	8100 2400 6750 2400
 Wire Wire Line
 	6750 2400 6750 1550
 Wire Wire Line
-	6750 1550 5350 1550
-Wire Wire Line
-	5350 1550 5350 1100
+	6750 1550 5450 1550
 Wire Wire Line
 	8100 2600 6800 2600
 Wire Wire Line
 	6800 2600 6800 1500
 Wire Wire Line
-	6800 1500 5450 1500
-Wire Wire Line
-	5450 1500 5450 1100
+	6800 1500 5350 1500
 Wire Wire Line
 	8100 2700 6850 2700
 Wire Wire Line
 	6850 2700 6850 1450
-Wire Wire Line
-	6850 1450 5550 1450
-Wire Wire Line
-	5550 1450 5550 1100
 Wire Wire Line
 	9000 2050 8700 2050
 Wire Wire Line
@@ -928,33 +916,17 @@ Wire Wire Line
 Wire Wire Line
 	9050 2400 9050 1400
 Wire Wire Line
-	9050 1400 5650 1400
-Wire Wire Line
-	5650 1400 5650 1100
-Wire Wire Line
 	9000 2500 9100 2500
 Wire Wire Line
 	9100 2500 9100 1350
-Wire Wire Line
-	9100 1350 5750 1350
-Wire Wire Line
-	5750 1350 5750 1100
 Wire Wire Line
 	9000 2600 9150 2600
 Wire Wire Line
 	9150 2600 9150 1300
 Wire Wire Line
-	9150 1300 5850 1300
-Wire Wire Line
-	5850 1300 5850 1100
-Wire Wire Line
 	9000 2700 9200 2700
 Wire Wire Line
 	9200 2700 9200 1250
-Wire Wire Line
-	9200 1250 5950 1250
-Wire Wire Line
-	5950 1250 5950 1100
 Wire Wire Line
 	3550 2800 3550 3100
 $Comp
@@ -969,7 +941,7 @@ F 3 "" H 2450 600 50  0000 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	5950 600  2450 600 
+	2450 600  5950 600 
 Connection ~ 5850 600 
 Connection ~ 5750 600 
 Connection ~ 5650 600 
@@ -1004,10 +976,10 @@ Connection ~ 4650 600
 Wire Wire Line
 	1400 2800 1400 3100
 $Comp
-L GND #PWR?
+L GND #PWR017
 U 1 1 581472AD
 P 7250 4150
-F 0 "#PWR?" H 7250 3900 50  0001 C CNN
+F 0 "#PWR017" H 7250 3900 50  0001 C CNN
 F 1 "GND" H 7250 4000 50  0000 C CNN
 F 2 "" H 7250 4150 50  0000 C CNN
 F 3 "" H 7250 4150 50  0000 C CNN
@@ -1016,10 +988,10 @@ F 3 "" H 7250 4150 50  0000 C CNN
 $EndComp
 Connection ~ 7150 4150
 $Comp
-L +3.3V #PWR?
+L +3.3V #PWR018
 U 1 1 58147458
 P 7300 4650
-F 0 "#PWR?" H 7300 4500 50  0001 C CNN
+F 0 "#PWR018" H 7300 4500 50  0001 C CNN
 F 1 "+3.3V" H 7300 4790 50  0000 C CNN
 F 2 "" H 7300 4650 50  0000 C CNN
 F 3 "" H 7300 4650 50  0000 C CNN
@@ -1027,4 +999,32 @@ F 3 "" H 7300 4650 50  0000 C CNN
 	0    1    1    0   
 $EndComp
 Connection ~ 7150 4650
+Wire Wire Line
+	9050 1400 5950 1400
+Wire Wire Line
+	5950 1400 5950 1100
+Wire Wire Line
+	9100 1350 5850 1350
+Wire Wire Line
+	5850 1350 5850 1100
+Wire Wire Line
+	9150 1300 5750 1300
+Wire Wire Line
+	5750 1300 5750 1100
+Wire Wire Line
+	9200 1250 5650 1250
+Wire Wire Line
+	5650 1250 5650 1100
+Wire Wire Line
+	6700 1600 5550 1600
+Wire Wire Line
+	5550 1600 5550 1100
+Wire Wire Line
+	5450 1550 5450 1100
+Wire Wire Line
+	5350 1500 5350 1100
+Wire Wire Line
+	6850 1450 5250 1450
+Wire Wire Line
+	5250 1450 5250 1100
 $EndSCHEMATC
