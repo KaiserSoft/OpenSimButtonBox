@@ -1235,7 +1235,7 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Angled_2x32 (layer F.Cu) (tedit 58161A80) (tstamp 581331AA)
+  (module Pin_Headers:Pin_Header_Angled_2x32 (layer F.Cu) (tedit 58161B95) (tstamp 581331AA)
     (at 172.75 93.7 90)
     (descr "Through hole pin header")
     (tags "pin header")
@@ -1243,7 +1243,7 @@
     (fp_text reference P6 (at 5.3 12.85 180) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "BTN 1-32" (at 5.4 6.25 180) (layer F.Fab) hide
+    (fp_text value "BTN 1-32" (at 5.4 6.25 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.35 -1.75) (end -1.35 80.5) (layer F.CrtYd) (width 0.05))
