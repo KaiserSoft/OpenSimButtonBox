@@ -13,7 +13,7 @@ Prototype v2 demo video https://www.youtube.com/watch?v=qAUQymDLhig
     
 Prototype v3 update    
 PCB rev RC3 with support for 32 buttons, 3 rotary encoders, 1 pit limiter switch, 3 AUX ports 0V-5V
-![PCB revision RC3](https://github.com/KaiserSoft/OpenSimButtonBox/blob/master/Main%20Module/Images/Development/PCB/MOBB-RC3-2016-11-01.png)
+![PCB revision RC3](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Main%20Module/Images/Development/PCB/MOBB-RC3-2016-11-01.png)
 
 
 Fan control board for 12V fans with RPM adjustable from the button box.
