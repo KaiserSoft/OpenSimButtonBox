@@ -1,4 +1,4 @@
-update=30/10/2016 16:49:17
+update=02.11.2016 21:02:10
 version=1
 last_client=kicad
 [general]
@@ -6,9 +6,28 @@ version=1
 [cvpcb]
 version=1
 NetIExt=net
+[pcbnew]
+version=1
+PageLayoutDescrFile=
+LastNetListRead=
+PadDrill=0.6
+PadDrillOvalY=0.6
+PadSizeH=1.5
+PadSizeV=1.5
+PcbTextSizeV=1.5
+PcbTextSizeH=1.5
+PcbTextThickness=0.3
+ModuleTextSizeV=1
+ModuleTextSizeH=1
+ModuleTextSizeThickness=0.15
+SolderMaskClearance=0
+SolderMaskMinWidth=0
+DrawSegmentWidth=0.2
+BoardOutlineThickness=0.09999999999999999
+ModuleOutlineThickness=0.15
 [eeschema]
 version=1
-LibDir=
+LibDir=../MOBB-KiCad-Lib
 [eeschema/libraries]
 LibName1=OSBB-v1-rescue
 LibName2=power
@@ -40,24 +59,5 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=Z:/_private/GitHub - OpenSimButtonBox/Main Module/PCB/KiCad-Library/74hc4051
-LibName32=Z:/_private/GitHub - OpenSimButtonBox/Main Module/PCB/KiCad-Library/Teensy3.2
-[pcbnew]
-version=1
-PageLayoutDescrFile=
-LastNetListRead=
-PadDrill=0.6
-PadDrillOvalY=0.6
-PadSizeH=1.5
-PadSizeV=1.5
-PcbTextSizeV=1.5
-PcbTextSizeH=1.5
-PcbTextThickness=0.3
-ModuleTextSizeV=1
-ModuleTextSizeH=1
-ModuleTextSizeThickness=0.15
-SolderMaskClearance=0
-SolderMaskMinWidth=0
-DrawSegmentWidth=0.2
-BoardOutlineThickness=0.09999999999999999
-ModuleOutlineThickness=0.15
+LibName31=74hc4051
+LibName32=Teensy3.2

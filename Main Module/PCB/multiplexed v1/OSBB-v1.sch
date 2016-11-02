@@ -29,17 +29,15 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:74hc4051
-LIBS:Teensy3.2
 LIBS:OSBB-v1-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
+Title "Modular Open Button Box (MOBB)"
+Date "2016-11-02"
+Rev "RC4"
 Comp ""
 Comment1 ""
 Comment2 ""
