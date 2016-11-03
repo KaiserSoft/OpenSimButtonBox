@@ -21,9 +21,9 @@
 
   (layers
     (0 F.Cu signal)
-    (31 B.Cu signal)
+    (31 B.Cu signal hide)
     (32 B.Adhes user hide)
-    (33 F.Adhes user hide)
+    (33 F.Adhes user)
     (34 B.Paste user hide)
     (35 F.Paste user hide)
     (36 B.SilkS user)
@@ -343,7 +343,7 @@
   )
 
   (module MOBB-KiCad-Lib:VIA-0.6MM (layer F.Cu) (tedit 581A646B) (tstamp 581A6530)
-    (at 199.7 128.9)
+    (at 198.6 128.7)
     (fp_text reference "" (at 0 0.5) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
@@ -451,7 +451,7 @@
   )
 
   (module MOBB-KiCad-Lib:VIA-0.6MM (layer F.Cu) (tedit 581A646B) (tstamp 581A649A)
-    (at 193.8 131.1)
+    (at 193 130.9)
     (fp_text reference "" (at 0 0.5) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
@@ -643,7 +643,7 @@
   )
 
   (module MOBB-KiCad-Lib:VIA-0.6MM (layer F.Cu) (tedit 581A646B) (tstamp 581A6458)
-    (at 206.1 123)
+    (at 205.2 122.9)
     (fp_text reference "" (at 0 0.5) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
