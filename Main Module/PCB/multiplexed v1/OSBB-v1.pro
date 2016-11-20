@@ -1,4 +1,4 @@
-update=02.11.2016 21:02:10
+update=17.11.2016 21:17:07
 version=1
 last_client=kicad
 [general]
@@ -61,3 +61,4 @@ LibName29=contrib
 LibName30=valves
 LibName31=74hc4051
 LibName32=Teensy3.2
+LibName33=resistor-star
