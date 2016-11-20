@@ -297,14 +297,19 @@ void setup() {
 
 
 void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
-  #if OutputSerial == 1
+    
+  #if OutputSerial == 1 && DebugMultiplexer == 0
     Serial.print("send_key() / ");
     Serial.print("Mod:");
     Serial.print(mod);
     Serial.print(" / key:");
     Serial.print(key);
+    Serial.print(" / kb:");
+    key_int2str(key, mod);
     Serial.println();
-  #else
+  #endif
+
+  #if OutoutKeyboard == 1 && DebugMultiplexer == 0
     Keyboard.set_modifier(mod);
     Keyboard.set_key1(key);
     Keyboard.send_now();
@@ -475,12 +480,47 @@ void eeprom_update_pwm(){
 
 
 void release_key() {
-  #if OutputSerial == 1
+  #if OutputSerial == 1 && DebugMultiplexer == 0
     Serial.println("ran release_key()");
-  #else
+  #endif
+
+  #if OutoutKeyboard == 1 && DebugMultiplexer == 0
     Keyboard.set_modifier(0);
     Keyboard.set_key1(0);
     Keyboard.send_now();
   #endif
 }
+
+
+#if OutputSerial == 1
+// returns keyboard string value for constant - NULL on failure
+void key_int2str( int value, int mod ) {
+  #define asize 23
+  int Code[asize] = { 16395, 16393, 16392, 16391, 16397, 16405, 16402, 16396, 16390, 16389, 16394, 16399, 16388, 16401, 16413, 16411, 16414, 16398, 16418, 16406, 16407, 16408, 16409 }; //, {,''}
+  char Key[asize] = { 'h', 'f', 'e', 'd', 'j', 'r', 'o', 'i', 'c', 'b', 'g', 'l', 'a', 'n', 'y', 'x', '1', 'k', '5', 's', 't', 'u', 'v' };
+
+  //hardcode some values
+  if( value == 16425 ){
+    Serial.print("<ESC>");
+    return;
+  }else if( value == 16428 ){
+    Serial.print("<SPACE>");
+    return;
+  }
+
+  for( int i=0 ; i < asize ; i++ ){
+    
+    if( Code[i] == value ){
+      if( mod == 0 ) {
+         Serial.print( Key[i] );
+      }else{
+        String upper = Key[i];
+        Serial.print( upper.toUpperCase() );
+      }
+      return;
+    }
+  }
+}
+#endif
+
 
