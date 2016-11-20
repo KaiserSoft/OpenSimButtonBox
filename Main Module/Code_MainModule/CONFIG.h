@@ -174,7 +174,8 @@
 #define Button_4_Hold 0                 // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_4_Pin 0                  // not used when EnableMultiplexer is 1
 
-#define Button_5_Key KEY_2              // key to send
+//Pin 1
+#define Button_5_Key KEY_A              // key to send
 #define Button_5_Mod 0                  // modifier key to send
 #define Button_5_Hold 0                 // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_5_Pin 0                  // not used when EnableMultiplexer is 1
@@ -316,8 +317,8 @@
 #define Button_29_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_29_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 25
-#define Button_30_Key KEY_Y             // key to send
+//Pin 26
+#define Button_30_Key KEY_Z             // key to send
 #define Button_30_Mod 0                 // modifier key to send
 #define Button_30_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
@@ -326,8 +327,8 @@
 #define Button_31_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_31_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 26
-#define Button_32_Key KEY_Z             // key to send
+//Pin 25
+#define Button_32_Key KEY_Y             // key to send
 #define Button_32_Mod 0                 // modifier key to send
 #define Button_32_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
