@@ -1,8 +1,9 @@
-/* Based on Encoder Library
-   http://www.pjrc.com/teensy/td_libs_Encoder.html
+/* 
+ *  Modular Button Box (MOBB)
 */
 
 #include "CONFIG.h"
+#include "BUTTONS.h"
 #include <Encoder.h>
 #include <Bounce.h>
 #include <EEPROM.h>
@@ -495,9 +496,9 @@ void release_key() {
 #if OutputSerial == 1
 // returns keyboard string value for constant - NULL on failure
 void key_int2str( int value, int mod ) {
-  #define asize 23
-  int Code[asize] = { 16395, 16393, 16392, 16391, 16397, 16405, 16402, 16396, 16390, 16389, 16394, 16399, 16388, 16401, 16413, 16411, 16414, 16398, 16418, 16406, 16407, 16408, 16409 }; //, {,''}
-  char Key[asize] = { 'h', 'f', 'e', 'd', 'j', 'r', 'o', 'i', 'c', 'b', 'g', 'l', 'a', 'n', 'y', 'x', '1', 'k', '5', 's', 't', 'u', 'v' };
+  #define asize 28
+  int Code[asize] = { 16395, 16393, 16392, 16391, 16397, 16405, 16402, 16396, 16390, 16389, 16394, 16399, 16388, 16401, 16413, 16411, 16414, 16398, 16418, 16406, 16407, 16408, 16409, 16410, 16412, 16404, 16403, 16400 };
+  char Key[asize] = { 'h', 'f', 'e', 'd', 'j', 'r', 'o', 'i', 'c', 'b', 'g', 'l', 'a', 'n', 'y', 'x', '1', 'k', '5', 's', 't', 'u', 'v', 'w', 'z', 'q', 'p', 'm'  };
 
   //hardcode some values
   if( value == 16425 ){
