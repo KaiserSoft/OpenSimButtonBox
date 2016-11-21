@@ -4,6 +4,7 @@
 
 #include "CONFIG.h"
 #include "BUTTONS.h"
+#include "AUXPins.h"
 #include <Encoder.h>
 #include <Bounce.h>
 #include <EEPROM.h>
@@ -11,9 +12,9 @@
 long positionLeft  = 0;
 long positionCenter = 0;
 long positionRight = 0;
-boolean AUX1Pressed = false;
-boolean AUX2Pressed = false;
-boolean AUX3Pressed = false;
+unsigned long AUX1Pressed = 0;
+unsigned long AUX2Pressed = 0;
+unsigned long AUX3Pressed = 0;
 #if EnableAux1_Button == 1
   byte AUX1PWM = EEPROM.read(AUX1_EEPROM); //read PWM value from EEPROM
 #else
@@ -232,24 +233,30 @@ void setup() {
       #if OutputSerial == 1
         Serial.println("Fan ramp up done");
       #endif
-      
-      if( EnableAux1_Button == 1 ) { 
-        AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
-      }else if ( EnableAux1 == 1 ){
-        AUX1PWM = AUX1_PWM_FIXED;       
-      }
-      
-      if( EnableAux2_Button == 1 ) { 
-        AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
-      }else if ( EnableAux2 == 1 ){
-        AUX2PWM = AUX2_PWM_FIXED;
-      }
-      
-      if( EnableAux3_Button == 1 ) {
-        AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
-      }else if ( EnableAux3 == 1 ){
-        AUX3PWM = AUX3_PWM_FIXED;
-      }
+
+      #if EnableAux1 == 1
+        if( EnableAux1_Button == 1 ) { 
+          AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
+        }else if ( EnableAux1 == 1 ){
+          AUX1PWM = AUX1_PWM_FIXED;       
+        }
+      #endif
+
+      #if EnableAux2 == 1
+        if( EnableAux2_Button == 1 ) { 
+          AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
+        }else if ( EnableAux2 == 1 ){
+          AUX2PWM = AUX2_PWM_FIXED;
+        }
+      #endif
+
+      #if EnableAux3 == 1
+        if( EnableAux3_Button == 1 ) {
+          AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
+        }else if ( EnableAux3 == 1 ){
+          AUX3PWM = AUX3_PWM_FIXED;
+        }
+      #endif
     }
   }
 
@@ -329,6 +336,11 @@ void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
 
 
 
+/*
+ ##############
+ # LOOOOOOOOP #
+ ##############
+*/
 void loop() {
   
   if( EnableAux1 == 1 ) { analogWrite(AUX1_Pin, AUX1PWM);}
@@ -399,7 +411,71 @@ void loop() {
   #endif
 
   eeprom_update_pwm();
+
+  #if AUX1_Button_Auto_Hold > 0 || AUX2_Button_Auto_Hold > 0 || AUX3_Button_Auto_Hold > 0
+    release_aux_button();
+  #endif
 }
+
+
+
+
+
+
+#if AUX1_Button_Auto_Hold > 0 || AUX2_Button_Auto_Hold > 0 || AUX3_Button_Auto_Hold > 0
+/**
+ * checks if any AUX buttons need to be released
+ */
+void release_aux_button(){
+  unsigned long timenow = millis();
+
+  if( AUX1_Button_Auto_Hold > 0 && AUX1Pressed > 0 && timenow > ( AUX1Pressed + AUX1_Button_Auto_Hold * 1000) ){
+    #if OutputSerial == 1
+      Serial.print("AUX1 auto hold released / PWM ");
+      Serial.print(AUX1PWM);
+      Serial.print(" / AuxMod ");
+      Serial.print(AUX1_Button_Mod);
+      Serial.println(" / release_aux_button()");
+    #endif
+    AUX1Pressed = 0;
+    #if AUX_LED_Enable == 1
+      analogWrite(AUX_LED_Pin, 0);
+    #endif
+  }
+
+  if( AUX2_Button_Auto_Hold > 0 && AUX2Pressed > 0 && timenow > ( AUX2Pressed + AUX2_Button_Auto_Hold * 1000) ){
+    #if OutputSerial == 1
+      Serial.print("AUX2 auto hold released / PWM ");
+      Serial.print(AUX2PWM);
+      Serial.print(" / AuxMod ");
+      Serial.print(AUX2_Button_Mod);
+      Serial.println(" / release_aux_button()");
+    #endif
+    AUX2Pressed = 0;
+    #if AUX_LED_Enable == 1
+      analogWrite(AUX_LED_Pin, 0);
+    #endif
+  }
+
+  if( AUX3_Button_Auto_Hold > 0 && AUX3Pressed > 0 && timenow > ( AUX3Pressed + AUX3_Button_Auto_Hold * 1000) ){
+    #if OutputSerial == 1
+      Serial.print("AUX3 auto hold released / PWM ");
+      Serial.print(AUX3PWM);
+      Serial.print(" / AuxMod ");
+      Serial.print(AUX3_Button_Mod);
+      Serial.println(" / release_aux_button()");
+    #endif
+    AUX3Pressed = 0;
+    #if AUX_LED_Enable == 1
+      analogWrite(AUX_LED_Pin, 0);
+    #endif
+  }
+  
+}
+#endif
+
+
+
 
 
 /** compares current pwm vs the eeprom value every few seconds
@@ -430,35 +506,56 @@ void eeprom_update_pwm(){
 
     if( EnableAux1_Button == 1 && EEPROM.read(AUX1_EEPROM) != AUX1PWM ){
       #if OutputSerial == 1
-        Serial.print("INFO: Update AUX1 EEPROM address ");
+        Serial.print("INFO: AUX1 EEPROM address ");
         Serial.print(AUX1_EEPROM);
-        Serial.print(" with value ");
+        Serial.print(" write value ");
         Serial.print(AUX1PWM);
         Serial.println(" / eeprom_update_pwm()");
       #endif
-      EEPROM.write(AUX1_EEPROM, AUX1PWM);
+      
+      #if EEPROMWrite == 1
+        EEPROM.write(AUX1_EEPROM, AUX1PWM);
+      #else
+        #if OutputSerial == 1
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif        
+      #endif      
     }
 
     if( EnableAux2_Button == 1 && EEPROM.read(AUX2_EEPROM) != AUX2PWM ){
       #if OutputSerial == 1
-        Serial.print("INFO: Update AUX2 EEPROM address ");
+        Serial.print("INFO: AUX2 EEPROM address ");
         Serial.print(AUX2_EEPROM);
-        Serial.print(" with value ");
+        Serial.print(" write value ");
         Serial.print(AUX2PWM);
         Serial.println(" / eeprom_update_pwm()");
       #endif
-      EEPROM.write(AUX2_EEPROM, AUX2PWM);
+      
+      #if EEPROMWrite == 1
+        EEPROM.write(AUX2_EEPROM, AUX2PWM);
+      #else
+        #if OutputSerial == 1
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif
+      #endif      
     }
 
     if( EnableAux3_Button == 1 && EEPROM.read(AUX3_EEPROM) != AUX3PWM ){
       #if OutputSerial == 1
-        Serial.print("INFO: Update AUX3 EEPROM address ");
+        Serial.print("INFO: AUX3 EEPROM address ");
         Serial.print(AUX3_EEPROM);
-        Serial.print(" with value ");
+        Serial.print(" write value ");
         Serial.print(AUX3PWM);
         Serial.println(" / eeprom_update_pwm()");
       #endif
-      EEPROM.write(AUX3_EEPROM, AUX3PWM);
+      
+      #if EEPROMWrite == 1
+        EEPROM.write(AUX3_EEPROM, AUX3PWM);
+      #else
+        #if OutputSerial == 1
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif
+      #endif
     }
 
     
