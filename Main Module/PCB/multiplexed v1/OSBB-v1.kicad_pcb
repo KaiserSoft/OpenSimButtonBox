@@ -5,7 +5,7 @@
     (no_connects 0)
     (area 175.269999 88.074999 261.407144 151.803575)
     (thickness 1.6)
-    (drawings 97)
+    (drawings 96)
     (tracks 1158)
     (zones 0)
     (modules 170)
@@ -2284,7 +2284,7 @@
   )
 
   (module MOBB-KiCad-Lib:VIA-W0.6mm-H0.4mm (layer F.Cu) (tedit 5832ECB2) (tstamp 5832E816)
-    (at 227.35 127.16)
+    (at 225.95 130.7)
     (fp_text reference Ref** (at 0 0.5) (layer F.Fab) hide
       (effects (font (size 0.127 0.127) (thickness 0.000001)))
     )
@@ -2296,7 +2296,7 @@
   )
 
   (module MOBB-KiCad-Lib:VIA-W0.6mm-H0.4mm (layer F.Cu) (tedit 5832EEDC) (tstamp 5832E811)
-    (at 227.12 131.35)
+    (at 243.11 132.24)
     (fp_text reference Ref** (at 0 0.5) (layer F.Fab) hide
       (effects (font (size 0.127 0.127) (thickness 0.000001)))
     )
@@ -2308,7 +2308,7 @@
   )
 
   (module MOBB-KiCad-Lib:VIA-W0.6mm-H0.4mm (layer F.Cu) (tedit 5832EC7D) (tstamp 5832E80C)
-    (at 225.9 129.8)
+    (at 240.76 132.24)
     (fp_text reference Ref** (at 0 0.5) (layer F.Fab) hide
       (effects (font (size 0.127 0.127) (thickness 0.000001)))
     )
@@ -4342,6 +4342,10 @@
       (net 6 GND) (zone_connect 2))
   )
 
+  (gr_line (start 227.28 132.24) (end 227.28 129.5) (angle 90) (layer F.Fab) (width 0.2))
+  (gr_line (start 239.14 132.24) (end 227.28 132.24) (angle 90) (layer F.Fab) (width 0.2))
+  (gr_line (start 239.14 129.5) (end 239.14 132.24) (angle 90) (layer F.Fab) (width 0.2))
+  (gr_line (start 227.28 129.5) (end 239.14 129.5) (angle 90) (layer F.Fab) (width 0.2))
   (gr_text S (at 260.1 101.575) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.25)))
   )
@@ -4522,11 +4526,6 @@
   (gr_text 1 (at 180.25 114.5 90) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.25)))
   )
-  (gr_line (start 243.57 130.3) (end 243.57 130.42) (angle 90) (layer F.Fab) (width 0.2))
-  (gr_line (start 228.33 130.3) (end 243.57 130.3) (angle 90) (layer F.Fab) (width 0.2))
-  (gr_line (start 228.33 133.35) (end 228.33 130.3) (angle 90) (layer F.Fab) (width 0.2))
-  (gr_line (start 243.54 133.35) (end 228.33 133.35) (angle 90) (layer F.Fab) (width 0.2))
-  (gr_line (start 243.54 130.3) (end 243.54 133.35) (angle 90) (layer F.Fab) (width 0.2))
   (gr_text VUSB (at 199.025 137.925) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.2)))
   )
