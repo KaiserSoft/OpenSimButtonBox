@@ -1,9 +1,0 @@
-Software used: Slicer 1.2.9
-
-* Face Plate
-	- 25% infill, combine every 2 layers
-	- 3 top shells, 2 bottom shells
-
-* Body
-	- 20% infill, combine every 2 layers
-	- 2 top, 2 bottom shells
