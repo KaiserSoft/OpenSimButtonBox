@@ -121,10 +121,6 @@ void check_multiplexed_buttons(){
                   Serial.print(AUX1PWM);
                   Serial.print(" / AnalogValue ");
                   Serial.print(AnalogValue);
-                  Serial.print(" / ButtonMod ");
-                  Serial.print(ButtonModifier[d][i]);
-                  Serial.print(" / AuxMod ");
-                  Serial.print(AUX1_Button_Mod);
                   Serial.println(" / check_multiplexed_buttons()");
                 #endif
                 
@@ -148,10 +144,6 @@ void check_multiplexed_buttons(){
                   Serial.print(AUX2PWM);
                   Serial.print(" / AnalogValue ");
                   Serial.print(AnalogValue);
-                  Serial.print(" / ButtonMod ");
-                  Serial.print(ButtonModifier[d][i]);
-                  Serial.print(" / AuxMod ");
-                  Serial.print(AUX2_Button_Mod);
                   Serial.println(" / check_multiplexed_buttons()");
                 #endif
 
@@ -176,10 +168,6 @@ void check_multiplexed_buttons(){
                   Serial.print(AUX3PWM);
                   Serial.print(" / AnalogValue ");
                   Serial.print(AnalogValue);
-                  Serial.print(" / ButtonMod ");
-                  Serial.print(ButtonModifier[d][i]);
-                  Serial.print(" / AuxMod ");
-                  Serial.print(AUX3_Button_Mod);
                   Serial.println(" / check_multiplexed_buttons()");
                 #endif
               }
@@ -215,10 +203,6 @@ void check_multiplexed_buttons(){
               Serial.print(AUX1PWM);
               Serial.print(" / AnalogValue ");
               Serial.print(AnalogValue);
-              Serial.print(" / ButtonMod ");
-              Serial.print(ButtonModifier[d][i]);
-              Serial.print(" / AuxMod ");
-              Serial.print(AUX1_Button_Mod);
               Serial.println(" / check_multiplexed_buttons()");
             #endif
           }
@@ -235,10 +219,6 @@ void check_multiplexed_buttons(){
               Serial.print(AUX2PWM);
               Serial.print(" / AnalogValue ");
               Serial.print(AnalogValue);
-              Serial.print(" / ButtonMod ");
-              Serial.print(ButtonModifier[d][i]);
-              Serial.print(" / AuxMod ");
-              Serial.print(AUX2_Button_Mod);
               Serial.println(" / check_multiplexed_buttons()");
             #endif
           }
@@ -255,10 +235,6 @@ void check_multiplexed_buttons(){
                 Serial.print(AUX3PWM);
                 Serial.print(" / AnalogValue ");
                 Serial.print(AnalogValue);
-                Serial.print(" / ButtonMod ");
-                Serial.print(ButtonModifier[d][i]);
-                Serial.print(" / AuxMod ");
-                Serial.print(AUX3_Button_Mod);
                 Serial.println(" / check_multiplexed_buttons()");
               #endif
           }
