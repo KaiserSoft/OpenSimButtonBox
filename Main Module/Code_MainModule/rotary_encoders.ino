@@ -74,7 +74,7 @@ void check_rotary_encoders(){
           EEPROM_val_change_last = millis();
           #if AUX2_Button_Auto_Hold > 0
             AUX2Pressed = millis(); //reset "hold" counter when button is used
-            AUX1Pressed = 0
+            AUX1Pressed = 0;
             AUX3Pressed = 0;
           #endif
         }else if( AUX3Pressed > 0 ) {
