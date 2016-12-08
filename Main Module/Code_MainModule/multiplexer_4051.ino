@@ -61,14 +61,15 @@ void check_multiplexed_buttons(){
       AnalogValue = analogRead(Devices[d]);
 
       #if OutputSerial == 1 && DebugMultiplexer == 1
-        if( SerialMultiDebugStart == false && AnalogValue < AnalogLowerLimit ) {
-          Serial.print("Mpin:");
+        if( SerialMultiDebugStart == false && AnalogValue > AnalogLowerLimit ) {
+          Serial.println("");
+          Serial.print(" Mpin:");
           Serial.print(i);
           SerialMultiDebugStart = true;
           SerialMultiDebugOut = true;
         }
       
-        if( AnalogValue < AnalogLowerLimit ){
+        if( AnalogValue > AnalogLowerLimit ){
           Serial.print(" / Tpin: ");
           Serial.print(Devices[d]);
           Serial.print(" dev:");
@@ -78,7 +79,7 @@ void check_multiplexed_buttons(){
         }
       #endif
       
-      if( AnalogValue < AnalogLowerLimit ){
+      if( AnalogValue > AnalogLowerLimit ){
         if( ButtonState[d][i] == 0 ){
           //press has been registed, store time
           ButtonState[d][i] = millis();
@@ -252,8 +253,8 @@ void check_multiplexed_buttons(){
   #if OutputSerial == 1 && DebugMultiplexer == 1
     if( SerialMultiDebugOut == true ){
       Serial.println("");
+      delay(1000);
     }
-    delay(1000);
   #endif
 
 }

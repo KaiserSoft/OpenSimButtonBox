@@ -1,0 +1,7 @@
+Quick Text file to keep track of some issues and how to fix them.
+Use them for a guide or FAQ later
+
+* Button presses are unreliable and/or one button triggers two different key presses. Some pins should not trigger a keypress
+  - Check continuity of all 32 pins. Every pin must short circuit to one pin on a multiplexer and 10K to Ground
+  - Check continuity of multiplexer pins 11,10,9. 
+    Each pin is connected to the same pin on every multiplexer and to pins 0,1,2 on the Teensy. I had a bad solder joint on pin 0

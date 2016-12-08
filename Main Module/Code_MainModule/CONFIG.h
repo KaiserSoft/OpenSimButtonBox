@@ -28,7 +28,7 @@
   #############################
 */
 #define EnableMultiplexer 1 // 1 to use the multiplexer or 0 to use buttons without
-#define AnalogLowerLimit 10 // a button is considered pressed when the analog reading drops below this value
+#define AnalogLowerLimit 3800 // a button is considered pressed when the analog reading drops below this value
 #define Multiplexer1 A9     //analog pin to multiplexer
 #define Multiplexer2 A7     //analog pin to multiplexer
 #define Multiplexer3 A8     //analog pin to multiplexer
@@ -47,7 +47,7 @@
 /* 
  *  the device may be debuged using a serial console
 */
-#define OutoutKeyboard 0 // set to 1 to send keys as a USB keyboard or disable for debugging - default: 1
+#define OutoutKeyboard 1 // set to 1 to send keys as a USB keyboard or disable for debugging - default: 1
 #define OutputSerial 1 //set to 1 to enable serial output - default: 0
 #define DebugMultiplexer 0 //set to 1 to get pin and device info for pins 1-32. Serial must be 1 and disables send_key()
 #define DebugOutput 0 //enables timing info ... very verbose. keep this disabled  - default: 0
