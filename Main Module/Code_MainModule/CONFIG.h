@@ -1,28 +1,28 @@
 /* CONFIG START */
 
-/* 
+/*
   ######################
   # Misc Configuration #
   ######################
 */
 #define BootUpDelay 2000        //Delay between power on and "ready", set to 0 (zero) to disable
 #define BUTTON_HOLD 75          //button is send to the computer for this many ms, then it is released
-#define ledPin 13 
+#define ledPin 13
 #define AnalogResolution 12     //used when reading multiplexed buttons
 #define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
 
 
 
-/** 
- *  Auxillary Port Control
- *  Setting the "EnableAux*" option to 1 will override the button specified in "AUX*_Button"
- *  Holding that button down enables the use of the rotary encoder on the right to change the PWM value 
- *  of each AUX port
- */
+/**
+    Auxillary Port Control
+    Setting the "EnableAux*" option to 1 will override the button specified in "AUX*_Button"
+    Holding that button down enables the use of the rotary encoder on the right to change the PWM value
+    of each AUX port
+*/
 #define AUX_RAMP_TIME 3000 //ramp up timer for all AUX port on boot up
 
 
-/* 
+/*
   #############################
   # Multiplexer Configuration #
   #############################
@@ -39,15 +39,15 @@
 
 
 
-/* 
+/*
   ###############################
   # Debug Options Configuration #
   ###############################
 */
-/* 
- *  the device may be debuged using a serial console
+/*
+    the device may be debuged using a serial console
 */
-#define OutoutKeyboard 1 // set to 1 to send keys as a USB keyboard or disable for debugging - default: 1
+#define OutputKeyboard 1 // set to 1 to send keys as a USB keyboard or disable for debugging - default: 1
 #define OutputSerial 1 //set to 1 to enable serial output - default: 0
 #define DebugMultiplexer 0 //set to 1 to get pin and device info for pins 1-32. Serial must be 1 and disables send_key()
 #define DebugOutput 0 //enables timing info ... very verbose. keep this disabled  - default: 0

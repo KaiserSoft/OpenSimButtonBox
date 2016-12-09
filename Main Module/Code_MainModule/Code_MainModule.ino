@@ -347,7 +347,7 @@ void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
     Serial.println();
   #endif
 
-  #if OutoutKeyboard == 1 && DebugMultiplexer == 0
+  #if OutputKeyboard == 1 && DebugMultiplexer == 0
     Keyboard.set_modifier(mod);
     Keyboard.set_key1(key);
     Keyboard.send_now();
@@ -612,7 +612,7 @@ void release_key() {
     Serial.println("ran release_key()");
   #endif
 
-  #if OutoutKeyboard == 1 && DebugMultiplexer == 0
+  #if OutputKeyboard == 1 && DebugMultiplexer == 0
     Keyboard.set_modifier(0);
     Keyboard.set_key1(0);
     Keyboard.send_now();

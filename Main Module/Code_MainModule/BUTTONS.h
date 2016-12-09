@@ -21,10 +21,10 @@
   # Rotary Encoders #
   ###################
 */
-#define Encoder1PinA      12         // the pin the encoder is connected to
+#define Encoder1PinA      9          // the pin the encoder is connected to
 #define Encoder1ModA      MODIFIERKEY_SHIFT // modifier key to send
 #define Encoder1KeyA      KEY_X      // key to send
-#define Encoder1PinB      11         // the pin the encoder is connected to
+#define Encoder1PinB      10         // the pin the encoder is connected to
 #define Encoder1ModB      MODIFIERKEY_SHIFT // modifier key to send
 #define Encoder1KeyB      KEY_Y      // key to send
 #define Encoder1PinC      0          // encoder push button - not used when EnableMultiplexer is 1
@@ -32,10 +32,10 @@
 #define Encoder1ModC      0          // encoder push button - not used when EnableMultiplexer is 1
 #define Encoder1HoldC     0          // encoder push button - not used when EnableMultiplexer is 1
 
-#define Encoder2PinA      9          // the pin the encoder is connected to
+#define Encoder2PinA      11         // the pin the encoder is connected to
 #define Encoder2ModA      0          // modifier key to send
 #define Encoder2KeyA      KEY_DOWN   // key to send
-#define Encoder2PinB      10         // the pin the encoder is connected to
+#define Encoder2PinB      12         // the pin the encoder is connected to
 #define Encoder2ModB      0          // modifier key to send
 #define Encoder2KeyB      KEY_UP     // key to send
 #define Encoder2PinC      0          // encoder push button - not used when EnableMultiplexer is 1
@@ -43,10 +43,10 @@
 #define Encoder2ModC      0          // encoder push button - not used when EnableMultiplexer is 1
 #define Encoder2HoldC     0          // encoder push button - not used when EnableMultiplexer is 1
 
-#define Encoder3PinA      7          // the pin the encoder is connected to
+#define Encoder3PinA      13         // the pin the encoder is connected to
 #define Encoder3ModA      0          // modifier key to send
 #define Encoder3KeyA      KEY_LEFT  // key to send
-#define Encoder3PinB      8          // the pin the encoder is connected to
+#define Encoder3PinB      14         // the pin the encoder is connected to
 #define Encoder3ModB      0          // modifier key to send
 #define Encoder3KeyB      KEY_RIGHT   // key to send
 #define Encoder3PinC      0          // encoder push button - not used when EnableMultiplexer is 1
