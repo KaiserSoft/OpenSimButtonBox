@@ -90,22 +90,17 @@ Bounce PitLimiterButton = Bounce(PitLimiterPin, 10);
 
 
 void setup() {
-  delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
-  pinMode(ledPin, OUTPUT);
-  
   // Anything with "Serial." is only used for development ATM
   #if OutputSerial == 1
     Serial.begin(115200);
-    while (!Serial){delay(500);}
   #endif
+  delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
+  pinMode(ledPin, OUTPUT);
 
-  /* rotary encoders */
-//  pinMode(Encoder1PinA, INPUT_PULLUP);
-//  pinMode(Encoder1PinB, INPUT_PULLUP);
-//  pinMode(Encoder2PinA, INPUT_PULLUP);
-//  pinMode(Encoder2PinB, INPUT_PULLUP);
-//  pinMode(Encoder3PinA, INPUT_PULLUP);
-//  pinMode(Encoder3PinB, INPUT_PULLUP);
+  
+  #if OutputSerial == 1
+    while (!Serial){delay(250);}
+  #endif
 
   /* multi plexer setup */
   #if EnableMultiplexer == 1
@@ -648,6 +643,12 @@ void key_int2str( int value, int mod ) {
     return;
   }else if( value == 61519 ){
     Serial.print("<RIGHT-ARROW>");
+    return;
+  }else if( value == 61522 ){
+    Serial.print("<UP-ARROW>");
+    return;
+  }else if( value == 61521 ){
+    Serial.print("<DOWN-ARROW>");
     return;
   }
 

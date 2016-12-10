@@ -195,7 +195,9 @@ void check_multiplexed_buttons(){
 
         #if EnableAux1 == 1 && EnableAux1_Button == 1 && AUX1_Button_Auto_Hold == 0
           if( ButtonExecuted[d][i] == 1 && AUX1_Button == ButtonKey[d][i] && AUX1_Button_Mod == ButtonModifier[d][i] ){
-            AUX2Pressed = 0;
+              AUX1Pressed = 0;
+              AUX2Pressed = 0;
+              AUX3Pressed = 0;
             #if AUX_LED_Enable == 1
               analogWrite(AUX_LED_Pin, 0);
             #endif
@@ -211,7 +213,9 @@ void check_multiplexed_buttons(){
 
         #if EnableAux2 == 1 && EnableAux2_Button == 1 && AUX2_Button_Auto_Hold == 0
           if( ButtonExecuted[d][i] == 1 && AUX2_Button == ButtonKey[d][i] && AUX2_Button_Mod == ButtonModifier[d][i] ){
-            AUX2Pressed = 0;
+              AUX1Pressed = 0;
+              AUX2Pressed = 0;
+              AUX3Pressed = 0;
             #if AUX_LED_Enable == 1
               analogWrite(AUX_LED_Pin, 0);
             #endif
@@ -227,6 +231,8 @@ void check_multiplexed_buttons(){
 
         #if EnableAux3 == 1 && EnableAux3_Button == 1 && AUX3_Button_Auto_Hold == 0
           if( ButtonExecuted[d][i] == 1 && AUX3_Button == ButtonKey[d][i] && AUX3_Button_Mod == ButtonModifier[d][i] ){
+              AUX1Pressed = 0;
+              AUX2Pressed = 0;
               AUX3Pressed = 0;
             #if AUX_LED_Enable == 1
               analogWrite(AUX_LED_Pin, 0);
