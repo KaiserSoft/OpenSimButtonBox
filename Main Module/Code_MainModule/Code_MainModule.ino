@@ -98,6 +98,14 @@ void setup() {
     Serial.begin(115200);
   #endif
 
+  /* rotary encoders */
+  pinMode(Encoder1PinA, INPUT_PULLUP);
+  pinMode(Encoder1PinB, INPUT_PULLUP);
+  pinMode(Encoder2PinA, INPUT_PULLUP);
+  pinMode(Encoder2PinB, INPUT_PULLUP);
+  pinMode(Encoder3PinA, INPUT_PULLUP);
+  pinMode(Encoder3PinB, INPUT_PULLUP);
+
   /* multi plexer setup */
   #if EnableMultiplexer == 1
     pinMode(MultiplexerP9, OUTPUT);

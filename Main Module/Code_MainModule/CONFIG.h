@@ -10,7 +10,7 @@
 #define ledPin 13
 #define AnalogResolution 12     //used when reading multiplexed buttons
 #define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
-
+#define ENCODER_DO_NOT_USE_INTERRUPTS // encoder on pin 7,8 will not work with out this. needs to be investigated
 
 
 /**
