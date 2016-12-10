@@ -10,7 +10,6 @@
 #define ledPin 13
 #define AnalogResolution 12     //used when reading multiplexed buttons
 #define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
-#define ENCODER_DO_NOT_USE_INTERRUPTS // encoder on pin 7,8 will not work with out this. needs to be investigated
 
 
 /**
@@ -29,9 +28,9 @@
 */
 #define EnableMultiplexer 1 // 1 to use the multiplexer or 0 to use buttons without
 #define AnalogLowerLimit 3800 // a button is considered pressed when the analog reading drops below this value
-#define Multiplexer1 A9     //analog pin to multiplexer
+#define Multiplexer1 A8     //analog pin to multiplexer
 #define Multiplexer2 A7     //analog pin to multiplexer
-#define Multiplexer3 A8     //analog pin to multiplexer
+#define Multiplexer3 A9     //analog pin to multiplexer
 #define Multiplexer4 A6     //analog pin to multiplexer
 #define MultiplexerP9 0     //4051 pin 9 connected to this Teensy pin (digital)
 #define MultiplexerP10 1    //4051 pin 10 connected to this Teensy pin (digital)

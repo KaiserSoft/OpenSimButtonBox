@@ -1,0 +1,51 @@
+File to collect information. To be turned into an HTML file later
+
+
+Steps to verify the assembled PCB.
+
+Please note, button detection is slower when "OutputSerial" is enabled. You need to hold the button for a 
+bit longer to get detected. Disable the option once you are done setting everything up.
+
+
+* Open latest firmware with Arduino IDE
+* Set to Teensy 3.2 with "Serial + Keyboard + Mouse + Joystick"
+* In Config.h, set OutputSerial to 1
+* In AUXPins.h, set EnableAux1, EnableAux2, EnableAux3 to 0
+* Upload Sketch to Teensy
+* Open Serial Console from Arduino IDE
+
+* Start with header pins 1-32, use the same button to test every pin. 
+  You should see feedback in the Serial Monitor. The sequence is (US-layout) "abcdefghijklmnopqrstuvwxABCDEFGH"
+  NOTE: There is no "y" or "z" in the output
+
+* Use one encoder to test pins 1A through 3B. 1 = left, 2 = center, 3 = right
+  You should see output like this "EncLeft:right / check_rotary_encoders()"
+  Rotate the plug if the "left" / "right" direction is reversed
+
+
+* In AUXPins.h, set EnableAux1, EnableAux2, EnableAux3 to 1
+  also set AUX1_Button_Auto_Hold to 0 for every AUX port
+* Upload the new scetch
+* Connect an LED or your multimeter to AUX1, AUX2, AUX3
+* Connect a switch to pin 1, 2 and 3 on the 1-32 pin header
+* connect the 5V connector
+* Push and hold the button connected to pin 1 and turn the encoder on the right
+* You should see the voltage on the port increase with every turn. The maximum will be around 5V, depends on your USB power source
+* Now do the same with the rest and ensure all ports work
+
+
+* Connect a latching switch to the "Pit" pins
+  You should see "Pit limiter ON" when you activate it and "Pit limiter OFF" when you flip the switch again
+
+* "Extra Pins" are not used at the moment
+
+
+* The PCB should be functional at this point.
+* DON'T FORGET to setOutputSerial to 0 in Config.h
+  This will ensure that all of the Teensy CPU power is dedicated to handeling button processes
+  and not waste any on sending serial messages.
+ 
+
+
+
+              

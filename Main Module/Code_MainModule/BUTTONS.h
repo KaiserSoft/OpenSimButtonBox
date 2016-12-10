@@ -127,38 +127,38 @@
 #define Button_15_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_15_Pin 0                 // not used when EnableMultiplexer is 1
 
-//Pin 19
-#define Button_16_Key KEY_S             // key to send
+//Pin 23
+#define Button_16_Key KEY_W             // key to send
 #define Button_16_Mod 0                 // modifier key to send
 #define Button_16_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_16_Pin 0                 // not used when EnableMultiplexer is 1
 
-//Pin 20
-#define Button_14_Key KEY_T             // key to send
+//Pin 24
+#define Button_14_Key KEY_X             // key to send
 #define Button_14_Mod 0                 // modifier key to send
 #define Button_14_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_14_Pin 0                 // not used when EnableMultiplexer is 1
 
-//Pin 21
-#define Button_11_Key KEY_U             // key to send
+//Pin 19
+#define Button_11_Key KEY_S             // key to send
 #define Button_11_Mod 0                 // modifier key to send
 #define Button_11_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_11_Pin 0                 // not used when EnableMultiplexer is 1
 
-//Pin 22
-#define Button_10_Key KEY_V             // key to send
+//Pin 20
+#define Button_10_Key KEY_T             // key to send
 #define Button_10_Mod 0                 // modifier key to send
 #define Button_10_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_10_Pin 0                 // not used when EnableMultiplexer is 1
 
-//Pin 23
-#define Button_9_Key KEY_W              // key to send
+//Pin 21
+#define Button_9_Key KEY_U              // key to send
 #define Button_9_Mod 0                  // modifier key to send
 #define Button_9_Hold 0                 // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_9_Pin 0                  // not used when EnableMultiplexer is 1
 
-//Pin 24
-#define Button_12_Key KEY_X             // key to send
+//Pin 22
+#define Button_12_Key KEY_V             // key to send
 #define Button_12_Mod 0                 // modifier key to send
 #define Button_12_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 #define Button_12_Pin 0                 // not used when EnableMultiplexer is 1
@@ -180,73 +180,73 @@
 #define Button_23_Mod 0                 // modifier key to send
 #define Button_23_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 11
-#define Button_24_Key KEY_K             // key to send
+//Pin 15
+#define Button_24_Key KEY_O             // key to send
 #define Button_24_Mod 0                 // modifier key to send
 #define Button_24_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 12
-#define Button_22_Key KEY_L            // key to send
+//Pin 16
+#define Button_22_Key KEY_P            // key to send
 #define Button_22_Mod 0                 // modifier key to send
 #define Button_22_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 13
-#define Button_19_Key KEY_M            // key to send
+//Pin 11
+#define Button_19_Key KEY_K            // key to send
 #define Button_19_Mod 0                 // modifier key to send
 #define Button_19_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 14
-#define Button_18_Key KEY_N             // key to send
+//Pin 12
+#define Button_18_Key KEY_L             // key to send
 #define Button_18_Mod 0                 // modifier key to send
 #define Button_18_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 15
-#define Button_17_Key KEY_O             // key to send
+//Pin 13
+#define Button_17_Key KEY_M             // key to send
 #define Button_17_Mod 0                 // modifier key to send
 #define Button_17_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 16
-#define Button_20_Key KEY_P             // key to send
+//Pin 14
+#define Button_20_Key KEY_N             // key to send
 #define Button_20_Mod 0                 // modifier key to send
 #define Button_20_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 25
-#define Button_32_Key KEY_Y             // key to send
-#define Button_32_Mod 0                 // modifier key to send
+//Pin 28
+#define Button_32_Key KEY_D             // key to send
+#define Button_32_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_32_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 26
-#define Button_30_Key KEY_Z             // key to send
-#define Button_30_Mod 0                 // modifier key to send
+//Pin 25
+#define Button_30_Key KEY_A             // key to send
+#define Button_30_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_30_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 27
-#define Button_31_Key KEY_A             // key to send
+//Pin 31
+#define Button_31_Key KEY_G             // key to send
 #define Button_31_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_31_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 28
-#define Button_29_Key KEY_B             // key to send
+//Pin 30
+#define Button_29_Key KEY_F             // key to send
 #define Button_29_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_29_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 29
-#define Button_28_Key KEY_C             // key to send
+//Pin 26
+#define Button_28_Key KEY_B             // key to send
 #define Button_28_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_28_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 30
-#define Button_25_Key KEY_D             // key to send
+//Pin 27
+#define Button_25_Key KEY_C             // key to send
 #define Button_25_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_25_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
-//Pin 31
+//Pin 29
 #define Button_26_Key KEY_E            // key to send
 #define Button_26_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_26_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 
 //Pin 32
-#define Button_27_Key KEY_F             // key to send
+#define Button_27_Key KEY_H             // key to send
 #define Button_27_Mod MODIFIERKEY_SHIFT // modifier key to send
 #define Button_27_Hold 0                // 1 == send key until released, 0 == release after BUTTON_HOLD
 

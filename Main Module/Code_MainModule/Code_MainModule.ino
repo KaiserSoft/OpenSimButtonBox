@@ -96,15 +96,16 @@ void setup() {
   // Anything with "Serial." is only used for development ATM
   #if OutputSerial == 1
     Serial.begin(115200);
+    while (!Serial){delay(500);}
   #endif
 
   /* rotary encoders */
-  pinMode(Encoder1PinA, INPUT_PULLUP);
-  pinMode(Encoder1PinB, INPUT_PULLUP);
-  pinMode(Encoder2PinA, INPUT_PULLUP);
-  pinMode(Encoder2PinB, INPUT_PULLUP);
-  pinMode(Encoder3PinA, INPUT_PULLUP);
-  pinMode(Encoder3PinB, INPUT_PULLUP);
+//  pinMode(Encoder1PinA, INPUT_PULLUP);
+//  pinMode(Encoder1PinB, INPUT_PULLUP);
+//  pinMode(Encoder2PinA, INPUT_PULLUP);
+//  pinMode(Encoder2PinB, INPUT_PULLUP);
+//  pinMode(Encoder3PinA, INPUT_PULLUP);
+//  pinMode(Encoder3PinB, INPUT_PULLUP);
 
   /* multi plexer setup */
   #if EnableMultiplexer == 1
@@ -641,6 +642,12 @@ void key_int2str( int value, int mod ) {
     return;
   }else if( value == 16428 ){
     Serial.print("<SPACE>");
+    return;
+  }else if( value == 61520 ){
+    Serial.print("<LEFT-ARROW>");
+    return;
+  }else if( value == 61519 ){
+    Serial.print("<RIGHT-ARROW>");
     return;
   }
 
