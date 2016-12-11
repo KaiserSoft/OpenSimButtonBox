@@ -2,3 +2,4 @@
 /Main Module/PCB/multiplexed v1/OSBB-v1-cache.lib
 /Main Module/PCB/multiplexed v1/OSBB-v1-rescue.lib
 _autosave-*.kicad_pcb
+*.kicad_pcb-bak
