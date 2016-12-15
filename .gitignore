@@ -4,3 +4,4 @@
 _autosave-*.kicad_pcb
 *.kicad_pcb-bak
 /Main Module/PCB/fan controller/*.bak
+/Main Module/PCB/fan controller/*.kicad_pcb-bak
