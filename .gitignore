@@ -3,3 +3,4 @@
 /Main Module/PCB/multiplexed v1/OSBB-v1-rescue.lib
 _autosave-*.kicad_pcb
 *.kicad_pcb-bak
+/Main Module/PCB/fan controller/*.bak
