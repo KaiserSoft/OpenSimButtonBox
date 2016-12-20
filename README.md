@@ -1,29 +1,48 @@
 Modular Open Sim Racing Button Box
 ==================================
 
-![example image of complete unit](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Documentation/Images/Prototype-v3.PNG)    
-
-The Modular Open Button Box (MOBB) project is an expandable button box designed for iRacing, build on a Teensy 3.2. The "Main Module" is designed to be very simple to build while still offering 14 buttons and 3 rotary encoders to navigate the iRacing Black Box screens. 
-The design uses the internal resistors so wires connect directly from the switches to the Teensy board.
-
-Main Module
-===========
-Prototype v2 demo video https://www.youtube.com/watch?v=qAUQymDLhig    
-      
+The Modular Open Button Box (MOBB) project is a complete open source solution to build your own button box. It provides complete plans on how to build your own 
+Teensy 3.2 shield, button box ideas, box designs for 3D printers, drill tempaltes for your face plates or just ideas for your own design.    
+The design is modular so you may pick and choose from various parts to design YOUR button box the way YOU imagine it.    
     
-Prototype v3 update    
-PCB rev RC3 with support for 32 buttons, 3 rotary encoders, 1 pit limiter switch, 3 AUX ports 0V-5V
-![PCB revision RC3](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Main%20Module/Images/Development/PCB/MOBB-RC3-2016-11-01.png)
+    
 
+![example image of the Open Button Box (MOBB) PCB rev5](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Main%20Module/Images/Development/PCB/PCB_MOBB-rc5-arrived-small.jpg)    
 
-Fan control board for 12V fans with RPM adjustable from the button box.
-![image of fan controller board](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Documentation/Images/aux_fan_control-small.jpg)
+Side by side box design    
+![side by side sim button box](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Main%20Module/Images/Development/Prototype%203/Prototype%203%20-%20Main%20Module%20%2B%20Side%20Box%20-%20Layout%201%20-%20small.jpg)
+
+Two of the boxes used for current development    
+![two development button boxes](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Documentation/Images/button_box-full_layout-vertical-760.jpg)
+
+Example of pit limiter switch on older development board   
+![pit limiter switch example](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Documentation/Images/button_box_pit_limiter-ON-small.jpg)
+
+The PCB
+===========
+The PCB is a shield for the Teensy 3.2 micro controller board. You may use the provided schematic to build your own on a perfboard, use the provided gerber files to have one manfucatured or contact me to send you one.    
+Assembly requires minor soldering skills but assembly is quite easy if you follow the instruction videos.       
+
+The current version supports
+* through hole component design for easy soldering
+* 32 buttons
+* 1 latching toggle switch with LED inside - used to enable/disable the pit limiter
+* 3 rotary encoders
+* 3 Auxillary ports providing 0-5Volt @ 100mA each
+* one handed operation to adjust AUX ports (always have one hand on the steering wheel)
+* fully open source in design and code
+* code written using the Arduino IDE for easy customizations
+* (Optional) 12Volt Fan Board with optical isolation between 12Volt supply and host PC. Connects to one AUX port and controls up to two fans.
+![image of fan controller board](https://raw.githubusercontent.com/KaiserSoft/OpenSimButtonBox/master/Main%20Module/Images/Development/PCB-Fan-Board/fan_board-RC1-with-dev_small.jpg)
 
 
 
 INSTRUCTIONS & Sources List
 ===========================
-I am still working on the documentation but most of it is complete. Please take a look in the "Documentation" directory. These are HTML files. Save them to your computer and open them from there.    
-I will provide online documentation ASAP.
+December 2016 - Instructions and Assembly Videos will be released once PCB RC6 arrives at the end of the month.
+Any documentation in the "Documentation" directory is not up to date anymore!    
 
 
+
+    
+This is an open source project - contributions are welcome!
