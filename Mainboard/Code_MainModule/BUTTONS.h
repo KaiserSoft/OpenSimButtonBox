@@ -9,7 +9,7 @@
  * The value of "PitLimiterKey" is send once for "ON" and again for "OFF"
  */
 #define EnablePitLimiterSwitch 1
-#define PitLimiterPin 6     // pin for ON/OFF switch used as pit limiter
+#define PitLimiterPin 3     // pin for ON/OFF switch used as pit limiter
 #define PitLimiterKey KEY_A // key for pit limiter. sent once when enabled and again when turned off
 #define PitLimiterMod 0
 #define PitLimiterHold 0

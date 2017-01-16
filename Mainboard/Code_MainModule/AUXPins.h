@@ -2,7 +2,7 @@
 
 //Pin for feedback LED. High when AUX key is pushed or hold is active
 #define AUX_LED_Enable 1 // 1 to enable LED feedback, default: 0
-#define AUX_LED_Pin 3 // pin number of LED
+#define AUX_LED_Pin 13 // pin number of LED
 #define AUX_LED_PWD 255 //PWM value for output
 
 
@@ -10,7 +10,7 @@
 
 #define EnableAux1 1 // Enable / Disable AUX port. Set this to 1 to use the feature
 #define EnableAux1_Button 1 //hold down a button to control the PMW output
-#define AUX1_Pin 5 // 5Volt -  fan or UV LED pin
+#define AUX1_Pin 6 // 5Volt -  fan or UV LED pin
 #define AUX1_Button KEY_A // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX1_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
 #define AUX1_Button_Auto_Hold 6 //seconds the button is "held" in software to allow one hand operation. 0 = hold and turn knob 0< push, release button and turn knop within the time your set here
@@ -33,7 +33,7 @@
 
 #define EnableAux2 1 // Enable / Disable AUX port. Set this to 1 to use the feature
 #define EnableAux2_Button 1 //hold down a button to control the PMW output
-#define AUX2_Pin 4 // 5Volt - fan or UV LED pin
+#define AUX2_Pin 5 // 5Volt - fan or UV LED pin
 #define AUX2_Button KEY_B // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX2_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
 #define AUX2_Button_Auto_Hold 0 //seconds the button is "held" in software to allow one hand operation. 0 = hold and turn knob 0< push, release button and turn knop within the time your set here
@@ -53,9 +53,9 @@
 
 
 
-#define EnableAux3 0 // Enable / Disable AUX port. Set this to 1 to use the feature
+#define EnableAux3 1 // Enable / Disable AUX port. Set this to 1 to use the feature
 #define EnableAux3_Button 1 //hold down a button to control the PMW output
-#define AUX3_Pin 3 // 5Volt - fan or UV LED pin
+#define AUX3_Pin 4 // 5Volt - fan or UV LED pin
 #define AUX3_Button KEY_C // hold this button and use encoder left/right to adjust PWM output on port
 #define AUX3_Button_Mod 0 //set to 'MODIFIERKEY_SHIFT' to a capital letter
 #define AUX3_Button_Auto_Hold 0 //seconds the button is "held" in software to allow one hand operation. 0 = hold and turn knob 0< push, release button and turn knop within the time your set here

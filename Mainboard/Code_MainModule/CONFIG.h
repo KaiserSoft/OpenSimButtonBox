@@ -27,7 +27,7 @@
   #############################
 */
 #define EnableMultiplexer 1 // 1 to use the multiplexer or 0 to use buttons without
-#define AnalogLowerLimit 3800 // a button is considered pressed when the analog reading drops below this value
+#define AnalogLowerLimit 1600 // a button is considered pressed when the analog reading drops below this value
 #define Multiplexer1 A8     //analog pin to multiplexer
 #define Multiplexer2 A7     //analog pin to multiplexer
 #define Multiplexer3 A9     //analog pin to multiplexer
