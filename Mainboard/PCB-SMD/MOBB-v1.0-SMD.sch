@@ -31,6 +31,7 @@ LIBS:valves
 LIBS:74hc4051
 LIBS:resistor-star
 LIBS:Teensy3.2
+LIBS:MOBB-v1.0-SMD-cache
 EELAYER 25 0
 EELAYER END
 $Descr A3 16535 11693
@@ -139,7 +140,7 @@ U 1 1 57F1AF96
 P 9300 8900
 F 0 "P5" H 9300 9250 50  0000 C CNN
 F 1 "Rotary Encoders" V 9400 8900 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x06" H 9300 8900 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x06" H 9300 8900 50  0001 C CNN
 F 3 "" H 9300 8900 50  0000 C CNN
 	1    9300 8900
 	-1   0    0    1   
@@ -152,7 +153,7 @@ U 1 1 580F60D7
 P 12500 8850
 F 0 "P14" H 12500 9150 50  0000 C CNN
 F 1 "EXTRA Pins" V 12600 8850 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x05" H 12500 8850 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x05" H 12500 8850 50  0001 C CNN
 F 3 "" H 12500 8850 50  0000 C CNN
 	1    12500 8850
 	1    0    0    1   
@@ -194,7 +195,7 @@ U 1 1 581250E2
 P 7600 10450
 F 0 "P1" H 7600 10650 50  0000 C CNN
 F 1 "AUX 1-3" H 7600 10250 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_2x03" H 7600 9250 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_2x03" H 7600 9250 50  0001 C CNN
 F 3 "" H 7600 9250 50  0000 C CNN
 	1    7600 10450
 	1    0    0    -1  
@@ -238,7 +239,7 @@ U 1 1 581294B1
 P 13850 7800
 F 0 "P3" H 13850 8000 50  0000 C CNN
 F 1 "+3.3V" H 13850 7600 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_2x03" H 13850 6600 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_2x03" H 13850 6600 50  0001 C CNN
 F 3 "" H 13850 6600 50  0000 C CNN
 	1    13850 7800
 	0    1    1    0   
@@ -348,7 +349,7 @@ U 1 1 5813B5E9
 P 10200 3450
 F 0 "P6" H 10200 5100 50  0000 C CNN
 F 1 "BTN 1-32" V 10200 3450 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_2x32" H 10200 3050 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_2x32" H 10200 3050 50  0001 C CNN
 F 3 "" H 10200 3050 50  0000 C CNN
 	1    10200 3450
 	0    -1   -1   0   
@@ -414,7 +415,7 @@ U 1 1 58189415
 P 9500 10500
 F 0 "P4" H 9500 10650 50  0000 C CNN
 F 1 "Pit Limiter" V 9600 10500 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x02" H 9500 10500 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x02" H 9500 10500 50  0001 C CNN
 F 3 "" H 9500 10500 50  0000 C CNN
 	1    9500 10500
 	0    1    1    0   
@@ -1389,7 +1390,7 @@ U 1 1 584D6310
 P 11900 9650
 F 0 "P7" H 11900 9800 50  0000 C CNN
 F 1 "LED" V 12000 9650 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02" H 11900 9650 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_1x02" H 11900 9650 50  0001 C CNN
 F 3 "" H 11900 9650 50  0000 C CNN
 	1    11900 9650
 	0    1    1    0   
