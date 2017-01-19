@@ -140,7 +140,7 @@ U 1 1 57F1AF96
 P 9300 8900
 F 0 "P5" H 9300 9250 50  0000 C CNN
 F 1 "Rotary Encoders" V 9400 8900 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x06" H 9300 8900 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x06_Pitch2.54mm" H 9300 8900 50  0001 C CNN
 F 3 "" H 9300 8900 50  0000 C CNN
 	1    9300 8900
 	-1   0    0    1   
@@ -153,7 +153,7 @@ U 1 1 580F60D7
 P 12500 8850
 F 0 "P14" H 12500 9150 50  0000 C CNN
 F 1 "EXTRA Pins" V 12600 8850 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x05" H 12500 8850 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x05_Pitch2.54mm" H 12500 8850 50  0001 C CNN
 F 3 "" H 12500 8850 50  0000 C CNN
 	1    12500 8850
 	1    0    0    1   
@@ -195,7 +195,7 @@ U 1 1 581250E2
 P 7600 10450
 F 0 "P1" H 7600 10650 50  0000 C CNN
 F 1 "AUX 1-3" H 7600 10250 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_2x03" H 7600 9250 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_2x03_Pitch2.54mm" H 7600 9250 50  0001 C CNN
 F 3 "" H 7600 9250 50  0000 C CNN
 	1    7600 10450
 	1    0    0    -1  
@@ -217,7 +217,7 @@ U 1 1 58126797
 P 10350 10350
 F 0 "P2" H 10350 10450 50  0000 C CNN
 F 1 "Wire to Teensy VUSB" V 10450 10350 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x01" H 10350 10350 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 10350 10350 50  0001 C CNN
 F 3 "" H 10350 10350 50  0000 C CNN
 	1    10350 10350
 	0    1    1    0   
@@ -239,7 +239,7 @@ U 1 1 581294B1
 P 13850 7800
 F 0 "P3" H 13850 8000 50  0000 C CNN
 F 1 "+3.3V" H 13850 7600 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_2x03" H 13850 6600 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_2x03_Pitch2.54mm" H 13850 6600 50  0001 C CNN
 F 3 "" H 13850 6600 50  0000 C CNN
 	1    13850 7800
 	0    1    1    0   
@@ -349,7 +349,7 @@ U 1 1 5813B5E9
 P 10200 3450
 F 0 "P6" H 10200 5100 50  0000 C CNN
 F 1 "BTN 1-32" V 10200 3450 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_2x32" H 10200 3050 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_2x32_Pitch2.54mm" H 10200 3050 50  0001 C CNN
 F 3 "" H 10200 3050 50  0000 C CNN
 	1    10200 3450
 	0    -1   -1   0   
@@ -415,7 +415,7 @@ U 1 1 58189415
 P 9500 10500
 F 0 "P4" H 9500 10650 50  0000 C CNN
 F 1 "Pit Limiter" V 9600 10500 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02" H 9500 10500 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 9500 10500 50  0001 C CNN
 F 3 "" H 9500 10500 50  0000 C CNN
 	1    9500 10500
 	0    1    1    0   
@@ -481,7 +481,7 @@ U 1 1 582FE7E3
 P 12300 7800
 F 0 "C4" H 12325 7900 50  0000 L CNN
 F 1 "C" H 12325 7700 50  0000 L CNN
-F 2 "Capacitors_ThroughHole:C_Disc_D3.0mm_W2.0mm_P2.50mm" H 12338 7650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 12338 7650 50  0001 C CNN
 F 3 "" H 12300 7800 50  0000 C CNN
 	1    12300 7800
 	1    0    0    -1  
@@ -1390,7 +1390,7 @@ U 1 1 584D6310
 P 11900 9650
 F 0 "P7" H 11900 9800 50  0000 C CNN
 F 1 "LED" V 12000 9650 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x02" H 11900 9650 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 11900 9650 50  0001 C CNN
 F 3 "" H 11900 9650 50  0000 C CNN
 	1    11900 9650
 	0    1    1    0   
