@@ -397,30 +397,10 @@ void loop() {
   
   
   /**
-   * pit limiter is permanent ON/OFF switch so this is must be handeled seperately
+  * pit limiter is permanent ON/OFF switch so this is must be handeled seperately
    */
-  #if EnablePitLimiterSwitch == 1
-    if (PitLimiterButton.update()) {
-  
-  
-      if (PitLimiterButton.fallingEdge()) {
-        Pit_limiter_active = true;
-        #if OutputSerial == 1
-          Serial.println("Pit limiter ON");
-        #endif
-        send_key(PitLimiterKey, BUTTON_HOLD, PitLimiterMod, PitLimiterHold );
-  
-        
-      }else{
-        if( Pit_limiter_active == true ){
-          Pit_limiter_active = false;
-          #if OutputSerial == 1
-            Serial.println("Pit limiter OFF");
-          #endif
-          send_key(PitLimiterKey, BUTTON_HOLD, PitLimiterMod, PitLimiterHold );
-        }
-      }
-    }
+  #if EnablePitLimiterSwitch == 1    
+    pit_limit();
   #endif
 
   /* button check start */
@@ -452,6 +432,44 @@ void loop() {
 }
 
 
+
+ /*
+ * handles pit limiter operation
+ * pit limiter is permanent ON/OFF switch so this is must be handeled seperately
+ */
+ #if EnablePitLimiterSwitch == 1
+ void pit_limit(){
+    if (PitLimiterButton.update()) {
+
+      #if PitLimiterIgnoreOnAux == 1
+        if( AUX1Pressed != 0 || AUX2Pressed != 0 || AUX3Pressed != 0 ){
+            #if OutputSerial == 1
+              Serial.println("Pit limiter ignored - AUX ist active");
+            #endif
+            return;
+        }
+      #endif
+  
+      if (PitLimiterButton.fallingEdge()) {
+        Pit_limiter_active = true;
+        #if OutputSerial == 1
+          Serial.println("Pit limiter ON");
+        #endif
+        send_key(PitLimiterKey, BUTTON_HOLD, PitLimiterMod, PitLimiterHold );
+  
+        
+      }else{
+        if( Pit_limiter_active == true ){
+          Pit_limiter_active = false;
+          #if OutputSerial == 1
+            Serial.println("Pit limiter OFF");
+          #endif
+          send_key(PitLimiterKey, BUTTON_HOLD, PitLimiterMod, PitLimiterHold );
+        }
+      }
+    }  
+ }
+ #endif
 
 
 

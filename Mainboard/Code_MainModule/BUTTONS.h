@@ -13,6 +13,10 @@
 #define PitLimiterKey KEY_A // key for pit limiter. sent once when enabled and again when turned off
 #define PitLimiterMod 0
 #define PitLimiterHold 0
+#define PitLimiterIgnoreOnAux 1 //ignore pit limter if any AUX key are set
+                                // allows you turn the pit limiter off if you reset your car with it on.
+                                // this may reset the car with the pit limiter off in car 
+                                // but still on according to the button box
 
 
 
