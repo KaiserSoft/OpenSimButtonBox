@@ -3,7 +3,21 @@ KNOWN ISSUES
 
 
 
-PCB RC5
+fan board RC2
+=============
+* LED can not be turned off by the jumper. it is always on when the load is on
+
+fan board RC1
+=============
+* through holes for fan and power headers are too tight
+
+
+Mainboard - PCB v1.0
+========
+* no known issues
+
+
+Mainboard - PCB RC5
 =======
 * Encoder Push Buttons are not working anymore - discovered 09.12.2016    
   This issue is caused by all multi plexed pins beeing pulled LOW when idle and HIGH when pushed. So far the  encoder buttons where connected the other way around.    
@@ -11,7 +25,7 @@ PCB RC5
   Note: Keep two of the three encoder pins connected to "Encoders" on PCB and center pin to ground.
 
 
-PCB <RC5
+Mainboard - PCB <RC5
 ========
 * multi plexed pins are floating    
   This works with hock up wire but fails with tiny traces using a manufactured PCB.     
