@@ -1,15 +1,20 @@
 KNOWN ISSUES
 ============
 
+fan board RC3
+=============
+* not manufactured yet / not tested
 
 
 fan board RC2
 =============
 * LED can not be turned off by the jumper. it is always on when the load is on
+  Solution: Has been fixed in fan board RC3
 
 fan board RC1
 =============
 * through holes for fan and power headers are too tight
+  Solution: Has been fixed in fan board RC2
 
 
 Mainboard - PCB v1.0
