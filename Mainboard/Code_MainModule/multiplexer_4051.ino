@@ -185,12 +185,12 @@ void check_multiplexed_buttons(){
 
 
       }else{
-       
+
           if( AUX1Pressed == 0 && AUX2Pressed == 0 && AUX3Pressed == 0   ){
             if( ButtonExecuted[d][i] == 1 && ButtonHold[d][i] == 1 ){
               release_key();
             }
-          }        
+          }
 
 
         #if EnableAux1 == 1 && EnableAux1_Button == 1 && AUX1_Button_Auto_Hold == 0
@@ -198,6 +198,7 @@ void check_multiplexed_buttons(){
               AUX1Pressed = 0;
               AUX2Pressed = 0;
               AUX3Pressed = 0;
+              beenUsed = true;
             #if AUX_LED_Enable == 1
               analogWrite(AUX_LED_Pin, 0);
             #endif
@@ -216,6 +217,7 @@ void check_multiplexed_buttons(){
               AUX1Pressed = 0;
               AUX2Pressed = 0;
               AUX3Pressed = 0;
+              beenUsed = true;
             #if AUX_LED_Enable == 1
               analogWrite(AUX_LED_Pin, 0);
             #endif
@@ -234,6 +236,7 @@ void check_multiplexed_buttons(){
               AUX1Pressed = 0;
               AUX2Pressed = 0;
               AUX3Pressed = 0;
+              beenUsed = true;
             #if AUX_LED_Enable == 1
               analogWrite(AUX_LED_Pin, 0);
             #endif

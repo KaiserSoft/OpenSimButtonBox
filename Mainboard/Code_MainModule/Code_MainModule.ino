@@ -86,7 +86,9 @@ Encoder knobRight(Encoder3PinA, Encoder3PinB);
 Bounce PitLimiterButton = Bounce(PitLimiterPin, 10);
 
 
-
+#ifndef AUX_ramp
+void AUX_ramp(byte port);
+#endif
 
 
 void setup() {
@@ -95,8 +97,11 @@ void setup() {
     Serial.begin(115200);
   #endif
   delay(BootUpDelay); //wait a few seconds before the "teensy keyboard" becomes active
+  #if AUX_LED_Enable == 1
+    pinMode(AUX_LED_Pin, OUTPUT);
+    digitalWrite(AUX_LED_Pin, 0);  
+  #endif
   pinMode(ledPin, OUTPUT);
-
   
   #if OutputSerial == 1
     while (!Serial){delay(250);}
@@ -190,88 +195,8 @@ void setup() {
   #endif
 
   /* get any fans started */
-  if( ( AUX1_fan_started == false || AUX1_fan_started == false || AUX1_fan_started == false ) &&
-      ( AUX1_ENABLE_FAN_START == 1 || AUX2_ENABLE_FAN_START == 1 || AUX3_ENABLE_FAN_START == 1 ) )
-  {
-    boolean fan_state_changed = false;
-
-    #if EnableAux1 == 1
-      if( EEPROM.read(AUX1_EEPROM) > AUX1_PWM_MIN ){
-        if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 && AUX1_FAN_START_RAMP > AUX1PWM ){
-          analogWrite(AUX1_Pin, AUX1_FAN_START_RAMP );
-          AUX1_fan_started = true;
-          fan_state_changed = true;
-          #if OutputSerial == 1
-            Serial.print("Fan ramp up AUX 1 PWM: ");
-            Serial.println(AUX1_FAN_START_RAMP);
-          #endif
-        }
-      }
-   #endif
-
-    #if EnableAux2 == 1
-      if( EEPROM.read(AUX2_EEPROM) > AUX2_PWM_MIN ){
-        if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 && AUX2_FAN_START_RAMP > AUX2PWM ){
-          analogWrite(AUX2_Pin, AUX2_FAN_START_RAMP );
-          AUX2_fan_started = true;
-          fan_state_changed = true;
-          #if OutputSerial == 1
-            Serial.print("Fan ramp up AUX 2 PWM: ");
-            Serial.println(AUX2_FAN_START_RAMP);
-          #endif
-        }
-      }
-    #endif
-
-    #if EnableAux3 == 1
-      if( EEPROM.read(AUX3_EEPROM) > AUX3_PWM_MIN ){
-        if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 && AUX3_FAN_START_RAMP > AUX3PWM ){
-          analogWrite(AUX3_Pin, AUX3_FAN_START_RAMP );
-          AUX3_fan_started = true;
-          fan_state_changed = true;
-          #if OutputSerial == 1
-            Serial.print("Fan ramp up AUX 3 PWM: ");
-            Serial.println(AUX3_FAN_START_RAMP);
-          #endif
-        }
-      }
-    #endif
-
-    if( fan_state_changed == true )
-    {
-      delay(AUX_RAMP_TIME); //allow fans to spin up
-      #if OutputSerial == 1
-        Serial.println("Fan ramp up done");
-      #endif
-
-      #if EnableAux1 == 1
-        if( EnableAux1_Button == 1 ) { 
-          AUX1PWM = EEPROM.read(AUX1_EEPROM); //current PWM value for port
-        }else if ( EnableAux1 == 1 ){
-          AUX1PWM = AUX1_PWM_FIXED;       
-        }
-      #endif
-
-      #if EnableAux2 == 1
-        if( EnableAux2_Button == 1 ) { 
-          AUX2PWM = EEPROM.read(AUX2_EEPROM); //current PWM value for port
-        }else if ( EnableAux2 == 1 ){
-          AUX2PWM = AUX2_PWM_FIXED;
-        }
-      #endif
-
-      #if EnableAux3 == 1
-        if( EnableAux3_Button == 1 ) {
-          AUX3PWM = EEPROM.read(AUX3_EEPROM); //current PWM value for port
-        }else if ( EnableAux3 == 1 ){
-          AUX3PWM = AUX3_PWM_FIXED;
-        }
-      #endif
-    }
-  }
-
   #if OutputSerial == 1
-    Serial.print("AUX ports ready");
+    Serial.print("AUX ports config");
     
     if( EnableAux1 == 0 ){
       Serial.print(" / AUX1 disabled");
@@ -327,7 +252,36 @@ void setup() {
       Serial.print(AUX3PWM);
     }
     Serial.println();
-  #endif  
+  #endif
+  
+  if( ( AUX1_fan_started == false || AUX1_fan_started == false || AUX1_fan_started == false ) &&
+      ( AUX1_ENABLE_FAN_START == 1 || AUX2_ENABLE_FAN_START == 1 || AUX3_ENABLE_FAN_START == 1 ) )
+  {
+
+    #if EnableAux1 == 1
+      if( EEPROM.read(AUX1_EEPROM) >= AUX1_PWM_MIN ){
+        if( AUX1_fan_started == false && AUX1_ENABLE_FAN_START == 1 && AUX1_FAN_START_RAMP > AUX1PWM ){
+          AUX_ramp(1);
+        }
+      }
+   #endif
+
+    #if EnableAux2 == 1
+      if( EEPROM.read(AUX2_EEPROM) >= AUX2_PWM_MIN ){
+        if( AUX2_fan_started == false && AUX2_ENABLE_FAN_START == 1 && AUX2_FAN_START_RAMP > AUX2PWM ){
+          AUX_ramp(2);
+        }
+      }
+    #endif
+
+    #if EnableAux3 == 1
+      if( EEPROM.read(AUX3_EEPROM) >= AUX3_PWM_MIN ){
+        if( AUX3_fan_started == false && AUX3_ENABLE_FAN_START == 1 && AUX3_FAN_START_RAMP > AUX3PWM ){
+          AUX_ramp(3);
+        }
+      }
+    #endif
+  }
 
 } //void setup()
 
@@ -376,11 +330,6 @@ void send_key( int key, int del, int mod = 0, int btnhold = 0 ) {
  ##############
 */
 void loop() {
-  
-  if( EnableAux1 == 1 ) { analogWrite(AUX1_Pin, AUX1PWM);}
-  if( EnableAux2 == 1 ) { analogWrite(AUX2_Pin, AUX2PWM);}
-  if( EnableAux3 == 1 ) { analogWrite(AUX3_Pin, AUX3PWM);}
-
 
 
   #if OutputSerial == 1 && DebugOutput == 1
@@ -429,6 +378,9 @@ void loop() {
   #if AUX1_Button_Auto_Hold > 0 || AUX2_Button_Auto_Hold > 0 || AUX3_Button_Auto_Hold > 0
     release_aux_button();
   #endif
+
+
+  AUX_ramp(0); //maintain AUX ramps
 }
 
 
@@ -471,6 +423,63 @@ void loop() {
  }
  #endif
 
+
+/*
+ * was supposed to only ramp AUX ports but now maintains values as well. needs to be rewritten for cleanup later ... lets test it first
+ * ramps a ports .... was added later needs to be improved to use defined values from config files
+ * port == 0 check current ramps or 1,2,3 for AUX
+ */
+void AUX_ramp( byte port ){
+  static unsigned long ramp_start[3] = { 0, 0, 0 }; // 0 = not active, >0 = ramping
+  byte ramp_value[3] = { AUX1_FAN_START_RAMP, AUX2_FAN_START_RAMP, AUX3_FAN_START_RAMP};
+  byte ramp_pin[3] = { AUX1_Pin, AUX2_Pin, AUX3_Pin};
+  byte ramp_enabled[3] {AUX1_ENABLE_FAN_START, AUX2_ENABLE_FAN_START, AUX3_ENABLE_FAN_START };
+  byte pwm_vals[3] = { AUX1PWM, AUX2PWM, AUX3PWM};
+  byte aux_active[3] = { EnableAux1, EnableAux2, EnableAux3};
+
+  if( port == 0 ) {
+    // maintain ramps
+    for( byte x=0 ; x < 3 ; ++x ){
+      if( ramp_start[x] > 0 && (ramp_start[x] + AUX_RAMP_TIME) < millis() ){
+        analogWrite(ramp_pin[x], pwm_vals[x] );
+        ramp_start[x]  = 0;
+        #if OutputSerial == 1
+          Serial.print("Ramp OFF AUX ");
+          Serial.print(x+1);
+          Serial.print(" pin ");
+          Serial.print(ramp_pin[x]);
+          Serial.print(" speed ");
+          Serial.print(pwm_vals[x]);
+          Serial.println();
+        #endif
+      }else if( ramp_start[x] == 0 ){
+        if( aux_active[x] == 1 ) {  analogWrite(ramp_pin[x], pwm_vals[x]);}
+        else{ analogWrite(ramp_pin[x], 0);}
+      }
+    }
+    return;
+  }
+
+
+  byte address = port - 1; //array address or port
+  if( ramp_start[address] == 0 ){
+    if( ramp_enabled[address] == 1 ){
+      analogWrite(ramp_pin[address], ramp_value[address] );
+      ramp_start[address] = millis();
+  
+      #if OutputSerial == 1
+        Serial.print("Ramp ON AUX ");
+        Serial.print(port);
+        Serial.print(" pin ");
+        Serial.print(ramp_pin[address]);
+        Serial.print(" speed ");
+        Serial.print(ramp_value[address]);
+        Serial.println();
+      #endif
+    }
+    return;
+  }
+}
 
 
 
@@ -625,7 +634,6 @@ void eeprom_update_pwm(){
 
 
 }
-
 
 
 

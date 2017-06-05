@@ -96,7 +96,12 @@ void check_rotary_encoders(){
           send_key(Encoder3KeyB, BUTTON_HOLD, Encoder3ModB );
         }else if( AUX1Pressed > 0 ) {
           AUX1PWM_new = AUX1PWM + AUX1_PWM_CHANGE;
-          AUX1PWM = (AUX1PWM_new < AUX1_PWM_MAX ) ? AUX1PWM_new : AUX1_PWM_MAX;
+          if( AUX1PWM == 0 && AUX1PWM_new > AUX1PWM ){
+            AUX1PWM = AUX1_PWM_MIN;
+            AUX_ramp(1);
+          }else{          
+            AUX1PWM = (AUX1PWM_new < AUX1_PWM_MAX ) ? AUX1PWM_new : AUX1_PWM_MAX;
+          }
           EEPROM_val_change_last = millis();
           #if AUX1_Button_Auto_Hold > 0
             AUX1Pressed = millis(); //reset "hold" counter when button is used
@@ -105,7 +110,12 @@ void check_rotary_encoders(){
           #endif
         }else if( AUX2Pressed > 0 ) {
           AUX2PWM_new = AUX2PWM + AUX2_PWM_CHANGE;
-          AUX2PWM = (AUX2PWM_new < 255 ) ? AUX2PWM_new : 255;
+          if( AUX2PWM == 0 && AUX2PWM_new > AUX2PWM ){
+            AUX2PWM = AUX2PWM_new;
+            AUX_ramp(2);
+          }else{          
+            AUX2PWM = (AUX2PWM_new < AUX2_PWM_MAX ) ? AUX2PWM_new : AUX2_PWM_MAX;
+          }
           EEPROM_val_change_last = millis();
           #if AUX2_Button_Auto_Hold > 0
             AUX2Pressed = millis(); //reset "hold" counter when button is used
@@ -114,7 +124,12 @@ void check_rotary_encoders(){
           #endif
         }else if( AUX3Pressed > 0 ) {
           AUX3PWM_new = AUX3PWM + AUX3_PWM_CHANGE;
-          AUX3PWM = (AUX3PWM_new < 255 ) ? AUX3PWM_new : 255;
+          if( AUX3PWM == 0 && AUX3PWM_new > AUX3PWM ){
+            AUX3PWM = AUX3PWM_new;
+            AUX_ramp(3);
+          }else{          
+            AUX3PWM = (AUX3PWM_new < AUX3_PWM_MAX ) ? AUX3PWM_new : AUX3_PWM_MAX;
+          }
           EEPROM_val_change_last = millis();
           #if AUX3_Button_Auto_Hold > 0
             AUX3Pressed = millis(); //reset "hold" counter when button is used
