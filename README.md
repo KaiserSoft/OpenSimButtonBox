@@ -42,8 +42,9 @@ The current version supports
 
 INSTRUCTIONS & Sources List
 ===========================
-December 2016 - Instructions and Assembly Videos will be released once PCB RC6 arrives at the end of the month.
 Any documentation in the "Documentation" directory is not up to date anymore!    
+I will produce a series of videos explaining how to build the PCB and how to configure the software.     
+The build video is available here https://www.youtube.com/watch?v=iexbjr4jJTc      
 
 
 
