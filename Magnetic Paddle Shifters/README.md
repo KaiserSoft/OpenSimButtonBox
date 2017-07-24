@@ -35,15 +35,15 @@ Bill of Materials
 The following parts are required to assemble one shifter unit. Each shifter requires on micro switch. The type 
 depends on which Body you are printing.
 
-2x MR52ZZ ball bearing
-1x M2x40mm flat head machine screw
-1x M2 nut for machine screw
-2x 12x3mm neodymium magnet (round disk shape)
-2x M3x14mm screw for mounting the paddles to the shift lever
-2x M3 nut for the M3x14mm screw
-2x M3 countersunk screw for mounting the unit to your button box or wheel
-1x Omron D2F-01 or D2F-01-D3 micro switch or cheap clones D2FC-F-7N on ebay (Body for Pin Plunger Switch)
-1x Omron D2F-01L or D2F-01L-D3 micro switch (Body for Hinge Lever Switch)
+* 2x MR52ZZ ball bearing
+* 1x M2x40mm flat head machine screw
+* 1x M2 nut for machine screw
+* 2x 12x3mm neodymium magnet (round disk shape)
+* 2x M3x14mm screw for mounting the paddles to the shift lever
+* 2x M3 nut for the M3x14mm screw
+* 2x M3 countersunk screw for mounting the unit to your button box or wheel
+* 1x Omron D2F-01 or D2F-01-D3 micro switch or cheap clones D2FC-F-7N on ebay (Body for Pin Plunger Switch)
+* 1x Omron D2F-01L or D2F-01L-D3 micro switch (Body for Hinge Lever Switch)
 
 
 
