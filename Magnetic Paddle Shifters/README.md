@@ -15,18 +15,19 @@ https://www.youtube.com/watch?v=EhsOMB1wswM
 
 Recommended printer/slicer settings
 ---
-* The shifter body should be printed with at least 20% infill
-* The lever should be printed solid.
+* The shifter body should be printed with at least 15% infill
+* The lever should be printed solid
+* The paddles work great with 30% honeycomb infill
 * The part is build with a 0.25mm layer height in mind
 * Material used for my prints is PLA
 
 
 File Overview
 ---
-* The folder "Body for Pin Plunger Switch" contains the body part designed for the "pin plunger" type of button.
-* The folder "Body for Hinge Lever Switch" contains the body part designed for the "hinge lever" type of button.
+* The folder "Body for Pin Plunger Switch" contains the body part designed for the "pin plunger" type of button
+* The folder "Body for Hinge Lever Switch" contains the body part designed for the "hinge lever" type of button
 * The folder "Lever" contains the Lever used by both body styles
-* The folder "Paddles" contains different paddle designs. You only need one per shifter set.
+* The folder "Paddles" contains different paddle designs. You only need one per shifter
 
 
 
