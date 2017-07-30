@@ -19,7 +19,34 @@
                                 // but still on according to the button box
 
 
+	
 
+
+	
+/*
+ ###################
+ # Shiter Priority #
+ ###################
+
+ * using this will check the multiplexer ports where your shifters are connected to after every port check
+ * 
+ * usually port 1 of every multiplexer is checked, then port 2 and so on
+ * with shifter priority enabled, port 1 of every multi plexer is checked, then the shifter ports, then port 2 of every multi plexer, then the shifter ports again
+ */
+#define Enable_Shifter_Priority 0  // 1 to check for shifts more often then regular buttons, 0 to check during regular button checks
+#define Shifter_A_Multiplexer 3    // multiplexer where the shifter is connected to - with DebugMultiplexer enabled, value "Device"
+#define Shifter_A_Port 6           // port on multiplexer - with DebugMultiplexer enabled, value "MultiplexerPin"
+#define Shifter_B_Multiplexer 3    // multiplexer where the shifter is connected to - with DebugMultiplexer enabled, value "Device"
+#define Shifter_B_Port 2           // port on multiplexer - with DebugMultiplexer enabled, value "MultiplexerPin"
+#define Shifter_Debounce 25        // time in ms that must pass before multiplexed buttons are considered pressed
+ 
+ 
+								
+								
+								
+
+								
+								
 /* 
   ###################
   # Rotary Encoders #
@@ -70,6 +97,15 @@
   # Buttons - multiplexed and non-multiplexed #
   #############################################
 */
+
+//Paddle Shifter Priority
+// list the two buttons used for you paddle shifters here
+// to ensure they are checked more often. prefents missing shifts when doing rapid gear changes
+// Use config options "DebugMultiplexer" to find the config options below
+#define Shifter_A_Multiplexer
+#define Shifter_A_Port
+#define Shifter_B_Multiplexer
+#define Shifter_B_Port
 
 //Pin 1
 #define Button_5_Key KEY_A              // key to send

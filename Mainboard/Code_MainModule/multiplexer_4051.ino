@@ -34,6 +34,8 @@ unsigned int AnalogValue = 0;
 
 
 
+
+
 void check_multiplexed_buttons(){
   #if OutputSerial == 1 && DebugMultiplexer == 1
     boolean SerialMultiDebugStart = false; //truen when pin line has been send
@@ -47,13 +49,17 @@ void check_multiplexed_buttons(){
       SerialMultiDebugStart = false;
     #endif
 
+    #if Enable_Shifter_Priority == 1
+      check_shifters();
+    #endif
+
     // select 74HC4051 channel 5 (of 0 to 7)
     digitalWrite(MultiplexerP9, ChannelActive[i][0]);
     digitalWrite(MultiplexerP10, ChannelActive[i][1]);
     digitalWrite(MultiplexerP11, ChannelActive[i][2]);
     
-    // allow 50 us for signals to stablize
-    delayMicroseconds(50);
+    // allow some timefor signal to stablize
+    delayMicroseconds(MultiplexerPortDelay);
 
   
     for( int d=0 ; d < 4 ; d++ ) {
@@ -63,7 +69,7 @@ void check_multiplexed_buttons(){
       #if OutputSerial == 1 && DebugMultiplexer == 1
         if( SerialMultiDebugStart == false && AnalogValue > AnalogLowerLimit ) {
           Serial.println("");
-          Serial.print(" Mpin:");
+          Serial.print(" MultiplexerPin:");
           Serial.print(i);
           SerialMultiDebugStart = true;
           SerialMultiDebugOut = true;
@@ -72,7 +78,7 @@ void check_multiplexed_buttons(){
         if( AnalogValue > AnalogLowerLimit ){
           Serial.print(" / Tpin: ");
           Serial.print(Devices[d]);
-          Serial.print(" dev:");
+          Serial.print(" Device:");
           Serial.print(d);
           Serial.print(" val:");
           Serial.print(AnalogValue);
@@ -84,7 +90,7 @@ void check_multiplexed_buttons(){
           //press has been registed, store time
           ButtonState[d][i] = millis();
           
-        }else if( ButtonState[d][i] + BUTTON_HOLD < ftime ){
+        }else if( ButtonState[d][i] + BUTTON_DEBOUNCE < ftime ){
           //button is still pressed
           
           if( ButtonExecuted[d][i] == 0 ){
@@ -269,3 +275,77 @@ void check_multiplexed_buttons(){
 }
 
 
+// only check ports defined as shifter ports
+void check_shifters(){
+  unsigned int ftime = millis(); //function time used for button press
+
+    //first shifter position
+    digitalWrite(MultiplexerP9, ChannelActive[Shifter_A_Port][0]);
+    digitalWrite(MultiplexerP10, ChannelActive[Shifter_A_Port][1]);
+    digitalWrite(MultiplexerP11, ChannelActive[Shifter_A_Port][2]);
+    
+    // allow some timefor signal to stablize
+    delayMicroseconds(MultiplexerPortDelay);
+    AnalogValue = analogRead(Devices[Shifter_A_Multiplexer]);
+    if( AnalogValue > AnalogLowerLimit){
+      if( ButtonState[Shifter_A_Multiplexer][Shifter_A_Port] == 0 ){
+        //press has been registed, store time
+        ButtonState[Shifter_A_Multiplexer][Shifter_A_Port] = millis();
+    
+      }else if( ButtonState[Shifter_A_Multiplexer][Shifter_A_Port] + Shifter_Debounce < ftime ){
+        //button is still pressed
+          
+        if( ButtonExecuted[Shifter_A_Multiplexer][Shifter_A_Port] == 0 )
+        {
+          send_key(ButtonKey[Shifter_A_Multiplexer][Shifter_A_Port], BUTTON_HOLD, ButtonModifier[Shifter_A_Multiplexer][Shifter_A_Port], ButtonHold[Shifter_A_Multiplexer][Shifter_A_Port] );
+          ButtonExecuted[Shifter_A_Multiplexer][Shifter_A_Port] = 1;
+        }
+        
+        #if OutputSerial == 1 && DebugShiterPriority == 1
+          Serial.print("Port A ");
+          Serial.println(AnalogValue);
+        #endif
+      }
+    }else{
+      if( ButtonExecuted[Shifter_A_Multiplexer][Shifter_A_Port] == 1 ){
+        ButtonExecuted[Shifter_A_Multiplexer][Shifter_A_Port] = 0;
+        ButtonState[Shifter_A_Multiplexer][Shifter_A_Port] = 0;
+      }
+    }
+
+
+
+    //Second shifter position
+    digitalWrite(MultiplexerP9, ChannelActive[Shifter_B_Port][0]);
+    digitalWrite(MultiplexerP10, ChannelActive[Shifter_B_Port][1]);
+    digitalWrite(MultiplexerP11, ChannelActive[Shifter_B_Port][2]);
+    
+    // allow some timefor signal to stablize
+    delayMicroseconds(MultiplexerPortDelay);
+    AnalogValue = analogRead(Devices[Shifter_B_Multiplexer]);
+    if( AnalogValue > AnalogLowerLimit){
+      if( ButtonState[Shifter_B_Multiplexer][Shifter_B_Port] == 0 ){
+        //press has been registed, store time
+        ButtonState[Shifter_B_Multiplexer][Shifter_B_Port] = millis();
+    
+      }else if( ButtonState[Shifter_B_Multiplexer][Shifter_B_Port] + Shifter_Debounce < ftime ){
+        //button is still pressed
+          
+        if( ButtonExecuted[Shifter_B_Multiplexer][Shifter_B_Port] == 0 )
+        {
+          send_key(ButtonKey[Shifter_B_Multiplexer][Shifter_B_Port], BUTTON_HOLD, ButtonModifier[Shifter_B_Multiplexer][Shifter_B_Port], ButtonHold[Shifter_B_Multiplexer][Shifter_B_Port] );
+          ButtonExecuted[Shifter_B_Multiplexer][Shifter_B_Port] = 1;
+        }
+        
+        #if OutputSerial == 1 && DebugShiterPriority == 1
+          Serial.print("Port B ");
+          Serial.println(AnalogValue);
+        #endif
+      }
+    }else{
+      if( ButtonExecuted[Shifter_B_Multiplexer][Shifter_B_Port] == 1 ){
+        ButtonExecuted[Shifter_B_Multiplexer][Shifter_B_Port] = 0;
+        ButtonState[Shifter_B_Multiplexer][Shifter_B_Port] = 0;
+      }
+    }
+}
