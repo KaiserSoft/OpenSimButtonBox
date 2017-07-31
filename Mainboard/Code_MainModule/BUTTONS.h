@@ -91,21 +91,11 @@
 
 
 
-
 /* 
   #############################################
   # Buttons - multiplexed and non-multiplexed #
   #############################################
 */
-
-//Paddle Shifter Priority
-// list the two buttons used for you paddle shifters here
-// to ensure they are checked more often. prefents missing shifts when doing rapid gear changes
-// Use config options "DebugMultiplexer" to find the config options below
-#define Shifter_A_Multiplexer
-#define Shifter_A_Port
-#define Shifter_B_Multiplexer
-#define Shifter_B_Port
 
 //Pin 1
 #define Button_5_Key KEY_A              // key to send
