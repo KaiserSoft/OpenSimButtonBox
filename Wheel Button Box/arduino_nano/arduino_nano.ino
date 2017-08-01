@@ -56,12 +56,15 @@ void check_button( int num ){
     Serial.println(random(1,3));
   }
 
+/*
+ * disabled for now since pins are floating
   if (Buttons[num].update()) {
     if (Buttons[num].fallingEdge()) {
-        Serial.print("B-WTF!");
+        Serial.print("B");
         Serial.println(ButtonKey[num]);
     }
   }
+  */
 }
 
 
