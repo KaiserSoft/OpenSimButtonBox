@@ -1,0 +1,45 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="B1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">a</Value>
+    </Setting>
+    <Setting Name="B2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">b</Value>
+    </Setting>
+    <Setting Name="B3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c</Value>
+    </Setting>
+    <Setting Name="B4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d</Value>
+    </Setting>
+    <Setting Name="B5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">e</Value>
+    </Setting>
+    <Setting Name="B6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">f</Value>
+    </Setting>
+    <Setting Name="B7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">g</Value>
+    </Setting>
+    <Setting Name="B8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">h</Value>
+    </Setting>
+    <Setting Name="B9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">i</Value>
+    </Setting>
+    <Setting Name="B10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">j</Value>
+    </Setting>
+    <Setting Name="B11" Type="System.String" Scope="User">
+      <Value Profile="(Default)">k</Value>
+    </Setting>
+    <Setting Name="J1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">x</Value>
+    </Setting>
+    <Setting Name="J2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">y</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
