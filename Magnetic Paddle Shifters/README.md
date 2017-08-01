@@ -40,8 +40,8 @@ depends on which Body you are printing.
 * 1x M2x40mm flat head machine screw
 * 1x M2 nut for machine screw
 * 2x 12x3mm neodymium magnet (round disk shape)
-* 2x M3x14mm screw for mounting the paddles to the shift lever
-* 2x M3 nut for the M3x14mm screw
+* 2x M3x10mm counter sunk screw for mounting the paddles to the shift lever
+* 2x M3 nut for the M3x10mm counter sunk screw
 * 2x M3 countersunk screw for mounting the unit to your button box or wheel
 * 1x Omron D2F-01 or D2F-01-D3 micro switch or cheap clones D2FC-F-7N on ebay (Body for Pin Plunger Switch)
 * 1x Omron D2F-01L or D2F-01L-D3 micro switch (Body for Hinge Lever Switch)
@@ -54,4 +54,6 @@ List of videos related to these magnetic paddle shifters
 * Magnetic Paddle Shifter durability testing - https://www.youtube.com/watch?v=JnYoWvMd-ec
 * Testing in game, mounted to G27 wheel base - https://www.youtube.com/watch?v=P4YznCb-aOs
 * First assembly video - https://www.youtube.com/watch?v=EhsOMB1wswM
+* Second assembly video - https://www.youtube.com/watch?v=DKPDk3TvZT4
+* Testing with OSW direct drive wheel - https://www.youtube.com/watch?v=NF07MALhuUw
 
