@@ -14,6 +14,7 @@
         frm_com_test.txt_btn11.Text = My.Settings.Item("B11").ToString
         frm_com_test.txt_joy1.Text = My.Settings.Item("J1").ToString
         frm_com_test.txt_joy2.Text = My.Settings.Item("J2").ToString
+        frm_com_test.chkKeyboardEnable.Checked = My.Settings.Item("KeyboardEnabled").ToString
     End Sub
 
     Shared Sub store()
@@ -30,6 +31,7 @@
         My.Settings.Item("B11") = frm_com_test.txt_btn11.Text
         My.Settings.Item("J1") = frm_com_test.txt_joy1.Text
         My.Settings.Item("J2") = frm_com_test.txt_joy2.Text
+        My.Settings.Item("KeyboardEnabled") = frm_com_test.chkKeyboardEnable.Checked
         My.Settings.Save()
     End Sub
 End Class

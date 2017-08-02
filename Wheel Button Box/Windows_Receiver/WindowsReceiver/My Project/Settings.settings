@@ -41,5 +41,8 @@
     <Setting Name="J2" Type="System.String" Scope="User">
       <Value Profile="(Default)">y</Value>
     </Setting>
+    <Setting Name="KeyboardEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

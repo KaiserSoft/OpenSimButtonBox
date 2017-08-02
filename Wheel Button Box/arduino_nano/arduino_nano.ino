@@ -10,6 +10,10 @@
 #include "Bounce2.h"
 #include <EEPROM.h>
 
+#define LED 13
+
+// Paddle_1_Pin and Paddle_2_Pin used here or as interrupt .. this may
+// be enough since it is only a few pins
 Bounce Buttons[11] = {
   Bounce(Button_1_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_2_Pin, BUTTON_DEBOUNCE),
@@ -20,8 +24,8 @@ Bounce Buttons[11] = {
   Bounce(Button_7_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_8_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_9_Pin, BUTTON_DEBOUNCE),
-  Bounce(Button_10_Pin, BUTTON_DEBOUNCE),
-  Bounce(Button_11_Pin, BUTTON_DEBOUNCE)
+  Bounce(Paddle_1_Pin, BUTTON_DEBOUNCE),
+  Bounce(Paddle_2_Pin, BUTTON_DEBOUNCE)
 };
 
 /* serial receive stuff */
@@ -33,9 +37,26 @@ boolean button_enabled = false; //don't send commands until the nano is connecte
 unsigned long debug_last = 0;
 
 void setup() {
+  pinMode( Button_1_Pin, INPUT_PULLUP);
+  pinMode( Button_2_Pin, INPUT_PULLUP);
+  pinMode( Button_3_Pin, INPUT_PULLUP);
+  pinMode( Button_4_Pin, INPUT_PULLUP);
+  pinMode( Button_5_Pin, INPUT_PULLUP);
+  pinMode( Button_6_Pin, INPUT_PULLUP);
+  pinMode( Button_7_Pin, INPUT_PULLUP);
+  pinMode( Button_8_Pin, INPUT_PULLUP);
+  pinMode( Button_9_Pin, INPUT_PULLUP);
+  pinMode( Paddle_1_Pin, INPUT_PULLUP);
+  pinMode( Paddle_2_Pin, INPUT_PULLUP);
+  
   Serial.begin(115200);
-}
+  Serial.println("Arduino Nano Button Box Ready");
+  digitalWrite( LED_BUILTIN, LOW);
 
+  //not sure if this is required, need to test
+  //attachInterrupt(digitalPinToInterrupt(Paddle_1_Pin), ISR_Paddle_1, LOW); 
+  //attachInterrupt(digitalPinToInterrupt(Paddle_2_Pin), ISR_Paddle_2, LOW); 
+}
 
 
 
@@ -56,28 +77,42 @@ void check_button( int num ){
     Serial.println(random(1,3));
   }
 
-/*
- * disabled for now since pins are floating
+
   if (Buttons[num].update()) {
     if (Buttons[num].fallingEdge()) {
-        Serial.print("B");
+        //Serial.print("B");
+        Serial.print("FLOATING-"); //for testing, set to "B" when using actual buttons
         Serial.println(ButtonKey[num]);
     }
   }
-  */
 }
 
 
 void loop() {
+  boolean led_state = false;
+  
   /* listen for program connection from PC */
   if (serial_done == true) {
     if( serial_cmd == "wr-rdy"){
       Serial.println("nano ready");
       debug_last = millis();
       button_enabled = true;
+      
     }else if( serial_cmd == "wr-stop" ){
-      Serial.println("nano stop");
+      Serial.println("nano stop");      
       button_enabled = false;
+      for( int x=0 ; x < 20 ; ++x){
+        if( led_state == true ){
+          digitalWrite(LED_BUILTIN, LOW);
+          led_state = false;
+        }else{
+          digitalWrite(LED_BUILTIN, HIGH);
+          led_state = true;
+        }
+        delay(125);
+      }
+      digitalWrite(LED_BUILTIN, LOW);
+      
     }else{
       Serial.print("invalid ");
       Serial.println(serial_cmd);
@@ -89,7 +124,6 @@ void loop() {
   for( int x=0 ; x < 11 ; ++x ){
     check_button( x );
   }
-
 
 
 }

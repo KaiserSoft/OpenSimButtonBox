@@ -1,7 +1,8 @@
 ﻿
 
-Imports System
+Imports System.ComponentModel
 Imports System.IO.Ports
+Imports System.Threading
 
 Public Class frm_com_test
     Dim comPORT As String
@@ -11,6 +12,7 @@ Public Class frm_com_test
 
     Private Sub frm_com_test_Load(sender As Object, e As EventArgs) Handles Me.Load
         comPORT = ""
+        lblFeedback.Text = ""
         For Each sp As String In My.Computer.Ports.SerialPortNames
             cmb_ports.Items.Add(sp)
         Next
@@ -44,9 +46,10 @@ Public Class frm_com_test
                 SerialPort1.Open()
                 SerialPort1.DiscardInBuffer()
                 SerialPort1.Write("wr-rdy" + vbLf)
-                btn_connect.Text = "Dis-connect"
+                btn_connect.Text = "Disconnect"
             Else
-                MsgBox("Select a COM port first")
+                MsgBox("Please select a COM port first")
+                UpdateLabel(lblFeedback, "Connection established!")
             End If
         Else
             btn_connect.Text = "Connect"
@@ -61,11 +64,12 @@ Public Class frm_com_test
         Dim indata As String = ""
         Try
             indata = sp.ReadLine()
+            'indata = sp.ReadExisting()
         Catch ex As Exception
             Console.WriteLine("Error reading serial:" + ex.ToString)
         End Try
 
-        'Dim indata As String = sp.ReadExisting()
+
 
         DataProcess(indata)
         AppendTextBox(txt_data, indata + vbCrLf)
@@ -77,50 +81,75 @@ Public Class frm_com_test
         Dim strip = Trim(data.Replace(vbCr, "").Replace(vbLf, ""))
 
         If strip = "" Then
-            Console.WriteLine("empty")
+            Console.WriteLine("Received empty string over serial!")
             Exit Sub
         End If
 
         Dim btn_press = strip.Substring(1)
         Dim btn_type = strip.Substring(0, 1)
-        Console.WriteLine("btn:" + btn_press)
-        Console.WriteLine("enabled:" + arduinoReady.ToString)
-        If btn_type = "B" Then
+
+        If arduinoReady = True And btn_type = "B" Then
             'buttons
             Dim btn As Integer = Convert.ToInt32(strip.Substring(1))
             Console.WriteLine("Button pressed:" + btn.ToString)
-            SendKeys.SendWait(My.Settings.Item("B" + btn.ToString).ToString)
+            If chkKeyboardEnable.Checked = True Then
+                SendKeys.SendWait(My.Settings.Item("B" + btn.ToString).ToString)
+            End If
             Exit Sub
-        ElseIf btn_type = "J" Then
+        ElseIf arduinoReady = True And btn_type = "J" Then
             'joystick
             Dim btn As Integer = Convert.ToInt32(strip.Substring(1))
             Console.WriteLine("Joystick moved:" + btn.ToString)
-            SendKeys.SendWait(My.Settings.Item("J" + btn.ToString).ToString)
+            If chkKeyboardEnable.Checked = True Then
+                SendKeys.SendWait(My.Settings.Item("J" + btn.ToString).ToString)
+            End If
             Exit Sub
         End If
 
-        If strip = "nano rdy" Then
+        Console.WriteLine(strip)
+        If strip = "nano ready" Then
+            UpdateLabel(lblFeedback, "Connection established!")
+            tmrClearFeedback.Start()
             arduinoReady = True
             Exit Sub
         ElseIf strip = "nano stop" Then
             SerialPort1.DiscardOutBuffer()
             SerialPort1.DiscardInBuffer()
             SerialPort1.Close()
+            UpdateLabel(lblFeedback, "Connection closed!")
+            tmrClearFeedback.Start()
             arduinoReady = False
             Exit Sub
         End If
     End Sub
 
 
-    Private Delegate Sub AppendTextBoxDelegate(ByVal TB As TextBox, ByVal txt As String)
-    Private Sub AppendTextBox(ByVal TB As TextBox, ByVal txt As String)
-        If TB.InvokeRequired Then
-            TB.Invoke(New AppendTextBoxDelegate(AddressOf AppendTextBox), New Object() {TB, txt})
-        Else
-            TB.AppendText(txt)
-        End If
+
+    Private Delegate Sub UpdateLabelDelegate(ByVal LB As Label, ByVal txt As String)
+    Private Sub UpdateLabel(ByVal LB As Label, ByVal txt As String)
+        Try
+            If LB.InvokeRequired Then
+                LB.Invoke(New UpdateLabelDelegate(AddressOf UpdateLabel), New Object() {LB, txt})
+            Else
+                LB.Text = txt
+            End If
+        Catch ex As Exception
+            Console.WriteLine("ERROR during lbl Update" + ex.ToString)
+        End Try
     End Sub
 
+    Private Delegate Sub AppendTextBoxDelegate(ByVal TB As TextBox, ByVal txt As String)
+    Private Sub AppendTextBox(ByVal TB As TextBox, ByVal txt As String)
+        Try
+            If TB.InvokeRequired Then
+                TB.Invoke(New AppendTextBoxDelegate(AddressOf AppendTextBox), New Object() {TB, txt})
+            Else
+                TB.AppendText(txt)
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
 
 
     Function ReceiveSerialData() As String
@@ -143,6 +172,30 @@ Public Class frm_com_test
     End Sub
 
     Private Sub btn_apply_Click(sender As Object, e As EventArgs) Handles btn_apply.Click
-        KeyboardSettings.store()
+        Try
+            KeyboardSettings.store()
+            lblFeedback.Text = "Settings Stored"
+        Catch ex As Exception
+            lblFeedback.Text = "Erro storing new settings"
+            MsgBox("Error: " + ex.ToString, vbExclamation)
+        End Try
+
+        tmrClearFeedback.Start()
+    End Sub
+
+    Private Sub frm_com_test_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If SerialPort1.IsOpen Then
+            RemoveHandler SerialPort1.DataReceived, AddressOf DataReceivedHandler
+            SerialPort1.Write("wr-stop" + vbLf)
+        End If
+    End Sub
+
+    Private Sub tmrClearFeedback_Tick(sender As Object, e As EventArgs) Handles tmrClearFeedback.Tick
+        lblFeedback.Text = ""
+        tmrClearFeedback.Stop()
+    End Sub
+
+    Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
+        Me.Close()
     End Sub
 End Class
