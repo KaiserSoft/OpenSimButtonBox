@@ -50,7 +50,6 @@ void setup() {
   pinMode( Paddle_2_Pin, INPUT_PULLUP);
   
   Serial.begin(115200);
-  Serial.println("Arduino Nano Button Box Ready");
   digitalWrite( LED_BUILTIN, LOW);
 
   //not sure if this is required, need to test
@@ -93,13 +92,13 @@ void loop() {
   
   /* listen for program connection from PC */
   if (serial_done == true) {
-    if( serial_cmd == "wr-rdy"){
-      Serial.println("nano ready");
+    if( serial_cmd == "wr"){
+      Serial.println("nr");
       debug_last = millis();
       button_enabled = true;
       
-    }else if( serial_cmd == "wr-stop" ){
-      Serial.println("nano stop");      
+    }else if( serial_cmd == "ws" ){
+      Serial.println("ns");      
       button_enabled = false;
       for( int x=0 ; x < 20 ; ++x){
         if( led_state == true ){

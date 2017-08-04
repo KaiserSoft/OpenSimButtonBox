@@ -45,7 +45,7 @@ Public Class frm_com_test
 
                 SerialPort1.Open()
                 SerialPort1.DiscardInBuffer()
-                SerialPort1.Write("wr-rdy" + vbLf)
+                SerialPort1.Write("wr" + vbLf)
                 btn_connect.Text = "Disconnect"
             Else
                 MsgBox("Please select a COM port first")
@@ -53,7 +53,7 @@ Public Class frm_com_test
             End If
         Else
             btn_connect.Text = "Connect"
-            SerialPort1.Write("wr-stop" + vbLf)
+            SerialPort1.Write("ws" + vbLf)
         End If
     End Sub
 
@@ -107,17 +107,13 @@ Public Class frm_com_test
         End If
 
         Console.WriteLine(strip)
-        If strip = "nano ready" Then
-            UpdateLabel(lblFeedback, "Connection established!")
-            tmrClearFeedback.Start()
+        If strip = "nr" Then
             arduinoReady = True
             Exit Sub
-        ElseIf strip = "nano stop" Then
+        ElseIf strip = "ns" Then
             SerialPort1.DiscardOutBuffer()
             SerialPort1.DiscardInBuffer()
             SerialPort1.Close()
-            UpdateLabel(lblFeedback, "Connection closed!")
-            tmrClearFeedback.Start()
             arduinoReady = False
             Exit Sub
         End If
@@ -186,7 +182,7 @@ Public Class frm_com_test
     Private Sub frm_com_test_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If SerialPort1.IsOpen Then
             RemoveHandler SerialPort1.DataReceived, AddressOf DataReceivedHandler
-            SerialPort1.Write("wr-stop" + vbLf)
+            SerialPort1.Write("ws" + vbLf)
         End If
     End Sub
 
