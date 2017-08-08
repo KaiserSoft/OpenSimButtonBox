@@ -10,10 +10,11 @@ Since the Nano can not run as a HID the Windows programm will send the keystroke
 
 Arduino Nano Pinout
 ---
-This button box will support up to 14 push buttons with one analog joystick
+This button box will support up to 13 push buttons with one analog joystick
 The pinout is defined like this:
 
-* D2-D8,D11-D13 are used for push buttons - 10 Buttons
+* D2-D8,D11,D12 are used for push buttons - 9 Buttons
+* D13 feedback LED
 * A2,A3,A6,A7 are used for push buttons - 4 Buttons
 * A0 used for Joystick 1 x/y-axis
 * A1 used for Joystick 1 x/y-axis

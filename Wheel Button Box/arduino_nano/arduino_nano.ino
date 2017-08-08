@@ -14,7 +14,7 @@
 
 // Paddle_1_Pin and Paddle_2_Pin used here or as interrupt .. this may
 // be enough since it is only a few pins
-Bounce Buttons[11] = {
+Bounce Buttons[13] = {
   Bounce(Button_1_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_2_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_3_Pin, BUTTON_DEBOUNCE),
@@ -24,6 +24,8 @@ Bounce Buttons[11] = {
   Bounce(Button_7_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_8_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_9_Pin, BUTTON_DEBOUNCE),
+  Bounce(Button_10_Pin, BUTTON_DEBOUNCE),
+  Bounce(Button_11_Pin, BUTTON_DEBOUNCE),
   Bounce(Paddle_1_Pin, BUTTON_DEBOUNCE),
   Bounce(Paddle_2_Pin, BUTTON_DEBOUNCE)
 };
@@ -46,6 +48,8 @@ void setup() {
   pinMode( Button_7_Pin, INPUT_PULLUP);
   pinMode( Button_8_Pin, INPUT_PULLUP);
   pinMode( Button_9_Pin, INPUT_PULLUP);
+  pinMode( Button_10_Pin, INPUT_PULLUP);
+  pinMode( Button_11_Pin, INPUT_PULLUP);
   pinMode( Paddle_1_Pin, INPUT_PULLUP);
   pinMode( Paddle_2_Pin, INPUT_PULLUP);
   

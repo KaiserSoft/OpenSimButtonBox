@@ -63,8 +63,6 @@ Partial Class frm_com_test
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txt_btn12 = New System.Windows.Forms.TextBox()
         Me.txt_btn13 = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.txt_btn14 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'cmb_ports
@@ -426,30 +424,11 @@ Partial Class frm_com_test
         Me.txt_btn13.TabIndex = 13
         Me.txt_btn13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(171, 282)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(79, 20)
-        Me.Label16.TabIndex = 37
-        Me.Label16.Text = "Button 14"
-        '
-        'txt_btn14
-        '
-        Me.txt_btn14.Location = New System.Drawing.Point(258, 279)
-        Me.txt_btn14.Name = "txt_btn14"
-        Me.txt_btn14.Size = New System.Drawing.Size(36, 26)
-        Me.txt_btn14.TabIndex = 14
-        Me.txt_btn14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
         'frm_com_test
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(463, 438)
-        Me.Controls.Add(Me.txt_btn14)
-        Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.txt_btn13)
         Me.Controls.Add(Me.txt_btn12)
         Me.Controls.Add(Me.Label15)
@@ -537,6 +516,4 @@ Partial Class frm_com_test
     Friend WithEvents Label15 As Label
     Friend WithEvents txt_btn12 As TextBox
     Friend WithEvents txt_btn13 As TextBox
-    Friend WithEvents Label16 As Label
-    Friend WithEvents txt_btn14 As TextBox
 End Class
