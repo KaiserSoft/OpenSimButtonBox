@@ -221,6 +221,42 @@ Namespace My
                 Me("KeyboardEnabled") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("l")>  _
+        Public Property B12() As String
+            Get
+                Return CType(Me("B12"),String)
+            End Get
+            Set
+                Me("B12") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("m")>  _
+        Public Property B13() As String
+            Get
+                Return CType(Me("B13"),String)
+            End Get
+            Set
+                Me("B13") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("n")>  _
+        Public Property B14() As String
+            Get
+                Return CType(Me("B14"),String)
+            End Get
+            Set
+                Me("B14") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

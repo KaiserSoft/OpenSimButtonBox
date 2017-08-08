@@ -44,5 +44,14 @@
     <Setting Name="KeyboardEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="B12" Type="System.String" Scope="User">
+      <Value Profile="(Default)">l</Value>
+    </Setting>
+    <Setting Name="B13" Type="System.String" Scope="User">
+      <Value Profile="(Default)">m</Value>
+    </Setting>
+    <Setting Name="B14" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -59,6 +59,12 @@ Partial Class frm_com_test
         Me.lblFeedback = New System.Windows.Forms.Label()
         Me.tmrClearFeedback = New System.Windows.Forms.Timer(Me.components)
         Me.btnExit = New System.Windows.Forms.Button()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.txt_btn12 = New System.Windows.Forms.TextBox()
+        Me.txt_btn13 = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txt_btn14 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'cmb_ports
@@ -95,7 +101,7 @@ Partial Class frm_com_test
         '
         'btn_clear
         '
-        Me.btn_clear.Location = New System.Drawing.Point(321, 363)
+        Me.btn_clear.Location = New System.Drawing.Point(321, 389)
         Me.btn_clear.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btn_clear.Name = "btn_clear"
         Me.btn_clear.Size = New System.Drawing.Size(125, 35)
@@ -210,7 +216,7 @@ Partial Class frm_com_test
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(11, 282)
+        Me.Label12.Location = New System.Drawing.Point(11, 314)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(82, 20)
         Me.Label12.TabIndex = 16
@@ -219,7 +225,7 @@ Partial Class frm_com_test
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(171, 282)
+        Me.Label13.Location = New System.Drawing.Point(171, 314)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(78, 20)
         Me.Label13.TabIndex = 17
@@ -326,28 +332,28 @@ Partial Class frm_com_test
         '
         'txt_joy1
         '
-        Me.txt_joy1.Location = New System.Drawing.Point(108, 279)
+        Me.txt_joy1.Location = New System.Drawing.Point(108, 311)
         Me.txt_joy1.MaxLength = 1
         Me.txt_joy1.Name = "txt_joy1"
         Me.txt_joy1.Size = New System.Drawing.Size(36, 26)
-        Me.txt_joy1.TabIndex = 12
+        Me.txt_joy1.TabIndex = 15
         Me.txt_joy1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'txt_joy2
         '
-        Me.txt_joy2.Location = New System.Drawing.Point(258, 279)
+        Me.txt_joy2.Location = New System.Drawing.Point(258, 311)
         Me.txt_joy2.MaxLength = 1
         Me.txt_joy2.Name = "txt_joy2"
         Me.txt_joy2.Size = New System.Drawing.Size(36, 26)
-        Me.txt_joy2.TabIndex = 13
+        Me.txt_joy2.TabIndex = 16
         Me.txt_joy2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'btn_apply
         '
-        Me.btn_apply.Location = New System.Drawing.Point(15, 363)
+        Me.btn_apply.Location = New System.Drawing.Point(15, 389)
         Me.btn_apply.Name = "btn_apply"
         Me.btn_apply.Size = New System.Drawing.Size(125, 35)
-        Me.btn_apply.TabIndex = 14
+        Me.btn_apply.TabIndex = 17
         Me.btn_apply.Text = "Apply"
         Me.btn_apply.UseVisualStyleBackColor = True
         '
@@ -366,7 +372,7 @@ Partial Class frm_com_test
         '
         Me.lblFeedback.AutoSize = True
         Me.lblFeedback.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblFeedback.Location = New System.Drawing.Point(10, 328)
+        Me.lblFeedback.Location = New System.Drawing.Point(10, 351)
         Me.lblFeedback.Name = "lblFeedback"
         Me.lblFeedback.Size = New System.Drawing.Size(100, 25)
         Me.lblFeedback.TabIndex = 33
@@ -378,7 +384,7 @@ Partial Class frm_com_test
         '
         'btnExit
         '
-        Me.btnExit.Location = New System.Drawing.Point(168, 363)
+        Me.btnExit.Location = New System.Drawing.Point(168, 389)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(125, 35)
         Me.btnExit.TabIndex = 34
@@ -386,11 +392,68 @@ Partial Class frm_com_test
         Me.btnExit.Text = "Exit"
         Me.btnExit.UseVisualStyleBackColor = True
         '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(171, 250)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(79, 20)
+        Me.Label14.TabIndex = 35
+        Me.Label14.Text = "Button 12"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(11, 282)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(79, 20)
+        Me.Label15.TabIndex = 36
+        Me.Label15.Text = "Button 13"
+        '
+        'txt_btn12
+        '
+        Me.txt_btn12.Location = New System.Drawing.Point(258, 247)
+        Me.txt_btn12.Name = "txt_btn12"
+        Me.txt_btn12.Size = New System.Drawing.Size(36, 26)
+        Me.txt_btn12.TabIndex = 12
+        Me.txt_btn12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txt_btn13
+        '
+        Me.txt_btn13.Location = New System.Drawing.Point(108, 279)
+        Me.txt_btn13.Name = "txt_btn13"
+        Me.txt_btn13.Size = New System.Drawing.Size(36, 26)
+        Me.txt_btn13.TabIndex = 13
+        Me.txt_btn13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(171, 282)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(79, 20)
+        Me.Label16.TabIndex = 37
+        Me.Label16.Text = "Button 14"
+        '
+        'txt_btn14
+        '
+        Me.txt_btn14.Location = New System.Drawing.Point(258, 279)
+        Me.txt_btn14.Name = "txt_btn14"
+        Me.txt_btn14.Size = New System.Drawing.Size(36, 26)
+        Me.txt_btn14.TabIndex = 14
+        Me.txt_btn14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'frm_com_test
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(463, 416)
+        Me.ClientSize = New System.Drawing.Size(463, 438)
+        Me.Controls.Add(Me.txt_btn14)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.txt_btn13)
+        Me.Controls.Add(Me.txt_btn12)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.btnExit)
         Me.Controls.Add(Me.lblFeedback)
         Me.Controls.Add(Me.chkKeyboardEnable)
@@ -470,4 +533,10 @@ Partial Class frm_com_test
     Friend WithEvents lblFeedback As Label
     Friend WithEvents tmrClearFeedback As Timer
     Friend WithEvents btnExit As Button
+    Friend WithEvents Label14 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents txt_btn12 As TextBox
+    Friend WithEvents txt_btn13 As TextBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents txt_btn14 As TextBox
 End Class
