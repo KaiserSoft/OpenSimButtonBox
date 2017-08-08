@@ -71,8 +71,8 @@ void check_button( int num ){
   }
   debug_last = millis();
   
-  int fake = random(0,13);
-  if( fake < 11 ){
+  int fake = random(0,15);
+  if( fake < 12 ){
     Serial.print("B");
     Serial.println(ButtonKey[fake]);
   }else{
