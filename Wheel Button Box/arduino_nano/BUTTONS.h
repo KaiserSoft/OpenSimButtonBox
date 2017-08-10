@@ -48,11 +48,21 @@
 
 #define Joystick_1_Key 1
 #define Joystick_1_Pin A0
+#define Joystick_1_Center 512   //Center Value for Joystick
+#define Joystick_1_Move_Min 150 //Send Joystick key once joystick has been moved this much off center
 
 #define Joystick_2_Key 2
 #define Joystick_2_Pin A1
+#define Joystick_2_Center 512   //Center Value for Joystick
+#define Joystick_2_Move_Min 150 //Send Joystick key once joystick has been moved this much off center
 
 /* setup array for key functions */
 int ButtonKey[13] = { Button_1_Key, Button_2_Key, Button_3_Key, Button_4_Key, Button_5_Key,
                       Button_6_Key, Button_7_Key, Button_8_Key, Button_9_Key, Button_10_Key,
                       Button_11_Key, Paddle_1_Pin, Paddle_2_Pin };
+
+
+int JoyStickKeys[2] = { Joystick_1_Key, Joystick_2_Key};
+int JoyStickPins[2] = { Joystick_1_Pin, Joystick_2_Pin};
+int JoyStickCenters[2] = { Joystick_1_Center, Joystick_2_Center};
+int JoyStickMoveMin[2] = { Joystick_1_Move_Min, Joystick_2_Move_Min};

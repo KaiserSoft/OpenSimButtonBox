@@ -6,6 +6,7 @@
 #define BUTTON_DEBOUNCE 25      //time in ms that must pass before multiplexed buttons are considered pressed
 #define AnalogResolution 12     //used when reading multiplexed buttons
 #define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
+#define BUTTON_REPEAT_TIME 250  //hold button for this long and it will be send to the computer again
 
 
 

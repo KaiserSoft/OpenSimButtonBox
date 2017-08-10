@@ -12,6 +12,9 @@
 
 #define LED 13
 
+int KeyPressed[12];   //buttons presses
+int JoystickMoved[2]; //joystick movement
+
 // Paddle_1_Pin and Paddle_2_Pin used here or as interrupt .. this may
 // be enough since it is only a few pins
 Bounce Buttons[13] = {
@@ -52,6 +55,11 @@ void setup() {
   pinMode( Button_11_Pin, INPUT_PULLUP);
   pinMode( Paddle_1_Pin, INPUT_PULLUP);
   pinMode( Paddle_2_Pin, INPUT_PULLUP);
+
+  //set all key press timings to zero
+  for( int x = 0 ; x <  sizeof(KeyPressed)/sizeof(int) ; x++ ){
+    KeyPressed[x] = 0;
+  }
   
   Serial.begin(115200);
   digitalWrite( LED_BUILTIN, LOW);
@@ -63,29 +71,64 @@ void setup() {
 
 
 
-void check_button( int num ){
+void check_buttons(){
   if( button_enabled != true ){ return; }
 
   if( millis() < debug_last + debug_delay ){
     return;
   }
-  debug_last = millis();
   
-  int fake = random(0,15);
-  if( fake < 12 ){
-    Serial.print("B");
-    Serial.println(ButtonKey[fake]);
-  }else{
-    Serial.print("J");
-    Serial.println(random(1,3));
+  int fake = random(0, (sizeof(ButtonKey)/sizeof(int)));
+  sendKey( 'B', ButtonKey[fake]);
+
+  
+
+  for( int x=0 ; x < sizeof(ButtonKey)/sizeof(int) ; ++x ){
+    if (Buttons[x].update()) {
+      if (Buttons[x].fallingEdge()) {
+          //Serial.print("B");
+          //Serial.println(ButtonKey[x]);
+          sendKey( 'B', ButtonKey[x]);
+      }
+    }
   }
 
+}
 
-  if (Buttons[num].update()) {
-    if (Buttons[num].fallingEdge()) {
-        //Serial.print("B");
-        Serial.print("FLOATING-"); //for testing, set to "B" when using actual buttons
-        Serial.println(ButtonKey[num]);
+
+
+void sendKey(char KeyType, byte KeyValue){
+  debug_last = millis();
+  Serial.print(KeyType);
+  Serial.println(KeyValue);
+}
+
+
+
+/* checks if the joystick has been moved */
+void check_joystick( ){  
+  if( button_enabled != true ){ return; }
+  int joyval = 0;
+
+  if( millis() < debug_last + debug_delay ){
+    return;
+  }
+
+  for( int x = 0 ; x < sizeof(JoyStickPins)/sizeof(int) ; x++ ){
+    joyval = analogRead(JoyStickPins[x]);
+    //fake for testing
+    x = random(0, 2);
+    if( random(1,3) > 1 ){
+      joyval = random(512, 1024);
+    }else{
+      joyval = random(0, 512);
+    }
+    
+
+    if( joyval > (JoyStickCenters[x] + JoyStickMoveMin[x]) || joyval < (JoyStickCenters[x] - JoyStickMoveMin[x]) ){
+      JoystickMoved[x] = millis();
+      sendKey( 'J', JoyStickKeys[x]);
+      return;
     }
   }
 }
@@ -123,9 +166,11 @@ void loop() {
     serial_done = false;
     serial_cmd = "";
   }
-  
-  for( int x=0 ; x < 11 ; ++x ){
-    check_button( x );
+
+  if( random(0, 2) == 1 ){
+    check_buttons();
+  }else{
+    check_joystick();
   }
 
 
