@@ -7,7 +7,7 @@
 */
 
 /* developemnt stuff - remove when done */
-#define enable_fake_keys true //ignore button presses and send fake keys instead
+#define enable_fake_keys false //ignore button presses and send fake keys instead
 #define debug_delay  2000
 unsigned long debug_last = 0;
 #define testing_oled false
@@ -127,7 +127,7 @@ void loop() {
     }
   #else
     check_buttons();
-    //check_joystick();
+    check_joystick();
     check_button_hold();
   #endif
 
@@ -171,6 +171,7 @@ void check_joystick(){
     if( JoystickSend[x] + JOYSTICK_REPEAT < millis() )
     {
       if( joyval > (JoyStickCenters[x] + JoyStickMoveMin[x]) || joyval < (JoyStickCenters[x] - JoyStickMoveMin[x]) ){
+        JoystickSend[x] = millis();
         JoystickMoved[x] = millis();
         sendKey( 'J', x+1);
         return;

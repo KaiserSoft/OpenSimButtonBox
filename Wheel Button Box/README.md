@@ -15,9 +15,9 @@ The pinout is defined like this:
 
 * D2-D8,D11,D12 are used for push buttons - 9 Buttons
 * D13 feedback LED
-* A2,A3,A6,A7 are used for push buttons - 4 Buttons
-* A0 used for Joystick 1 x/y-axis
-* A1 used for Joystick 1 x/y-axis
+* A0,A1,A2,A3 are used for push buttons - 4 Buttons
+* A6 used for Joystick 1 x/y-axis
+* A7 used for Joystick 1 x/y-axis
 * D9-D10 reserved for other functions (PWM pins)
 * A4,A5 reserved for possible i2c OLED display or LED RPM bar using i2C port extenders
 
