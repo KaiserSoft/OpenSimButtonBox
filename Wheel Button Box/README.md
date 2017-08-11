@@ -33,4 +33,5 @@ Supported Commands:
 	* 'ns' - Windows Receiver expects to receive this after 'ws' has been sent.
 	* 'B[1-13]' - The Arduino Nano may send button presses by indicating which button was pressed. Example: 'B1', 'B2', 'B6' .....     
 		The button number must match the setting in the Windows Receiver GUI
-	* 'J[1-2]' - Just like button but for analog "jostick". Send 'J1' or 'J2' where the number must match the GUI
+	* 'J[1-2]' - Just like button but for analog "jostick". Send 'J1' or 'J2' for one direcion where the number must match the GUI
+	* 'K[1-2]' - Sends 'K' instead of 'J' when the same axis is moved in the opposite direction

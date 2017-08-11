@@ -15,7 +15,9 @@
         frm_com_test.txt_btn12.Text = My.Settings.Item("B12").ToString
         frm_com_test.txt_btn13.Text = My.Settings.Item("B13").ToString
         frm_com_test.txt_joy1.Text = My.Settings.Item("J1").ToString
+        frm_com_test.txt_joy1k.Text = My.Settings.Item("K1").ToString
         frm_com_test.txt_joy2.Text = My.Settings.Item("J2").ToString
+        frm_com_test.txt_joy2k.Text = My.Settings.Item("K2").ToString
         frm_com_test.chkKeyboardEnable.Checked = My.Settings.Item("KeyboardEnabled").ToString
     End Sub
 
@@ -34,7 +36,9 @@
         My.Settings.Item("B12") = frm_com_test.txt_btn12.Text
         My.Settings.Item("B13") = frm_com_test.txt_btn13.Text
         My.Settings.Item("J1") = frm_com_test.txt_joy1.Text
+        My.Settings.Item("K1") = frm_com_test.txt_joy1k.Text
         My.Settings.Item("J2") = frm_com_test.txt_joy2.Text
+        My.Settings.Item("K2") = frm_com_test.txt_joy2k.Text
         My.Settings.Item("KeyboardEnabled") = frm_com_test.chkKeyboardEnable.Checked
         My.Settings.Save()
     End Sub

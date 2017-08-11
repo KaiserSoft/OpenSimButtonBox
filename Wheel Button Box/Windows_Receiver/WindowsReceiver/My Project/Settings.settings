@@ -36,7 +36,7 @@
       <Value Profile="(Default)">k</Value>
     </Setting>
     <Setting Name="J1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">x</Value>
+      <Value Profile="(Default)">w</Value>
     </Setting>
     <Setting Name="J2" Type="System.String" Scope="User">
       <Value Profile="(Default)">y</Value>
@@ -52,6 +52,12 @@
     </Setting>
     <Setting Name="B14" Type="System.String" Scope="User">
       <Value Profile="(Default)">n</Value>
+    </Setting>
+    <Setting Name="K1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">x</Value>
+    </Setting>
+    <Setting Name="K2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">z</Value>
     </Setting>
   </Settings>
 </SettingsFile>

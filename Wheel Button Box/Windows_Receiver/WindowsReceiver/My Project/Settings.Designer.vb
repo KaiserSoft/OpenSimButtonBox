@@ -188,7 +188,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("x")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("w")>  _
         Public Property J1() As String
             Get
                 Return CType(Me("J1"),String)
@@ -255,6 +255,30 @@ Namespace My
             End Get
             Set
                 Me("B14") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("x")>  _
+        Public Property K1() As String
+            Get
+                Return CType(Me("K1"),String)
+            End Get
+            Set
+                Me("K1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("z")>  _
+        Public Property K2() As String
+            Get
+                Return CType(Me("K2"),String)
+            End Get
+            Set
+                Me("K2") = value
             End Set
         End Property
     End Class

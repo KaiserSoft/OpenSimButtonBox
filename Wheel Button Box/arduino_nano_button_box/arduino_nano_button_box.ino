@@ -170,10 +170,15 @@ void check_joystick(){
 
     if( JoystickSend[x] + JOYSTICK_REPEAT < millis() )
     {
-      if( joyval > (JoyStickCenters[x] + JoyStickMoveMin[x]) || joyval < (JoyStickCenters[x] - JoyStickMoveMin[x]) ){
+      if( joyval > (JoyStickCenters[x] + JoyStickMoveMin[x]) ){
         JoystickSend[x] = millis();
         JoystickMoved[x] = millis();
         sendKey( 'J', x+1);
+        return;
+      }else if( joyval < (JoyStickCenters[x] - JoyStickMoveMin[x]) ){
+        JoystickSend[x] = millis();
+        JoystickMoved[x] = millis();
+        sendKey( 'K', x+1);
         return;
       }
     }

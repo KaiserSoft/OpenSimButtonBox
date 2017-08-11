@@ -63,6 +63,8 @@ Partial Class frm_com_test
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txt_btn12 = New System.Windows.Forms.TextBox()
         Me.txt_btn13 = New System.Windows.Forms.TextBox()
+        Me.txt_joy1k = New System.Windows.Forms.TextBox()
+        Me.txt_joy2k = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'cmb_ports
@@ -77,7 +79,7 @@ Partial Class frm_com_test
         '
         'btn_connect
         '
-        Me.btn_connect.Location = New System.Drawing.Point(201, 10)
+        Me.btn_connect.Location = New System.Drawing.Point(214, 6)
         Me.btn_connect.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btn_connect.Name = "btn_connect"
         Me.btn_connect.Size = New System.Drawing.Size(112, 35)
@@ -88,7 +90,7 @@ Partial Class frm_com_test
         '
         'txt_data
         '
-        Me.txt_data.Location = New System.Drawing.Point(321, 10)
+        Me.txt_data.Location = New System.Drawing.Point(380, 10)
         Me.txt_data.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.txt_data.Multiline = True
         Me.txt_data.Name = "txt_data"
@@ -99,7 +101,7 @@ Partial Class frm_com_test
         '
         'btn_clear
         '
-        Me.btn_clear.Location = New System.Drawing.Point(321, 389)
+        Me.btn_clear.Location = New System.Drawing.Point(379, 389)
         Me.btn_clear.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btn_clear.Name = "btn_clear"
         Me.btn_clear.Size = New System.Drawing.Size(125, 35)
@@ -124,7 +126,7 @@ Partial Class frm_com_test
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(171, 90)
+        Me.Label2.Location = New System.Drawing.Point(203, 90)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(74, 20)
         Me.Label2.TabIndex = 6
@@ -142,7 +144,7 @@ Partial Class frm_com_test
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(171, 122)
+        Me.Label4.Location = New System.Drawing.Point(203, 122)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(74, 20)
         Me.Label4.TabIndex = 8
@@ -160,7 +162,7 @@ Partial Class frm_com_test
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(171, 154)
+        Me.Label6.Location = New System.Drawing.Point(203, 154)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(74, 20)
         Me.Label6.TabIndex = 10
@@ -178,7 +180,7 @@ Partial Class frm_com_test
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(171, 186)
+        Me.Label8.Location = New System.Drawing.Point(203, 186)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(74, 20)
         Me.Label8.TabIndex = 12
@@ -196,7 +198,7 @@ Partial Class frm_com_test
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(171, 218)
+        Me.Label10.Location = New System.Drawing.Point(203, 218)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(79, 20)
         Me.Label10.TabIndex = 14
@@ -223,7 +225,7 @@ Partial Class frm_com_test
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(171, 314)
+        Me.Label13.Location = New System.Drawing.Point(203, 314)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(78, 20)
         Me.Label13.TabIndex = 17
@@ -240,7 +242,7 @@ Partial Class frm_com_test
         '
         'txt_btn2
         '
-        Me.txt_btn2.Location = New System.Drawing.Point(258, 87)
+        Me.txt_btn2.Location = New System.Drawing.Point(290, 87)
         Me.txt_btn2.MaxLength = 1
         Me.txt_btn2.Name = "txt_btn2"
         Me.txt_btn2.Size = New System.Drawing.Size(36, 26)
@@ -258,7 +260,7 @@ Partial Class frm_com_test
         '
         'txt_btn4
         '
-        Me.txt_btn4.Location = New System.Drawing.Point(258, 119)
+        Me.txt_btn4.Location = New System.Drawing.Point(290, 119)
         Me.txt_btn4.MaxLength = 1
         Me.txt_btn4.Name = "txt_btn4"
         Me.txt_btn4.Size = New System.Drawing.Size(36, 26)
@@ -276,7 +278,7 @@ Partial Class frm_com_test
         '
         'txt_btn6
         '
-        Me.txt_btn6.Location = New System.Drawing.Point(258, 151)
+        Me.txt_btn6.Location = New System.Drawing.Point(290, 151)
         Me.txt_btn6.MaxLength = 1
         Me.txt_btn6.Name = "txt_btn6"
         Me.txt_btn6.Size = New System.Drawing.Size(36, 26)
@@ -294,7 +296,7 @@ Partial Class frm_com_test
         '
         'txt_btn8
         '
-        Me.txt_btn8.Location = New System.Drawing.Point(258, 183)
+        Me.txt_btn8.Location = New System.Drawing.Point(290, 183)
         Me.txt_btn8.MaxLength = 1
         Me.txt_btn8.Name = "txt_btn8"
         Me.txt_btn8.Size = New System.Drawing.Size(36, 26)
@@ -312,7 +314,7 @@ Partial Class frm_com_test
         '
         'txt_btn10
         '
-        Me.txt_btn10.Location = New System.Drawing.Point(258, 215)
+        Me.txt_btn10.Location = New System.Drawing.Point(290, 215)
         Me.txt_btn10.MaxLength = 1
         Me.txt_btn10.Name = "txt_btn10"
         Me.txt_btn10.Size = New System.Drawing.Size(36, 26)
@@ -339,7 +341,7 @@ Partial Class frm_com_test
         '
         'txt_joy2
         '
-        Me.txt_joy2.Location = New System.Drawing.Point(258, 311)
+        Me.txt_joy2.Location = New System.Drawing.Point(290, 311)
         Me.txt_joy2.MaxLength = 1
         Me.txt_joy2.Name = "txt_joy2"
         Me.txt_joy2.Size = New System.Drawing.Size(36, 26)
@@ -382,7 +384,7 @@ Partial Class frm_com_test
         '
         'btnExit
         '
-        Me.btnExit.Location = New System.Drawing.Point(168, 389)
+        Me.btnExit.Location = New System.Drawing.Point(197, 389)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(125, 35)
         Me.btnExit.TabIndex = 34
@@ -393,7 +395,7 @@ Partial Class frm_com_test
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(171, 250)
+        Me.Label14.Location = New System.Drawing.Point(203, 250)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(79, 20)
         Me.Label14.TabIndex = 35
@@ -410,7 +412,7 @@ Partial Class frm_com_test
         '
         'txt_btn12
         '
-        Me.txt_btn12.Location = New System.Drawing.Point(258, 247)
+        Me.txt_btn12.Location = New System.Drawing.Point(290, 247)
         Me.txt_btn12.Name = "txt_btn12"
         Me.txt_btn12.Size = New System.Drawing.Size(36, 26)
         Me.txt_btn12.TabIndex = 12
@@ -424,11 +426,29 @@ Partial Class frm_com_test
         Me.txt_btn13.TabIndex = 13
         Me.txt_btn13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
+        'txt_joy1k
+        '
+        Me.txt_joy1k.Location = New System.Drawing.Point(155, 311)
+        Me.txt_joy1k.Name = "txt_joy1k"
+        Me.txt_joy1k.Size = New System.Drawing.Size(36, 26)
+        Me.txt_joy1k.TabIndex = 37
+        Me.txt_joy1k.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txt_joy2k
+        '
+        Me.txt_joy2k.Location = New System.Drawing.Point(332, 311)
+        Me.txt_joy2k.Name = "txt_joy2k"
+        Me.txt_joy2k.Size = New System.Drawing.Size(36, 26)
+        Me.txt_joy2k.TabIndex = 38
+        Me.txt_joy2k.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'frm_com_test
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(463, 438)
+        Me.ClientSize = New System.Drawing.Size(518, 438)
+        Me.Controls.Add(Me.txt_joy2k)
+        Me.Controls.Add(Me.txt_joy1k)
         Me.Controls.Add(Me.txt_btn13)
         Me.Controls.Add(Me.txt_btn12)
         Me.Controls.Add(Me.Label15)
@@ -516,4 +536,6 @@ Partial Class frm_com_test
     Friend WithEvents Label15 As Label
     Friend WithEvents txt_btn12 As TextBox
     Friend WithEvents txt_btn13 As TextBox
+    Friend WithEvents txt_joy1k As TextBox
+    Friend WithEvents txt_joy2k As TextBox
 End Class
