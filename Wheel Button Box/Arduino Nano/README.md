@@ -1,6 +1,19 @@
 Arduino Nano Button Box
 ---
 
+Update 2017-08-15
+WARNING: The code in this directory is not finished. The serial communication from the Arduino Nano to the VB.NET program is working but 
+I ran into an issue when I tried to send the key presses to iRacing. It works in Windows Editor, other programs and even the iRacing chat box but 
+it stops working once I enter the car. This may be an issue with which window has focus so the solution may be to detect the iracing window and 
+explicitly send the output to it. I may investigate in the future or if someone else feels like testing it .... feel free.
+I have decided to switch to an Arduino Pro Micro since that unit is about the same price as the Nano but offers USB HID support out of the box.
+This will eliminate the requirement for the VB.NET program to send the keypresses since the Pro Micro will act as a true HID.
+I was not aware of the Pro Micro before, that would have been the better solution to begin with.... I am also investigating using an STM32 since they are also very cheap and very capable. This will be a great replacement for the rather expensive Teensy 3.2
+
+ANYWAY - DO NOT USE THE CODE IN THIS DIRECTORY AND EXPECT IT TO WORK IN GAME! - You have been warned!
+/End of Update 2017-08-15
+
+
 DO NOT USE THIS YET! This is mostly just code to test the concept!
 
 

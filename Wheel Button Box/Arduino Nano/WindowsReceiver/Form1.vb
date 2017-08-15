@@ -104,6 +104,15 @@ Public Class frm_com_test
                 SendKeys.SendWait(My.Settings.Item("J" + btn.ToString).ToString)
             End If
             Exit Sub
+
+        ElseIf arduinoReady = True And btn_type = "K" Then
+            'joystick - quick hack for other direction
+            Dim btn As Integer = Convert.ToInt32(strip.Substring(1))
+            Console.WriteLine("Joystick moved:" + btn.ToString)
+            If chkKeyboardEnable.Checked = True Then
+                SendKeys.SendWait(My.Settings.Item("K" + btn.ToString).ToString)
+            End If
+            Exit Sub
         End If
 
         Console.WriteLine(strip)
