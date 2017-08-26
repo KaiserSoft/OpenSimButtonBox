@@ -167,7 +167,10 @@ void releaseKey( char Key, char Mod){
 }
 
 /* checks if the joystick has been moved */
-void check_joystick(){  
+void check_joystick(){
+  #if JoystickEnabled != true
+    return;
+  #endif
   int joyval = 0;
 
 
@@ -232,14 +235,12 @@ void check_joystick(){
       }
     #endif
   }//for
-  
 }
 
 
 
 /* checks all buttons and sends key when one has been pressed */
 void check_buttons(){
-
   for( byte x=0 ; x < sizeof(ButtonPins)/sizeof(byte) ; ++x ){
     if (Buttons[x].update()) {
       if (Buttons[x].fallingEdge()) {
@@ -255,28 +256,6 @@ void check_buttons(){
   }
 
 }
-
-
-/* checks if buttons are held down */
-void check_button_hold(){    
-  for( byte x=0 ; x < sizeof(ButtonPressed)/sizeof(unsigned long) ; ++x ){
-    
-    // check if button is held down
-    if( ButtonPressed[x] > 0 ){
-      if( ButtonPressed[x] + BUTTON_WAIT_HOLD < millis() ){
-        //button is beeing held down
-        if( ButtonSend[x] + BUTTON_REPEAT < millis() ){
-          //time is up - resend the key
-          releaseKey( ButtonKeys[x][0], ButtonMods[x][0]);
-          ButtonSend[x] = millis();
-        }
-      }
-    }
-
-  }
-}
-
-
 
 
 

@@ -5,11 +5,8 @@
 #define BUTTON_DEBOUNCE 25      //time in ms that must pass before multiplexed buttons are considered pressed
 #define AnalogResolution 12     //used when reading multiplexed buttons
 #define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
-#define BUTTON_WAIT_HOLD 725    // button must be held down for this long to be considered "held" down
-#define BUTTON_REPEAT 250       // resend keyboard key every this many milliseconds
-#define JOYSTICK_REPEAT 500     // resend key for joystick after this many ms. Value should propably 
-                                // be larger then BUTTON_REPEAT since operating the joystick is not as quick
 #define KeyboardEnabled true    // true sends key presses, false does not
+#define JoystickEnabled true    // true sends key presses, false does not
 
 
 
