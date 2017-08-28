@@ -11,15 +11,6 @@ https://www.youtube.com/watch?v=kEENwVqYf5s
 
 	
 
-Recommended printer/slicer settings
----
-* The shifter body should be printed with at least 20% honeycomb infill
-* The lever should be printed solid
-* The paddles work great with 30% honeycomb infill
-* The part is build with a 0.25mm layer height in mind
-* Material used for my prints is PLA
-
-
 File Overview
 ---
 * The folder "Box Style" contains the current design. It is simpler to build and uses stronger parts when compared to the "Open Design".
@@ -27,6 +18,14 @@ File Overview
 * The folder "Open Design" contains the older "open style" design. It is more complicated to build and requires exact distance between the lever and the switch. You probably don't want to use this.
 
 
+Recommended printer/slicer settings
+---
+* The shifter body should be printed with at least 20% honeycomb infill
+* The lever should be printed solid
+* The paddles work great with 30% honeycomb infill
+* The part is build with a 0.25mm layer height in mind
+* Material used for my prints is PLA
+   
 
 Bill of Materials
 ---
