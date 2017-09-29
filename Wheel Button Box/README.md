@@ -1,6 +1,8 @@
 OSW Button Box - DIY Direct Drive Wheel Button Box
 ===
 
+![Image of fully assembled wheel button box](https://media.githubusercontent.com/media/KaiserSoft/OpenSimButtonBox/master/Wheel%20Button%20Box/Images/Wheel%20Button%20Box%20-%20Version%201%20-%20ProMicro%20-%20tiny.jpg)
+
 **Please note** the documentation is currently being worked on. It will be updated within the next day or two to include additional information
 
 Recommended Print / Slicer Settings
