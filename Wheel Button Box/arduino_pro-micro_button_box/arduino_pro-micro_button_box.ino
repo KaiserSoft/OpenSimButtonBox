@@ -1,7 +1,7 @@
 /*
- * Stand Alone Wheel Button Box for the Arduino Nano
+ * Stand Alone Wheel Button Box for the Arduino Pro Micro
  * The buttons for the wheel button box may be connected to the MOBB-PCB or to an
- * Arduino Nano using this code
+ * Arduino Pro Micro using this code
  * 
  * 
 */
@@ -14,7 +14,7 @@ unsigned long debug_last = 0;
 
 
 #include "CONFIG.h"
-#include "Bounce2.h"
+#include "Bounce2.h" 
 #include <EEPROM.h>
 #include <Keyboard.h>
 
@@ -77,6 +77,7 @@ char JoystickMods[2][2][1] = { { Joystick_1_ModA, Joystick_1_ModB }, { Joystick_
 int  JoyStickCenters[2] = { Joystick_1_Center, Joystick_2_Center };
 int  JoyStickMoveMin[2] = { Joystick_1_Move_Min, Joystick_2_Move_Min };
 byte  JoyStickDirection[2] = { 0, 0 }; // 0 center, 1=direction 1 2=direction 2
+byte JoyStickMoved = 0; // lockup other axis when joystick is moved. Only allows move left/right or up/down but not at the same time. 0 = no move, 1= joystick direction 1, 2= joy direction 2
 
 /* serial receive stuff */
 boolean serial_done = false;
@@ -178,7 +179,7 @@ void check_joystick(){
     joyval = analogRead(JoystickPins[x]);
 
 
-    #if JoysticksGetValues == true
+    #if DebugJoysticksGetValues == true
       Serial.print("check_joystick() pin:");
       Serial.print(JoystickPins[x]);
       Serial.print(" value:");
@@ -199,7 +200,10 @@ void check_joystick(){
           Serial.print(" value:");
           Serial.println(joyval);
         #endif
-        sendKey( JoystickKeys[x][0][0], JoystickMods[x][0][0] );
+        if( JoyStickMoved == 0 || JoyStickMoved == x ){
+          JoyStickMoved = x;
+          sendKey( JoystickKeys[x][0][0], JoystickMods[x][0][0] );
+        }
         return;
         
       }else if( joyval < (JoyStickCenters[x] - JoyStickMoveMin[x]) ){
@@ -214,7 +218,10 @@ void check_joystick(){
           Serial.print(" value:");
           Serial.println(joyval);
         #endif
-        sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0] );
+        if( JoyStickMoved == 0 || JoyStickMoved == x ){
+          JoyStickMoved = x;
+          sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0] );
+        }
         return;
         
       }else{
@@ -224,11 +231,13 @@ void check_joystick(){
             releaseKey( JoystickKeys[x][0][0], JoystickMods[x][0][0] );
             JoyStickDirection[x] = 0;
             JoystickSend[x] = 0;
+            JoyStickMoved = 0;
             
           }else if( JoyStickDirection[x] == 2 ){
             releaseKey( JoystickKeys[x][1][0], JoystickMods[x][1][0] );
             JoyStickDirection[x] = 0;
-            JoystickSend[x] = 0;
+            JoystickSend[x] = 0;            
+            JoyStickMoved = 0;
           }
           
         }
