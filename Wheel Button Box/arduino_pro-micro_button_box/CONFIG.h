@@ -81,20 +81,20 @@
  * one direction. Use the config options below to adjust values to your joystick.
  */
  #define Joystick_1_Pin A0
- #define Joystick_1_KeyA 'o'
+ #define Joystick_1_KeyA KEY_UP_ARROW
  #define Joystick_1_ModA ""
- #define Joystick_1_KeyB 'p'
+ #define Joystick_1_KeyB KEY_DOWN_ARROW
  #define Joystick_1_ModB ""
- #define Joystick_1_Center 508   // Center value for your joystick
- #define Joystick_1_Move_Min 150 // Stick must move this far of center to trigger a button press
- 
+ #define Joystick_1_Center 515   // Center value for your joystick
+ #define Joystick_1_Move_Min 450 // Stick must move this far of center to trigger a button press
+
  #define Joystick_2_Pin A1
- #define Joystick_2_KeyA 'q'
+ #define Joystick_2_KeyA KEY_RIGHT_ARROW
  #define Joystick_2_ModA ""
- #define Joystick_2_KeyB 'r'
+ #define Joystick_2_KeyB KEY_LEFT_ARROW
  #define Joystick_2_ModB ""
- #define Joystick_2_Center 508   // Center value for your joystick
- #define Joystick_2_Move_Min 150 // Stick must move this far of center to trigger a button press
+ #define Joystick_2_Center 515   // Center value for your joystick
+ #define Joystick_2_Move_Min 450 // Stick must move this far of center to trigger a button press
 
 
 
