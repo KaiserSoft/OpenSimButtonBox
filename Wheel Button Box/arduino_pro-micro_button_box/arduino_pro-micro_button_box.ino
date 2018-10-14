@@ -4,6 +4,8 @@
  * Arduino Pro Micro using this code
  * 
  * 
+ * Required Libraries
+ * https://github.com/MHeironimus/ArduinoJoystickLibrary
 */
 
 /* developemnt stuff - remove when done */
@@ -12,11 +14,19 @@ unsigned long debug_last = 0;
 #define testing_oled false
 /* developemnt stuff - remove when done */
 
+#define CONTROLLER_OUTPUT_MODE 2 // 1 == keyboard / 2 == joystick
 
 #include "CONFIG.h"
 #include "Bounce2.h" 
 #include <EEPROM.h>
-#include <Keyboard.h>
+#if CONTROLLER_OUTPUT_MODE == 1
+  #include <Keyboard.h>
+#else
+  #include <Keyboard.h> //needed for defines in config.h
+  #include "DynamicHID.h"
+  #include "Joystick.h"
+  Joystick_ Joystick;
+#endif
 
 #if testing_oled == true
   #include <SPI.h>
@@ -68,11 +78,16 @@ char ButtonMods[14][1] = { Button_1_Mod, Button_2_Mod, Button_3_Mod, Button_4_Mo
                         Button_5_Mod, Button_6_Mod, Button_7_Mod, Button_8_Mod,
                         Button_9_Mod, Button_10_Mod, Button_11_Mod, Button_12_Mod, 
                         Shifter_1_Mod, Shifter_2_Mod };
+char ButtonJoy[14][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy,
+                        Button_5_Joy, Button_6_Joy, Button_7_Joy, Button_8_Joy,
+                        Button_9_Joy, Button_10_Joy, Button_11_Joy, Button_12_Joy, 
+                        Shifter_1_Joy, Shifter_2_Joy };
 
 /* setup array for joystick to make it simpler to read it */
 byte JoystickPins[2] = { Joystick_1_Pin, Joystick_2_Pin };
 char JoystickKeys[2][2][1] = { { Joystick_1_KeyA, Joystick_1_KeyB }, { Joystick_2_KeyA, Joystick_2_KeyB } };
 char JoystickMods[2][2][1] = { { Joystick_1_ModA, Joystick_1_ModB }, { Joystick_2_ModA, Joystick_2_ModB } };
+char JoystickJoys[2][2][1] = { { Joystick_1_JoyA, Joystick_1_JoyB }, { Joystick_2_JoyA, Joystick_2_JoyB } };
 
 int  JoyStickCenters[2] = { Joystick_1_Center, Joystick_2_Center };
 int  JoyStickMoveMin[2] = { Joystick_1_Move_Min, Joystick_2_Move_Min };
@@ -114,7 +129,11 @@ void setup() {
   #endif
 
   #if KeyboardEnabled == true
-    Keyboard.begin();
+    #if CONTROLLER_OUTPUT_MODE == 1
+      Keyboard.begin();
+    #else
+      Joystick.begin();
+    #endif
   #endif
 }
 
@@ -136,11 +155,15 @@ void loop() {
 
 
 /* does the actual key pessing */
-void sendKey( char Key, char Mod){
+void sendKey( char Key, char Mod, char Joy){
 
   #if KeyboardEnabled == true
-    Keyboard.press(Mod);
-    Keyboard.press(Key);
+    #if CONTROLLER_OUTPUT_MODE == 1
+      Keyboard.press(Mod);
+      Keyboard.press(Key);
+    #else
+      Joystick.setButton(Joy, 1);
+    #endif
   #endif
   
   #if DebugSendKey == true
@@ -152,11 +175,15 @@ void sendKey( char Key, char Mod){
 }
 
 /* release the pressed key */
-void releaseKey( char Key, char Mod){
+void releaseKey( char Key, char Mod, char Joy ){
 
   #if KeyboardEnabled == true
-    Keyboard.release(Mod);
-    Keyboard.release(Key);
+    #if CONTROLLER_OUTPUT_MODE == 1
+      Keyboard.release(Mod);
+      Keyboard.release(Key);
+    #else
+      Joystick.setButton(Joy, 0);
+    #endif
   #endif
 
   #if DebugSendKey == true
@@ -202,7 +229,7 @@ void check_joystick(){
         #endif
         if( JoyStickMoved == 0 || JoyStickMoved == x ){
           JoyStickMoved = x;
-          sendKey( JoystickKeys[x][0][0], JoystickMods[x][0][0] );
+          sendKey( JoystickKeys[x][0][0], JoystickMods[x][0][0], JoystickJoys[x][1][0] );
         }
         return;
         
@@ -220,7 +247,7 @@ void check_joystick(){
         #endif
         if( JoyStickMoved == 0 || JoyStickMoved == x ){
           JoyStickMoved = x;
-          sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0] );
+          sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
         }
         return;
         
@@ -228,13 +255,13 @@ void check_joystick(){
         if( JoystickSend[x] > 0 ){
           
           if( JoyStickDirection[x] == 1 ){
-            releaseKey( JoystickKeys[x][0][0], JoystickMods[x][0][0] );
+            releaseKey( JoystickKeys[x][0][0], JoystickMods[x][0][0], JoystickJoys[x][1][0] );
             JoyStickDirection[x] = 0;
             JoystickSend[x] = 0;
             JoyStickMoved = 0;
             
           }else if( JoyStickDirection[x] == 2 ){
-            releaseKey( JoystickKeys[x][1][0], JoystickMods[x][1][0] );
+            releaseKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
             JoyStickDirection[x] = 0;
             JoystickSend[x] = 0;            
             JoyStickMoved = 0;
@@ -252,14 +279,18 @@ void check_joystick(){
 void check_buttons(){
   for( byte x=0 ; x < sizeof(ButtonPins)/sizeof(byte) ; ++x ){
     if (Buttons[x].update()) {
+
+      //pressed
       if (Buttons[x].fallingEdge()) {
-        ButtonPressed[x] = millis();
-        sendKey( ButtonKeys[x][0], ButtonMods[x][0]);
+        ButtonPressed[x] = millis();        
+        sendKey( ButtonKeys[x][0], ButtonMods[x][0], ButtonJoy[x][0] );
         ButtonSend[x] = millis();
+
+       // released
       }else{
         ButtonSend[x] = 0;
         ButtonPressed[x] = 0;
-        releaseKey( ButtonKeys[x][0], ButtonMods[x][0]);
+        releaseKey( ButtonKeys[x][0], ButtonMods[x][0], ButtonJoy[x][0] );
       }
     }
   }
