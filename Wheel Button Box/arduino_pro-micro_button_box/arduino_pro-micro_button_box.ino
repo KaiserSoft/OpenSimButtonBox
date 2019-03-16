@@ -14,7 +14,6 @@ unsigned long debug_last = 0;
 #define testing_oled false
 /* developemnt stuff - remove when done */
 
-#define CONTROLLER_OUTPUT_MODE 2 // 1 == keyboard / 2 == joystick
 
 #include "CONFIG.h"
 #include "Bounce2.h" 
@@ -26,6 +25,10 @@ unsigned long debug_last = 0;
   #include "DynamicHID.h"
   #include "Joystick.h"
   Joystick_ Joystick;
+#endif
+
+#if ALPSStickEnabled == true
+  #include <Encoder.h>
 #endif
 
 #if testing_oled == true
@@ -46,6 +49,7 @@ unsigned long ButtonPressed[13]; //stores the time when the key press has been d
 unsigned long ButtonSend[13];    //stores last time the key has been sent to the computer
 unsigned long JoystickMoved[2];  //stores the time when a joystick move has been detected
 unsigned long JoystickSend[2];   //stores last time the key has been sent to the computer
+byte ShifterSend[2];   //stores a 1 if the key is currently being pressed
 
 /* setup debounce library for all push buttons*/
 Bounce Buttons[14] = {
@@ -78,7 +82,7 @@ char ButtonMods[14][1] = { Button_1_Mod, Button_2_Mod, Button_3_Mod, Button_4_Mo
                         Button_5_Mod, Button_6_Mod, Button_7_Mod, Button_8_Mod,
                         Button_9_Mod, Button_10_Mod, Button_11_Mod, Button_12_Mod, 
                         Shifter_1_Mod, Shifter_2_Mod };
-char ButtonJoy[14][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy,
+byte ButtonJoy[14][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy,
                         Button_5_Joy, Button_6_Joy, Button_7_Joy, Button_8_Joy,
                         Button_9_Joy, Button_10_Joy, Button_11_Joy, Button_12_Joy, 
                         Shifter_1_Joy, Shifter_2_Joy };
@@ -98,6 +102,13 @@ byte JoyStickMoved = 0; // lockup other axis when joystick is moved. Only allows
 boolean serial_done = false;
 String serial_cmd;  // holds the received command
 boolean button_enabled = false; //don't send commands until the nano is connected to the PC
+
+#if ALPSStickEnabled == true
+  Encoder ALPSknob(EncoderPinB, EncoderPinB);
+  long positionLeft  = 0;
+  long sendKeyStart = 0; // holds time for automatic key press
+#endif
+
 
 
 void setup() {
@@ -132,6 +143,7 @@ void setup() {
     #if CONTROLLER_OUTPUT_MODE == 1
       Keyboard.begin();
     #else
+      Keyboard.begin();
       Joystick.begin();
     #endif
   #endif
@@ -149,7 +161,13 @@ void loop() {
 
 
  check_buttons();
- check_joystick();
+ #if AnalogJoystickEnabled == true
+  check_joystick();
+ #endif
+ #if ALPSStickEnabled == true
+  //check_rotary_encoders();
+ #endif
+ check_shifter_halleffect();
 
 }
 
@@ -158,19 +176,30 @@ void loop() {
 void sendKey( char Key, char Mod, char Joy){
 
   #if KeyboardEnabled == true
-    #if CONTROLLER_OUTPUT_MODE == 1
-      Keyboard.press(Mod);
-      Keyboard.press(Key);
-    #else
-      Joystick.setButton(Joy, 1);
+    #if CONTROLLER_OUTPUT_MODE == 1 || CONTROLLER_OUTPUT_MODE == 2
+      if( Key != false ){
+        Keyboard.press(Mod);
+        Keyboard.press(Key);
+      }
+    #endif
+
+    #if CONTROLLER_OUTPUT_MODE == 2
+      if( Key == false ){
+        Joystick.setButton(Joy, 1);
+      }
     #endif
   #endif
   
   #if DebugSendKey == true
-    Serial.print("sendKey key:");
-    Serial.print(Key);
-    Serial.print(" mod:");
-    Serial.println(Mod);
+    if( Key != false ){
+      Serial.print("sendKey key:");
+      Serial.print(Key);
+      Serial.print(" mod:");
+      Serial.println(Mod);
+    }else{
+      Serial.print("joystick output HIGH btn:");
+      Serial.println(Joy);
+    }
   #endif
 }
 
@@ -178,25 +207,70 @@ void sendKey( char Key, char Mod, char Joy){
 void releaseKey( char Key, char Mod, char Joy ){
 
   #if KeyboardEnabled == true
-    #if CONTROLLER_OUTPUT_MODE == 1
-      Keyboard.release(Mod);
-      Keyboard.release(Key);
-    #else
-      Joystick.setButton(Joy, 0);
+    #if CONTROLLER_OUTPUT_MODE == 1 || CONTROLLER_OUTPUT_MODE == 2
+      if( Key != false ){
+        Keyboard.release(Mod);
+        Keyboard.release(Key);
+      }
+    #endif
+
+    #if CONTROLLER_OUTPUT_MODE == 2
+      if( Key == false ){
+        Joystick.setButton(Joy, 0);
+      }
     #endif
   #endif
 
   #if DebugSendKey == true
-    Serial.print("releaseKey key:");
-    Serial.print(Key);
-    Serial.print(" mod:");
-    Serial.println(Mod);
+    if( Key != false ){
+      Serial.print("releaseKey key:");
+      Serial.print(Key);
+      Serial.print(" mod:");
+      Serial.println(Mod);
+    }else{
+      Serial.print("joystick output LOW btn:");
+      Serial.println(Joy);
+    }
   #endif
 }
 
+/* checks if a shift is happening */
+void check_shifter_halleffect(){
+  #if ShifterType != 2
+    return;
+  #endif
+
+  int raw = analogRead(Shifter_1_Pin);
+  if( raw > HallEffectShiftPoint ){
+    if( ShifterSend[0] == 0 ){
+      ShifterSend[0] = 1;
+      sendKey( Shifter_1_Key, Shifter_1_Mod, Shifter_1_Joy );
+    }
+  }else{
+    if( ShifterSend[0] == 1 ){
+      ShifterSend[0] = 0;
+      releaseKey( Shifter_1_Key, Shifter_1_Mod, Shifter_1_Joy );
+    }
+  }
+  
+  raw = analogRead(Shifter_2_Pin);
+  if( raw > HallEffectShiftPoint ){
+    if( ShifterSend[1] == 0 ){
+      ShifterSend[1] = 1;
+      sendKey( Shifter_2_Key, Shifter_2_Mod, Shifter_2_Joy );
+    }
+  }else{
+    if( ShifterSend[1] == 1 ){
+      ShifterSend[1] = 0;
+      releaseKey( Shifter_2_Key, Shifter_2_Mod, Shifter_2_Joy );
+    }
+  }
+}
+
+
 /* checks if the joystick has been moved */
 void check_joystick(){
-  #if JoystickEnabled != true
+  #if AnalogJoystickEnabled != true || ALPSStickEnabled == true
     return;
   #endif
   int joyval = 0;
@@ -297,6 +371,42 @@ void check_buttons(){
 
 }
 
+#if ALPSStickEnabled == true
+/* check rotary encourders */
+void check_rotary_encoders(){
+  #if AnalogJoystickEnabled == true || ALPSStickEnabled != true
+    return;
+  #endif
+  
+  long newLeft;
+
+  if( sendKeyStart > 0 && sendKeyStart < millis()-50 )
+  {
+    // releaseKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
+    sendKeyStart = 0;
+  }
+  
+  newLeft = ALPSknob.read()/4;
+  if (newLeft != positionLeft ){
+
+      if( newLeft > positionLeft ){
+        #if DebugSerialOut == true
+          Serial.println("EncLeft:left / check_rotary_encoders()");
+        #endif
+        // sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
+        sendKeyStart = millis();
+        
+      }else if( newLeft < positionLeft ){
+        #if DebugSerialOut == true
+          Serial.println("EncLeft:right / check_rotary_encoders()");
+        #endif
+        // sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
+        sendKeyStart = millis();
+      }
+      positionLeft = newLeft;
+  }
+}
+#endif
 
 
 /*
