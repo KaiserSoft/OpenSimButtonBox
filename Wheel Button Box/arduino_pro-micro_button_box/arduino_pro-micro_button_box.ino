@@ -27,7 +27,7 @@ unsigned long debug_last = 0;
   Joystick_ Joystick;
 #endif
 
-#if ALPSStickEnabled == true
+#if EncoderEnabled == true
   #include <Encoder.h>
 #endif
 
@@ -91,22 +91,32 @@ byte ButtonJoy[14][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy
 byte JoystickPins[2] = { Joystick_1_Pin, Joystick_2_Pin };
 char JoystickKeys[2][2][1] = { { Joystick_1_KeyA, Joystick_1_KeyB }, { Joystick_2_KeyA, Joystick_2_KeyB } };
 char JoystickMods[2][2][1] = { { Joystick_1_ModA, Joystick_1_ModB }, { Joystick_2_ModA, Joystick_2_ModB } };
-char JoystickJoys[2][2][1] = { { Joystick_1_JoyA, Joystick_1_JoyB }, { Joystick_2_JoyA, Joystick_2_JoyB } };
+byte JoystickJoys[2][2][1] = { { Joystick_1_JoyA, Joystick_1_JoyB }, { Joystick_2_JoyA, Joystick_2_JoyB } };
 
 int  JoyStickCenters[2] = { Joystick_1_Center, Joystick_2_Center };
 int  JoyStickMoveMin[2] = { Joystick_1_Move_Min, Joystick_2_Move_Min };
 byte  JoyStickDirection[2] = { 0, 0 }; // 0 center, 1=direction 1 2=direction 2
 byte JoyStickMoved = 0; // lockup other axis when joystick is moved. Only allows move left/right or up/down but not at the same time. 0 = no move, 1= joystick direction 1, 2= joy direction 2
 
-/* serial receive stuff */
-boolean serial_done = false;
-String serial_cmd;  // holds the received command
-boolean button_enabled = false; //don't send commands until the nano is connected to the PC
 
-#if ALPSStickEnabled == true
-  Encoder ALPSknob(EncoderPinB, EncoderPinB);
-  long positionLeft  = 0;
-  long sendKeyStart = 0; // holds time for automatic key press
+#if EncoderEnabled == true
+/* rotary encoder */
+byte EncoderPins[2] = { Encoder_A_Pin, Encoder_B_Pin };
+char EncoderKeys[2][1] = { Encoder_A_Key, Encoder_B_Key };
+char EncoderMods[2][1] = { Encoder_A_Mod, Encoder_B_Mod };
+byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
+#endif
+
+/* serial receive stuff */
+#if DebugSerialOut == true
+  boolean serial_done = false;
+  String serial_cmd;  // holds the received command
+#endif
+
+#if EncoderEnabled == true
+  Encoder EncoderKnob(Encoder_A_Pin, Encoder_B_Pin);
+  long positionEnc  = 0;
+  long sendKeyStart[2] = { 0, 0 }; // holds time for automatic key press
 #endif
 
 
@@ -151,23 +161,28 @@ void setup() {
 
 
 void loop() {
-  /* listen for commands from PC */
-  if (serial_done == true)
-  {
-    //maybe add config options later so the unit may be configured without compiling the code again
-    serial_done = false;
-    serial_cmd = "";
-  }
+  #if DebugSerialOut == true
+    if (serial_done == true){
+        //maybe add config options later so the unit may be configured without compiling the code again
+        serial_done = false;
+        serial_cmd = "";
+    }
+  #endif
 
 
  check_buttons();
+ 
  #if AnalogJoystickEnabled == true
   check_joystick();
  #endif
- #if ALPSStickEnabled == true
-  //check_rotary_encoders();
+ 
+ #if EncoderEnabled == true
+  check_rotary_encoders();
  #endif
- check_shifter_halleffect();
+
+ #if ShifterType == 2
+  check_shifter_halleffect();
+ #endif
 
 }
 
@@ -234,11 +249,9 @@ void releaseKey( char Key, char Mod, char Joy ){
   #endif
 }
 
+#if ShifterType == 2
 /* checks if a shift is happening */
 void check_shifter_halleffect(){
-  #if ShifterType != 2
-    return;
-  #endif
 
   int raw = analogRead(Shifter_1_Pin);
   if( raw > HallEffectShiftPoint ){
@@ -266,13 +279,11 @@ void check_shifter_halleffect(){
     }
   }
 }
+#endif
 
-
+#if AnalogJoystickEnabled == true
 /* checks if the joystick has been moved */
 void check_joystick(){
-  #if AnalogJoystickEnabled != true || ALPSStickEnabled == true
-    return;
-  #endif
   int joyval = 0;
 
 
@@ -346,19 +357,20 @@ void check_joystick(){
     #endif
   }//for
 }
+#endif
 
 
 
 /* checks all buttons and sends key when one has been pressed */
 void check_buttons(){
   for( byte x=0 ; x < sizeof(ButtonPins)/sizeof(byte) ; ++x ){
-    if (Buttons[x].update()) {
+    if( Buttons[x].update() ) {
 
       //pressed
-      if (Buttons[x].fallingEdge()) {
-        ButtonPressed[x] = millis();        
-        sendKey( ButtonKeys[x][0], ButtonMods[x][0], ButtonJoy[x][0] );
+      if( Buttons[x].fallingEdge() ) {
+        ButtonPressed[x] = millis();
         ButtonSend[x] = millis();
+        sendKey( ButtonKeys[x][0], ButtonMods[x][0], ButtonJoy[x][0] );
 
        // released
       }else{
@@ -368,42 +380,40 @@ void check_buttons(){
       }
     }
   }
-
 }
 
-#if ALPSStickEnabled == true
+
+#if EncoderEnabled == true
 /* check rotary encourders */
-void check_rotary_encoders(){
-  #if AnalogJoystickEnabled == true || ALPSStickEnabled != true
-    return;
-  #endif
-  
-  long newLeft;
+void check_rotary_encoders(){  
+  long newEncPos = -999;
 
-  if( sendKeyStart > 0 && sendKeyStart < millis()-50 )
-  {
-    // releaseKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
-    sendKeyStart = 0;
+  for( byte x = 0 ; x < 2 ; x++ ){
+    if( sendKeyStart[x] > 0 && sendKeyStart[x] < millis() - 25 )
+    {
+      sendKeyStart[x] = 0;
+      releaseKey( EncoderKeys[x][0], EncoderMods[x][0], EncoderJoys[x][0] );
+    }
   }
-  
-  newLeft = ALPSknob.read()/4;
-  if (newLeft != positionLeft ){
+    
+  newEncPos = EncoderKnob.read()/4;
+  if (newEncPos != positionEnc ){
 
-      if( newLeft > positionLeft ){
+      if( newEncPos > positionEnc ){
         #if DebugSerialOut == true
           Serial.println("EncLeft:left / check_rotary_encoders()");
         #endif
-        // sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
-        sendKeyStart = millis();
+        sendKeyStart[0] = millis();
+        sendKey( EncoderKeys[0][0], EncoderMods[0][0], EncoderJoys[0][0] );
         
-      }else if( newLeft < positionLeft ){
+      }else if( newEncPos < positionEnc ){
         #if DebugSerialOut == true
           Serial.println("EncLeft:right / check_rotary_encoders()");
         #endif
-        // sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
-        sendKeyStart = millis();
+        sendKeyStart[1] = millis();
+        sendKey( EncoderKeys[1][0], EncoderMods[1][0], EncoderJoys[1][0] );
       }
-      positionLeft = newLeft;
+      positionEnc = newEncPos;
   }
 }
 #endif
@@ -415,6 +425,7 @@ void check_rotary_encoders(){
   time loop() runs, so using delay inside loop can delay
   response.  Multiple bytes of data may be available.
  */
+#if DebugSerialOut == true
 void serialEvent() {
   while (Serial.available()) {
     char inChar = (char)Serial.read();
@@ -426,3 +437,4 @@ void serialEvent() {
     }
   }
 }
+#endif

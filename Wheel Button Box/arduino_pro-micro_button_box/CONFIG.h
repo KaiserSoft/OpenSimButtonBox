@@ -8,12 +8,13 @@
 #define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
 #define KeyboardEnabled true    // true sends key presses, false does not
 #define AnalogJoystickEnabled false // true to enable support for analog joystick type (game controller type)
-#define ALPSStickEnabled false  // true enable support for ALPS joystick, disabled AnalogJoystick
+#define EncoderEnabled false  // true to enable rotary encoder support
 #define ShifterType 1 // 1 == micro switch / 2 == linear hall effect sensor 
 
 /* private stuff 
  *  DEVWHEELTYPE 1 == Round with analog joystick 
- *  DEVWHEELTYPE 2 = Proto 5
+ *  DEVWHEELTYPE 2 = Proto 5 
+ *  DEVWHEELTYPE 3 = Proto 6
  */
 #define DEVWHEELTYPE 1
 
@@ -23,17 +24,25 @@
  * Shifter Pin 0, 1 ( micro switch - ShifterType 1 )
  * Shifter Pin A0, A1 ( hall effect - ShifterType 2 )
  * Encoder Pin 2,3 (INT)
- * Joystick Pin 4,5,6,7
- * Joy Button Pin 8
+ * ALPS Joystick Pin 4,5,6,7
+ * ALPS Joystick Push Button Pin 8
  * Buttons 9, 10, 14, 15, 16, A2, A3, (either  A0 and A1 or 0 and 1 - depends on shifter type)
  */
 
 
 /*
- * Encoder Pins - DO NOT CHANGE
+ * Encoder Config
  */
- #define EncoderPinA  2
- #define EncoderPinB  3
+ #define Encoder_A_Pin  2
+ #define Encoder_A_Key KEY_LEFT_ARROW
+ #define Encoder_A_Mod false
+ #define Encoder_A_Joy 27
+ 
+ #define Encoder_B_Pin  3
+ #define Encoder_B_Key KEY_RIGHT_ARROW
+ #define Encoder_B_Mod false
+ #define Encoder_B_Joy 28
+
 
 /*
  * Shifter Config
