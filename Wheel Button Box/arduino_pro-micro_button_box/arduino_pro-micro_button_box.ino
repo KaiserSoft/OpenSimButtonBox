@@ -21,13 +21,13 @@ unsigned long debug_last = 0;
 #if CONTROLLER_OUTPUT_MODE == 1
   #include <Keyboard.h>
 #else
-  #include <Keyboard.h> //needed for defines in config.h
+  #include <Keyboard.h>
   #include "DynamicHID.h"
   #include "Joystick.h"
   Joystick_ Joystick;
 #endif
 
-#if EncoderEnabled == true
+#if CONTROLLER_ENCODER_ENABLED == true
   #include <Encoder.h>
 #endif
 
@@ -47,8 +47,6 @@ unsigned long debug_last = 0;
 /*keep times of button presses */
 unsigned long ButtonPressed[13]; //stores the time when the key press has been detected
 unsigned long ButtonSend[13];    //stores last time the key has been sent to the computer
-unsigned long JoystickMoved[2];  //stores the time when a joystick move has been detected
-unsigned long JoystickSend[2];   //stores last time the key has been sent to the computer
 byte ShifterSend[2];   //stores a 1 if the key is currently being pressed
 
 /* setup debounce library for all push buttons*/
@@ -88,6 +86,7 @@ byte ButtonJoy[14][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy
                         Shifter_1_Joy, Shifter_2_Joy };
 
 /* setup array for joystick to make it simpler to read it */
+#if CONTROLLER_JOYSTICK_ENABLED == true
 byte JoystickPins[2] = { Joystick_1_Pin, Joystick_2_Pin };
 char JoystickKeys[2][2][1] = { { Joystick_1_KeyA, Joystick_1_KeyB }, { Joystick_2_KeyA, Joystick_2_KeyB } };
 char JoystickMods[2][2][1] = { { Joystick_1_ModA, Joystick_1_ModB }, { Joystick_2_ModA, Joystick_2_ModB } };
@@ -95,11 +94,14 @@ byte JoystickJoys[2][2][1] = { { Joystick_1_JoyA, Joystick_1_JoyB }, { Joystick_
 
 int  JoyStickCenters[2] = { Joystick_1_Center, Joystick_2_Center };
 int  JoyStickMoveMin[2] = { Joystick_1_Move_Min, Joystick_2_Move_Min };
-byte  JoyStickDirection[2] = { 0, 0 }; // 0 center, 1=direction 1 2=direction 2
+byte JoyStickDirection[2] = { 0, 0 }; // 0 center, 1=direction 1 2=direction 2
 byte JoyStickMoved = 0; // lockup other axis when joystick is moved. Only allows move left/right or up/down but not at the same time. 0 = no move, 1= joystick direction 1, 2= joy direction 2
 
+unsigned long JoystickMoved[2];  //stores the time when a joystick move has been detected
+unsigned long JoystickSend[2];   //stores last time the key has been sent to the computer
+#endif
 
-#if EncoderEnabled == true
+#if CONTROLLER_ENCODER_ENABLED == true
 /* rotary encoder */
 byte EncoderPins[2] = { Encoder_A_Pin, Encoder_B_Pin };
 char EncoderKeys[2][1] = { Encoder_A_Key, Encoder_B_Key };
@@ -111,29 +113,34 @@ byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
 #if DebugSerialOut == true
   boolean serial_done = false;
   String serial_cmd;  // holds the received command
+  unsigned long DebugSerialHallEffectLast = 0; // time for debug message
+  boolean DebugSerialHallEffectLastNow = false;
+  unsigned long DebugJoysticksGetValuesLast = 0; // time for debug message
 #endif
 
-#if EncoderEnabled == true
+#if CONTROLLER_ENCODER_ENABLED == true
   Encoder EncoderKnob(Encoder_A_Pin, Encoder_B_Pin);
   long positionEnc  = 0;
-  long sendKeyStart[2] = { 0, 0 }; // holds time for automatic key press
+  unsigned long sendKeyStart[2] = { 0, 0 }; // holds time for automatic key press
 #endif
 
 
 
-void setup() {
-  
+void setup() { 
   
   for( byte x=0 ; x < sizeof(ButtonPins)/sizeof(byte) ; ++x ){
     pinMode( ButtonPins[x], INPUT_PULLUP);
     ButtonPressed[x] = 0;
     ButtonSend[x] = 0;
   }
+  
+  #if CONTROLLER_JOYSTICK_ENABLED == true
   for( byte x=0 ; x < sizeof(JoystickPins)/sizeof(byte) ; ++x ){
     pinMode( JoystickPins[x], INPUT);
     JoystickMoved[x] = 0;
     JoystickSend[x] = 0;
   }
+  #endif
 
   #if testing_oled == true
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
@@ -142,14 +149,13 @@ void setup() {
   #if DebugSerialOut == true
   Serial.begin(115200);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+    // wait for serial port to connect. Needed for native USB port only
     delay(50);
   }
   Serial.println("ready");
-  delay(4000);
   #endif
 
-  #if KeyboardEnabled == true
+  #if CONTROLLER_OUTPUT_ENABLED == true
     #if CONTROLLER_OUTPUT_MODE == 1
       Keyboard.begin();
     #else
@@ -172,15 +178,15 @@ void loop() {
 
  check_buttons();
  
- #if AnalogJoystickEnabled == true
+ #if CONTROLLER_JOYSTICK_ENABLED == true
   check_joystick();
  #endif
  
- #if EncoderEnabled == true
+ #if CONTROLLER_ENCODER_ENABLED == true
   check_rotary_encoders();
  #endif
 
- #if ShifterType == 2
+ #if CONTROLLER_SHIFTER_TYPE == 2
   check_shifter_halleffect();
  #endif
 
@@ -190,7 +196,7 @@ void loop() {
 /* does the actual key pessing */
 void sendKey( char Key, char Mod, char Joy){
 
-  #if KeyboardEnabled == true
+  #if CONTROLLER_OUTPUT_ENABLED == true
     #if CONTROLLER_OUTPUT_MODE == 1 || CONTROLLER_OUTPUT_MODE == 2
       if( Key != false ){
         Keyboard.press(Mod);
@@ -221,7 +227,7 @@ void sendKey( char Key, char Mod, char Joy){
 /* release the pressed key */
 void releaseKey( char Key, char Mod, char Joy ){
 
-  #if KeyboardEnabled == true
+  #if CONTROLLER_OUTPUT_ENABLED == true
     #if CONTROLLER_OUTPUT_MODE == 1 || CONTROLLER_OUTPUT_MODE == 2
       if( Key != false ){
         Keyboard.release(Mod);
@@ -249,7 +255,7 @@ void releaseKey( char Key, char Mod, char Joy ){
   #endif
 }
 
-#if ShifterType == 2
+#if CONTROLLER_SHIFTER_TYPE == 2
 /* checks if a shift is happening */
 void check_shifter_halleffect(){
 
@@ -265,6 +271,15 @@ void check_shifter_halleffect(){
       releaseKey( Shifter_1_Key, Shifter_1_Mod, Shifter_1_Joy );
     }
   }
+
+  #if DebugSerialOut == true && DebugHallEffectShiftPoint == true
+    if( millis() - DebugSerialHallEffectLast > 1500 ){
+      Serial.print(millis());
+      Serial.print(" - Shifter_1 val:");
+      Serial.print(raw);
+      DebugSerialHallEffectLastNow = true;
+    }
+  #endif
   
   raw = analogRead(Shifter_2_Pin);
   if( raw > HallEffectShiftPoint ){
@@ -278,40 +293,48 @@ void check_shifter_halleffect(){
       releaseKey( Shifter_2_Key, Shifter_2_Mod, Shifter_2_Joy );
     }
   }
+  
+  #if DebugSerialOut == true && DebugHallEffectShiftPoint == true
+    if( DebugSerialHallEffectLastNow == true ){
+      Serial.print("  /  Shifter_2 val:");
+      Serial.println(raw);
+      DebugSerialHallEffectLast = millis();
+      DebugSerialHallEffectLastNow = false;
+    }
+  #endif
 }
 #endif
 
-#if AnalogJoystickEnabled == true
+#if CONTROLLER_JOYSTICK_ENABLED == true
 /* checks if the joystick has been moved */
 void check_joystick(){
   int joyval = 0;
+  
+  #if DebugSerialOut == true && DebugJoysticksGetValues == true
+  if( millis() - DebugJoysticksGetValuesLast > 1500 ){
 
+    Serial.print("check_joystick()");
+    for( byte x = 0 ; x < sizeof(JoystickPins)/sizeof(byte) ; x++ ){
+      joyval = analogRead(JoystickPins[x]);
+    
+      Serial.print(" / pin:");
+      Serial.print(JoystickPins[x]);
+      Serial.print(" value:");
+      Serial.print(joyval);
+    }
+    Serial.println();
+    DebugJoysticksGetValuesLast = millis();
+  }
+  #endif
 
   for( byte x = 0 ; x < sizeof(JoystickPins)/sizeof(byte) ; x++ ){
     joyval = analogRead(JoystickPins[x]);
-
-
-    #if DebugJoysticksGetValues == true
-      Serial.print("check_joystick() pin:");
-      Serial.print(JoystickPins[x]);
-      Serial.print(" value:");
-      Serial.println(joyval);
-    #endif
     
-
     #if JoysticksGetValues == false
       if( joyval > (JoyStickCenters[x] + JoyStickMoveMin[x]) ){
         JoystickSend[x] = millis();
         JoystickMoved[x] = millis();
         JoyStickDirection[x] = 1;
-        #if DebugSerialOut == true
-          Serial.print("check_joystick() x:");
-          Serial.print(x);
-          Serial.print(" pin:");
-          Serial.print(JoystickPins[x]);
-          Serial.print(" value:");
-          Serial.println(joyval);
-        #endif
         if( JoyStickMoved == 0 || JoyStickMoved == x ){
           JoyStickMoved = x;
           sendKey( JoystickKeys[x][0][0], JoystickMods[x][0][0], JoystickJoys[x][1][0] );
@@ -322,14 +345,6 @@ void check_joystick(){
         JoystickSend[x] = millis();
         JoystickMoved[x] = millis();
         JoyStickDirection[x] = 2;
-        #if DebugSerialOut == true
-          Serial.print("check_joystick() x:");
-          Serial.print(x);
-          Serial.print(" pin:");
-          Serial.print(JoystickPins[x]);
-          Serial.print(" value:");
-          Serial.println(joyval);
-        #endif
         if( JoyStickMoved == 0 || JoyStickMoved == x ){
           JoyStickMoved = x;
           sendKey( JoystickKeys[x][1][0], JoystickMods[x][1][0], JoystickJoys[x][1][0] );
@@ -383,7 +398,7 @@ void check_buttons(){
 }
 
 
-#if EncoderEnabled == true
+#if CONTROLLER_ENCODER_ENABLED == true
 /* check rotary encourders */
 void check_rotary_encoders(){  
   long newEncPos = -999;

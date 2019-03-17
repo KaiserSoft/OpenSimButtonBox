@@ -2,14 +2,14 @@
  * Configuration Options
  */
  
-#define CONTROLLER_OUTPUT_MODE 2 // 1 == keyboard / 2 == joystick + keyboard
-#define BUTTON_DEBOUNCE 25      //time in ms that must pass before multiplexed buttons are considered pressed
-#define AnalogResolution 12     //used when reading multiplexed buttons
-#define EEPROM_storage_loop 320 // update EEPROM at most every n seconds
-#define KeyboardEnabled true    // true sends key presses, false does not
-#define AnalogJoystickEnabled false // true to enable support for analog joystick type (game controller type)
-#define EncoderEnabled false  // true to enable rotary encoder support
-#define ShifterType 1 // 1 == micro switch / 2 == linear hall effect sensor 
+#define CONTROLLER_OUTPUT_MODE 2          // 1 == keyboard / 2 == joystick + keyboard
+#define CONTROLLER_OUTPUT_ENABLED false   // true to enable keyboard and joystick output
+#define CONTROLLER_JOYSTICK_ENABLED false // true to enable support for analog joystick type (game controller type)
+#define CONTROLLER_ENCODER_ENABLED false  // true to enable rotary encoder support
+#define CONTROLLER_SHIFTER_TYPE 2         // 1 == micro switch / 2 == linear hall effect sensor 
+#define BUTTON_DEBOUNCE 25                // time in ms that must pass before multiplexed buttons are considered pressed
+#define EEPROM_storage_loop 320           // update EEPROM at most every n seconds
+#define EEPROMWrite 1                     // set to 1 to enable writes to eeprom (update stored values) - default: 1
 
 /* private stuff 
  *  DEVWHEELTYPE 1 == Round with analog joystick 
@@ -17,17 +17,6 @@
  *  DEVWHEELTYPE 3 = Proto 6
  */
 #define DEVWHEELTYPE 1
-
-/**
- * PIN OVERVIEW
- * 
- * Shifter Pin 0, 1 ( micro switch - ShifterType 1 )
- * Shifter Pin A0, A1 ( hall effect - ShifterType 2 )
- * Encoder Pin 2,3 (INT)
- * ALPS Joystick Pin 4,5,6,7
- * ALPS Joystick Push Button Pin 8
- * Buttons 9, 10, 14, 15, 16, A2, A3, (either  A0 and A1 or 0 and 1 - depends on shifter type)
- */
 
 
 /*
@@ -66,9 +55,9 @@
  #endif
 
  /**
-  * Ratiometric Linear Hall Effect Shifter ( ShifterType == 2 )
+  * Ratiometric Linear Hall Effect Shifter ( CONTROLLER_SHIFTER_TYPE == 2 )
   */
- #define HallEffectShiftPoint 880 // set to analog read value when a shift should be triggered
+ #define HallEffectShiftPoint 880  // set to analog read value when a shift should be triggered
                                    // see debug section at bottom to get the analog read value
 
 
@@ -230,8 +219,7 @@
   # Debug Options Configuration #
   ###############################
 */
-#define DebugSerialOut false           // controls all non specific debugging messages - MUST BE ENABLED FOR SERIAL TO WORK
-#define DebugSendKey false             // Output key presses to seril - does NOT disable the keyboard
+#define DebugSerialOut true           // controls all non specific debugging messages - MUST BE ENABLED FOR SERIAL TO WORK
+#define DebugSendKey false             // Output key presses to serial - does NOT disable the keyboard
 #define DebugJoysticksGetValues false  // will send analog readings to serial instead of pressing keys
-#define DebugHallEffectShiftPoint false // set to true to get the analog read values of the shifter pins
-#define EEPROMWrite 1                  //set to 1 to enable writes to eeprom (update stored values) - default: 1
+#define DebugHallEffectShiftPoint true // set to true to get the analog read values of the shifter pins
