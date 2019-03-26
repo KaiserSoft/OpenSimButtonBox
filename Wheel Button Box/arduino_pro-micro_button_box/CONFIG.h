@@ -1,5 +1,6 @@
 /*
  * Configuration Options
+ * Settings Guide: https://github.com/KaiserSoft/simwheel-firmware-arduino-pro-micro/wiki/Firmware-Configuration-Options
  */
  
 #define CONTROLLER_OUTPUT_MODE 2          // 1 == keyboard / 2 == joystick + keyboard
@@ -9,7 +10,6 @@
 #define CONTROLLER_SHIFTER_TYPE 2         // 1 == micro switch / 2 == linear hall effect sensor 
 #define CONTROLLER_CLUTCH_ENABLED true    // true to enable clutch support, false to disable
 #define BUTTON_DEBOUNCE 25                // time in ms that must pass before multiplexed buttons are considered pressed
-#define EEPROM_storage_loop 320000        // update EEPROM at most every n ms
 #define EEPROMWrite 1                     // set to 1 to enable writes to eeprom (update stored values) - default: 1
 
 
@@ -34,11 +34,13 @@
  #define Shifter_1_Key false
  #define Shifter_1_Mod false
  #define Shifter_1_Joy 0
+ #define Shifter_1_ShiftPoint_Default 850
  
  #define Shifter_2_Pin A1
  #define Shifter_2_Key false
  #define Shifter_2_Mod false
  #define Shifter_2_Joy 1
+ #define Shifter_2_ShiftPoint_Default 850
 
 
 #if CONTROLLER_CLUTCH_ENABLED == true
@@ -157,8 +159,6 @@
  #define Joystick_2_JoyB 18
  #define Joystick_2_Center 515   // Center value for your joystick
  #define Joystick_2_Move_Min 450 // Stick must move this far of center to trigger a button press
-
-
 
 
  /*

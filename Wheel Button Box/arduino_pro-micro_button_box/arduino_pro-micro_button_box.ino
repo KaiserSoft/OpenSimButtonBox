@@ -1,16 +1,17 @@
 /*
- * Stand Alone Wheel Button Box for the Arduino Pro Micro
- * The buttons for the wheel button box may be connected to the MOBB-PCB or to an
- * Arduino Pro Micro using this code
+ * Firmware for an Arduino Pro Micro to run sim racing steering wheels or button boxes.
+ * Source: https://github.com/KaiserSoft/simwheel-firmware-arduino-pro-micro
+ * Wiki: https://github.com/KaiserSoft/simwheel-firmware-arduino-pro-micro/wiki
+ * Copyright 2019 Mirko Kaiser
+ * License: MIT License
  * 
  * 
  * Required Libraries
+ * Arduino Board Manager: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
  * https://github.com/MHeironimus/ArduinoJoystickLibrary
 */
 
 /* developemnt stuff - remove when done */
-#define debug_delay  2000
-unsigned long debug_last = 0;
 #define testing_oled false
 /* developemnt stuff - remove when done */
 
@@ -111,11 +112,11 @@ unsigned long JoystickSend[2];   //stores last time the key has been sent to the
 #endif
 
 #if CONTROLLER_ENCODER_ENABLED == true
-/* rotary encoder */
-byte EncoderPins[2] = { Encoder_A_Pin, Encoder_B_Pin };
-char EncoderKeys[2][1] = { Encoder_A_Key, Encoder_B_Key };
-char EncoderMods[2][1] = { Encoder_A_Mod, Encoder_B_Mod };
-byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
+  /* rotary encoder */
+  byte EncoderPins[2] = { Encoder_A_Pin, Encoder_B_Pin };
+  char EncoderKeys[2][1] = { Encoder_A_Key, Encoder_B_Key };
+  char EncoderMods[2][1] = { Encoder_A_Mod, Encoder_B_Mod };
+  byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
 #endif
 
 #if CONTROLLER_SHIFTER_TYPE == 2
@@ -137,8 +138,6 @@ byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
 
 /* serial receive stuff */
 #if DebugSerialOut == true
-  boolean serial_done = false;
-  String serial_cmd;  // holds the received command
   unsigned long DebugSerialHallEffectLast = 0; // time for debug message
   boolean DebugSerialHallEffectLastNow = false;
   unsigned long DebugJoysticksGetValuesLast = 0; // time for debug message
@@ -161,9 +160,10 @@ void setup() {
 
   // sane values for shifters
   #if CONTROLLER_SHIFTER_TYPE == 2
-    if( HESshiftPoint_1 > 1024 ){ HESshiftPoint_1 = 800; }
-    if( HESshiftPoint_2 > 1024 ){ HESshiftPoint_2 = 800; }
+    if( HESshiftPoint_1 > 1024 ){ HESshiftPoint_1 = Shifter_1_ShiftPoint_Default; }
+    if( HESshiftPoint_2 > 1024 ){ HESshiftPoint_2 = Shifter_2_ShiftPoint_Default; }
   #endif
+
 
   #if CONTROLLER_OUTPUT_MODE == 2
     Joystick.setXAxis(0);
@@ -177,27 +177,37 @@ void setup() {
   }
   
   #if CONTROLLER_JOYSTICK_ENABLED == true
-  for( byte x=0 ; x < sizeof(JoystickPins)/sizeof(byte) ; ++x ){
-    pinMode( JoystickPins[x], INPUT);
-    JoystickMoved[x] = 0;
-    JoystickSend[x] = 0;
-  }
+    for( byte x=0 ; x < sizeof(JoystickPins)/sizeof(byte) ; ++x ){
+      pinMode( JoystickPins[x], INPUT);
+      JoystickMoved[x] = 0;
+      JoystickSend[x] = 0;
+    }
   #endif
 
   #if testing_oled == true
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
   #endif
 
+  //initial setup Stuff
+  #if DebugSerialOut == true && DebugForceShiftPoint > 0
+    HESshiftPoint_1 = DebugForceShiftPoint;
+    HESshiftPoint_2 = DebugForceShiftPoint;
+  #endif
+  #if DebugSerialOut == true && DebugForceClutchPointLow > 0 && DebugForceClutchPointHigh > 0
+    ClutchLow = DebugForceClutchPointLow;
+    ClutchHigh = DebugForceClutchPointHigh;
+  #endif
+
   #if DebugSerialOut == true
-  Serial.begin(115200);
-  while (!Serial) {
-    // wait for serial port to connect. Needed for native USB port only
-    delay(50);
-  }
-  Serial.println("Loaded from EEPROM");
-  Serial.print("Shift1:");Serial.print(HESshiftPoint_1);
-  Serial.print(" / Shift2:");Serial.print(HESshiftPoint_2);
-  Serial.print(" / Clutch:");Serial.print(ClutchLow);Serial.print("/");Serial.println(ClutchHigh);
+    Serial.begin(115200);
+    while (!Serial) {
+      // wait for serial port to connect. Needed for native USB port only
+      delay(50);
+    }
+    Serial.println("Loaded from EEPROM");
+    Serial.print("Shift1:");Serial.print(HESshiftPoint_1);
+    Serial.print(" / Shift2:");Serial.print(HESshiftPoint_2);
+    Serial.print(" / Clutch:");Serial.print(ClutchLow);Serial.print("/");Serial.println(ClutchHigh);
   #endif
 
   #if CONTROLLER_OUTPUT_ENABLED == true
@@ -212,15 +222,6 @@ void setup() {
 
 
 void loop() {
-  #if DebugSerialOut == true
-    if (serial_done == true){
-        //maybe add config options later so the unit may be configured without compiling the code again
-        serial_done = false;
-        serial_cmd = "";
-    }
-  #endif
-
-
  check_buttons();
  
  #if CONTROLLER_JOYSTICK_ENABLED == true
@@ -500,7 +501,7 @@ void HES_calibrate_max(){
     //wait for shifter release
     while(true){
       #if DebugSerialOut == true && DebugHallEffectCalib == true
-        Serial.println("max collected, waiting for release");
+        Serial.println("Please release the paddle to continue.");
       #endif
       
       if( analogRead(Shifter_1_Pin) < total1 - HESCalibrationAdjust ){
@@ -530,7 +531,7 @@ void HES_calibrate_max(){
          #endif
         return;
       }
-      delay(500);
+      delay(1500);
     }
     
 }
@@ -664,28 +665,6 @@ void check_rotary_encoders(){
   }
 }
 #endif
-
-
-/*
-  SerialEvent occurs whenever a new data comes in the
-  hardware serial RX.  This routine is run between each
-  time loop() runs, so using delay inside loop can delay
-  response.  Multiple bytes of data may be available.
- */
-#if DebugSerialOut == true
-void serialEvent() {
-  while (Serial.available()) {
-    char inChar = (char)Serial.read();
-
-    if (inChar == '\n' || inChar == '\r' ) {
-      serial_done = true;
-    }else{
-      serial_cmd += inChar;
-    }
-  }
-}
-#endif
-
 
 
 #if EEPROMWrite == 1
