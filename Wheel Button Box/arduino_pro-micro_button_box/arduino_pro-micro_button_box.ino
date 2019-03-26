@@ -44,13 +44,21 @@ unsigned long debug_last = 0;
 #endif
 
 
+/* reads an int back from EEPROM */
+int eepromReadInt(int adr) {
+  byte low, high;
+  low=EEPROM.read(adr);
+  high=EEPROM.read(adr+1);
+  return low + ((high << 8)&0xFF00);
+}
+
 /*keep times of button presses */
 unsigned long ButtonPressed[13]; //stores the time when the key press has been detected
 unsigned long ButtonSend[13];    //stores last time the key has been sent to the computer
 byte ShifterSend[2];   //stores a 1 if the key is currently being pressed
 
 /* setup debounce library for all push buttons*/
-Bounce Buttons[14] = {
+Bounce Buttons[15] = {
   Bounce(Button_1_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_2_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_3_Pin, BUTTON_DEBOUNCE),
@@ -63,27 +71,28 @@ Bounce Buttons[14] = {
   Bounce(Button_10_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_11_Pin, BUTTON_DEBOUNCE),
   Bounce(Button_12_Pin, BUTTON_DEBOUNCE),
+  Bounce(Button_13_Pin, BUTTON_DEBOUNCE),
   Bounce(Shifter_1_Pin, BUTTON_DEBOUNCE),
   Bounce(Shifter_2_Pin, BUTTON_DEBOUNCE)
 };
 
 /* setup array to make processing buttons simpler */
-byte ButtonPins[14] = { Button_1_Pin, Button_2_Pin, Button_3_Pin, Button_4_Pin,
+byte ButtonPins[15] = { Button_1_Pin, Button_2_Pin, Button_3_Pin, Button_4_Pin,
                         Button_5_Pin, Button_6_Pin, Button_7_Pin, Button_8_Pin,
                         Button_9_Pin, Button_10_Pin, Button_11_Pin, Button_12_Pin, 
-                        Shifter_1_Pin, Shifter_2_Pin };
-char ButtonKeys[14][1] = { Button_1_Key, Button_2_Key, Button_3_Key, Button_4_Key,
+                        Button_13_Pin, Shifter_1_Pin, Shifter_2_Pin };
+char ButtonKeys[15][1] = { Button_1_Key, Button_2_Key, Button_3_Key, Button_4_Key,
                         Button_5_Key, Button_6_Key, Button_7_Key, Button_8_Key,
                         Button_9_Key, Button_10_Key, Button_11_Key, Button_12_Key, 
-                        Shifter_1_Key, Shifter_2_Key };
-char ButtonMods[14][1] = { Button_1_Mod, Button_2_Mod, Button_3_Mod, Button_4_Mod,
+                        Button_13_Key, Shifter_1_Key, Shifter_2_Key };
+char ButtonMods[15][1] = { Button_1_Mod, Button_2_Mod, Button_3_Mod, Button_4_Mod,
                         Button_5_Mod, Button_6_Mod, Button_7_Mod, Button_8_Mod,
                         Button_9_Mod, Button_10_Mod, Button_11_Mod, Button_12_Mod, 
-                        Shifter_1_Mod, Shifter_2_Mod };
-byte ButtonJoy[14][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy,
+                        Button_13_Mod, Shifter_1_Mod, Shifter_2_Mod };
+byte ButtonJoy[15][1] = { Button_1_Joy, Button_2_Joy, Button_3_Joy, Button_4_Joy,
                         Button_5_Joy, Button_6_Joy, Button_7_Joy, Button_8_Joy,
                         Button_9_Joy, Button_10_Joy, Button_11_Joy, Button_12_Joy, 
-                        Shifter_1_Joy, Shifter_2_Joy };
+                        Button_13_Joy, Shifter_1_Joy, Shifter_2_Joy };
 
 /* setup array for joystick to make it simpler to read it */
 #if CONTROLLER_JOYSTICK_ENABLED == true
@@ -109,6 +118,23 @@ char EncoderMods[2][1] = { Encoder_A_Mod, Encoder_B_Mod };
 byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
 #endif
 
+#if CONTROLLER_SHIFTER_TYPE == 2
+  #define HES_CALIBRATION_DELAY 5000 // hold shifter for this long to enter calibration mode
+  unsigned long HESCalibrationStart[2] = { 0, 0 }; //time of initial button press
+  unsigned int HESshiftPoint_1 = eepromReadInt(EEPROM_HES_1); // default shift value before calibration
+  unsigned int HESshiftPoint_2 = eepromReadInt(EEPROM_HES_2); // default shift value before calibration
+#endif
+
+#if CONTROLLER_CLUTCH_ENABLED == true
+  #define CLUTCH_CALIBRATION_DELAY 5000
+  #define CLUTCH_UPDATE_DELAY 25 // send joystick axis position only every this many ms
+  unsigned long ClutchCalibrationStart = 0;
+  unsigned long ClutchUpdateLaste = 0;
+  unsigned int ClutchLow = eepromReadInt(EEPROM_CLL_1);
+  unsigned int ClutchHigh = eepromReadInt(EEPROM_CLH_1);
+  unsigned int ClutchLastValue = 0 ; // Last value of clutch, only send position update if this changes
+#endif
+
 /* serial receive stuff */
 #if DebugSerialOut == true
   boolean serial_done = false;
@@ -116,6 +142,7 @@ byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
   unsigned long DebugSerialHallEffectLast = 0; // time for debug message
   boolean DebugSerialHallEffectLastNow = false;
   unsigned long DebugJoysticksGetValuesLast = 0; // time for debug message
+  unsigned long DebugSerialClutchLast = 0; // time for debug message
 #endif
 
 #if CONTROLLER_ENCODER_ENABLED == true
@@ -124,9 +151,24 @@ byte EncoderJoys[2][1] = { Encoder_A_Joy, Encoder_B_Joy };
   unsigned long sendKeyStart[2] = { 0, 0 }; // holds time for automatic key press
 #endif
 
+unsigned long EEPROM_check_last = 0; //last time EEPROM values where checked for change
+unsigned long EEPROM_val_change_last = 0; //last time any EEPROM stored value has changed
 
 
-void setup() { 
+
+
+void setup() {
+
+  // sane values for shifters
+  #if CONTROLLER_SHIFTER_TYPE == 2
+    if( HESshiftPoint_1 > 1024 ){ HESshiftPoint_1 = 800; }
+    if( HESshiftPoint_2 > 1024 ){ HESshiftPoint_2 = 800; }
+  #endif
+
+  #if CONTROLLER_OUTPUT_MODE == 2
+    Joystick.setXAxis(0);
+    Joystick.setYAxis(512);
+  #endif
   
   for( byte x=0 ; x < sizeof(ButtonPins)/sizeof(byte) ; ++x ){
     pinMode( ButtonPins[x], INPUT_PULLUP);
@@ -152,7 +194,10 @@ void setup() {
     // wait for serial port to connect. Needed for native USB port only
     delay(50);
   }
-  Serial.println("ready");
+  Serial.println("Loaded from EEPROM");
+  Serial.print("Shift1:");Serial.print(HESshiftPoint_1);
+  Serial.print(" / Shift2:");Serial.print(HESshiftPoint_2);
+  Serial.print(" / Clutch:");Serial.print(ClutchLow);Serial.print("/");Serial.println(ClutchHigh);
   #endif
 
   #if CONTROLLER_OUTPUT_ENABLED == true
@@ -190,6 +235,9 @@ void loop() {
   check_shifter_halleffect();
  #endif
 
+ #if CONTROLLER_CLUTCH_ENABLED == true
+  check_clutch();
+ #endif
 }
 
 
@@ -255,19 +303,134 @@ void releaseKey( char Key, char Mod, char Joy ){
   #endif
 }
 
+
+#if CONTROLLER_CLUTCH_ENABLED == true
+/* do the clutch */
+void check_clutch(){
+  // don't flood USB with position updates
+  if( CLUTCH_UPDATE_DELAY > millis()-ClutchUpdateLaste ) { return; }
+
+  int joy=0,raw = analogRead(Clutch_1_Pin);
+  joy = map(raw, (ClutchLow-ClutchCalibrationAdjust), (ClutchHigh+ClutchCalibrationAdjust), 0, 1024);
+  if( joy > 1024 ){ joy = 1024; }
+  
+  if( raw > ClutchLow ){
+    if( ClutchCalibrationStart == 0 ){ ClutchCalibrationStart = millis(); }
+
+    if( ClutchLastValue != joy ){
+      
+      #if CONTROLLER_OUTPUT_ENABLED == true
+        Joystick.setXAxis(joy);
+      #endif
+      ClutchLastValue = joy;
+      ClutchUpdateLaste = millis();
+
+      #if DebugSerialOut == true && DebugSendKey == true 
+        Serial.print("Clutch X Axis: "); Serial.println(joy);
+      #endif
+    }
+    
+  }else{
+    ClutchCalibrationStart == 0;
+    if( ClutchLastValue != 0 ){
+      #if CONTROLLER_OUTPUT_ENABLED == true
+        Joystick.setXAxis(0);
+      #endif
+      ClutchLastValue = 0;
+      
+      #if DebugSerialOut == true && DebugSendKey == true 
+        Serial.print("Clutch X Axis: "); Serial.println(0);
+      #endif
+    }
+  }
+    
+  #if DebugSerialOut == true && DebugClutchGetValues == true
+    if( millis() - DebugSerialClutchLast > 1500 ){
+      Serial.print(millis());
+      Serial.print(" - Clutch val:");
+      Serial.println(raw);
+      DebugSerialClutchLast = millis();
+    }
+  #endif
+
+#if DebugClutchCalib == true
+   /* enter calibration mode if paddle is held down */
+  if( ClutchCalibrationStart != 0 && millis() - ClutchCalibrationStart > CLUTCH_CALIBRATION_DELAY ){
+    ClutchCalibrationStart = 0;
+    clutch_calibrate();
+  }
+#endif
+}
+
+/* calibrate min max for the clutch */
+void clutch_calibrate(){
+      // calibrate current shifter for max reading
+    #if DebugSerialOut == true && DebugClutchCalib == true
+      Serial.println("entered calibration mode clutch_calibrate()");
+    #endif
+ 
+    int high=0,low=0;
+    for( byte x=0; x < 10 ; x++ ){
+      high += analogRead(Clutch_1_Pin);
+      delay(500);
+    }
+    high = high / 10;
+
+    //wait for shifter release
+    while(true){
+      #if DebugSerialOut == true && DebugClutchCalib == true
+        Serial.println("high collected, waiting for release");
+      #endif
+      
+      if( analogRead(Clutch_1_Pin) < high - ClutchCalibrationAdjust ){
+        for( byte x=0; x < 10 ; x++ ){
+          low += analogRead(Clutch_1_Pin);
+          delay(500);
+        }
+        low = low / 10;
+
+        ClutchLow = low + ClutchCalibrationAdjust;
+        ClutchHigh = high - ClutchCalibrationAdjust;
+        
+        #if DebugSerialOut == true && DebugClutchCalib == true
+            Serial.print("Clutch 1 high: ");
+            Serial.print(high);
+            Serial.print("(");
+            Serial.print( ClutchHigh );
+            Serial.print(")");
+            Serial.print(" / low: ");
+            Serial.print( low );
+            Serial.print("(");
+            Serial.print( ClutchLow );
+            Serial.println(")");
+        #endif
+        
+
+        #if EEPROMWrite == 1 && DebugClutchCalib == true
+          eeprom_update_hes();
+        #endif
+        return;
+      }
+      delay(500);
+    }
+}
+#endif
+
 #if CONTROLLER_SHIFTER_TYPE == 2
 /* checks if a shift is happening */
 void check_shifter_halleffect(){
 
   int raw = analogRead(Shifter_1_Pin);
-  if( raw > HallEffectShiftPoint ){
+  if( raw > HESshiftPoint_1 ){
     if( ShifterSend[0] == 0 ){
       ShifterSend[0] = 1;
       sendKey( Shifter_1_Key, Shifter_1_Mod, Shifter_1_Joy );
+      HESCalibrationStart[0] = millis();
     }
   }else{
     if( ShifterSend[0] == 1 ){
       ShifterSend[0] = 0;
+      HESCalibrationStart[0] = 0;
       releaseKey( Shifter_1_Key, Shifter_1_Mod, Shifter_1_Joy );
     }
   }
@@ -282,18 +445,33 @@ void check_shifter_halleffect(){
   #endif
   
   raw = analogRead(Shifter_2_Pin);
-  if( raw > HallEffectShiftPoint ){
+  if( raw > HESshiftPoint_2 ){
     if( ShifterSend[1] == 0 ){
       ShifterSend[1] = 1;
       sendKey( Shifter_2_Key, Shifter_2_Mod, Shifter_2_Joy );
+      HESCalibrationStart[1] = millis();
     }
   }else{
     if( ShifterSend[1] == 1 ){
       ShifterSend[1] = 0;
+      HESCalibrationStart[1] = 0;
       releaseKey( Shifter_2_Key, Shifter_2_Mod, Shifter_2_Joy );
     }
   }
+
+
+#if DebugHallEffectCalib == true
+  /* enter calibration mode if paddle is held down */
+  for( char x = 0 ; x < 2 ; x++ ){
+    if( HESCalibrationStart[x] != 0 && millis() - HESCalibrationStart[x] > HES_CALIBRATION_DELAY ){
+      HESCalibrationStart[x] = 0;
+      HES_calibrate_max();
+      break;
+    }
+  }
+#endif
   
+
   #if DebugSerialOut == true && DebugHallEffectShiftPoint == true
     if( DebugSerialHallEffectLastNow == true ){
       Serial.print("  /  Shifter_2 val:");
@@ -303,6 +481,60 @@ void check_shifter_halleffect(){
     }
   #endif
 }
+
+void HES_calibrate_max(){
+      // calibrate current shifter for max reading
+    #if DebugSerialOut == true && DebugHallEffectCalib == true
+      Serial.println("entered calibration mode HES_calibrate_max()");
+    #endif
+ 
+    int total1=0,total2=0;
+    for( byte x=0; x < 10 ; x++ ){
+      total1 += analogRead(Shifter_1_Pin);
+      total2 += analogRead(Shifter_2_Pin);
+      delay(500);
+    }
+    total1 = total1 / 10;
+    total2 = total2 / 10;
+
+    //wait for shifter release
+    while(true){
+      #if DebugSerialOut == true && DebugHallEffectCalib == true
+        Serial.println("max collected, waiting for release");
+      #endif
+      
+      if( analogRead(Shifter_1_Pin) < total1 - HESCalibrationAdjust ){
+        #if DebugSerialOut == true && DebugHallEffectCalib == true
+            Serial.print("Shifter 1 max: ");
+            Serial.print(total1);
+            Serial.print(" / new shift point: ");
+            Serial.println( total1 - HESCalibrationAdjust );
+        #endif
+        HESshiftPoint_1 = total1 - HESCalibrationAdjust;
+        #if EEPROMWrite == 1 && DebugHallEffectCalib == true
+          eeprom_update_hes();
+        #endif
+        return;
+      }
+      if( analogRead(Shifter_2_Pin) < total2 - HESCalibrationAdjust ){
+        HESshiftPoint_2 = total2 - HESCalibrationAdjust;
+        #if DebugSerialOut == true && DebugHallEffectCalib == true
+            Serial.print("Shifter 2 max: ");
+            Serial.print(total2);
+            Serial.print(" / new shift point: ");
+            Serial.println( total2 - HESCalibrationAdjust );
+        #endif
+        HESshiftPoint_2 = total2 - HESCalibrationAdjust;
+         #if EEPROMWrite == 1 && DebugHallEffectCalib == true
+          eeprom_update_hes();
+         #endif
+        return;
+      }
+      delay(500);
+    }
+    
+}
+
 #endif
 
 #if CONTROLLER_JOYSTICK_ENABLED == true
@@ -451,5 +683,110 @@ void serialEvent() {
       serial_cmd += inChar;
     }
   }
+}
+#endif
+
+
+
+#if EEPROMWrite == 1
+/** compares current hall effect sensor shift value vs the eeprom value every few seconds
+ *  updates it if the differ
+ */
+void eeprom_update_hes(){
+
+    if( HESshiftPoint_1 > 10 && eepromReadInt(EEPROM_HES_1) != HESshiftPoint_1 ){
+      #if DebugSerialOut == true
+        Serial.print("INFO: HES_1 EEPROM address ");
+        Serial.print(EEPROM_HES_1);
+        Serial.print(" write value ");
+        Serial.print(HESshiftPoint_1);
+        Serial.println(" / eeprom_update_pwm()");
+      #endif
+      
+      #if EEPROMWrite == 1
+        byte low, high;
+        low=HESshiftPoint_1&0xFF;
+        high=(HESshiftPoint_1>>8)&0xFF;
+        EEPROM.write(EEPROM_HES_1, low); // dauert 3,3ms 
+        EEPROM.write(EEPROM_HES_1+1, high);
+      #else
+        #if DebugSerialOut == true
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif        
+      #endif      
+    }
+
+
+    if( HESshiftPoint_2 > 10 && eepromReadInt(EEPROM_HES_2) != HESshiftPoint_2 ){
+      #if DebugSerialOut == true
+        Serial.print("INFO: HES_1 EEPROM address ");
+        Serial.print(EEPROM_HES_2);
+        Serial.print(" write value ");
+        Serial.print(HESshiftPoint_2);
+        Serial.println(" / eeprom_update_pwm()");
+      #endif
+      
+      #if EEPROMWrite == 1
+        byte low, high;
+        low=HESshiftPoint_2&0xFF;
+        high=(HESshiftPoint_2>>8)&0xFF;
+        EEPROM.write(EEPROM_HES_2, low); // dauert 3,3ms 
+        EEPROM.write(EEPROM_HES_2+1, high);
+        return;
+      #else
+        #if DebugSerialOut == true
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif        
+      #endif      
+    }
+
+  #if CONTROLLER_CLUTCH_ENABLED == true
+    if( ClutchLow > 1 && eepromReadInt(EEPROM_CLL_1) != ClutchLow ){
+      #if DebugSerialOut == true
+        Serial.print("INFO: Clutch_1 EEPROM address ");
+        Serial.print(EEPROM_CLL_1);
+        Serial.print(" write value ");
+        Serial.print(ClutchLow);
+        Serial.println(" / eeprom_update_pwm()");
+      #endif
+      
+      #if EEPROMWrite == 1
+        byte low, high;
+        low=ClutchLow&0xFF;
+        high=(ClutchLow>>8)&0xFF;
+        EEPROM.write(EEPROM_CLL_1, low); // dauert 3,3ms 
+        EEPROM.write(EEPROM_CLL_1+1, high);
+      #else
+        #if DebugSerialOut == true
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif        
+      #endif      
+    }
+
+
+    if( ClutchHigh > 10 && eepromReadInt(EEPROM_CLH_1) != ClutchHigh ){
+      #if DebugSerialOut == true
+        Serial.print("INFO: Clutch_1 EEPROM address ");
+        Serial.print(EEPROM_CLH_1);
+        Serial.print(" write value ");
+        Serial.print(ClutchHigh);
+        Serial.println(" / eeprom_update_pwm()");
+      #endif
+      
+      #if EEPROMWrite == 1
+        byte low, high;
+        low=ClutchHigh&0xFF;
+        high=(ClutchHigh>>8)&0xFF;
+        EEPROM.write(EEPROM_CLH_1, low); // dauert 3,3ms 
+        EEPROM.write(EEPROM_CLH_1+1, high);
+      #else
+        #if DebugSerialOut == true
+          Serial.println("INFO: write disabled by configuration / eeprom_update_pwm()");
+        #endif        
+      #endif      
+    }
+  #endif
+     
+    EEPROM_check_last = millis(); //update "last check counter"
 }
 #endif
